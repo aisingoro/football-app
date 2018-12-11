@@ -1,43 +1,41 @@
 <template>
   <div class="home">
-    <x-header></x-header>
-    <v-chart :data="data">
-      <v-scale x
-               type="timeCat"
-               mask="MM/DD"
-               :tick-count="3" />
-      <v-scale y
-               :min="0"
-               alias="日均温度"
-               :tick-count="5" />
-      <v-point :style="{
-          stroke: '#fff',
-          lineWidth: 1
-        }"
-               shape="smooth" />
-      <v-line shape="smooth" />
-    </v-chart>
-    <img alt="Vue logo"
-         src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <router-view></router-view>
+    <tabbar>
+      <tabbar-item selected
+                   link="/home/index">
+        <img slot="icon"
+             src="../../public/images/tabbar-sel-01.png">
+        <span slot="label">首页</span>
+      </tabbar-item>
+      <tabbar-item link="/home/internal-reference">
+        <img slot="icon"
+             src="../../public/images/tabbar-02.png">
+        <span slot="label">内参</span>
+      </tabbar-item>
+      <tabbar-item link="/home/ugc">
+        <img slot="icon"
+             src="../../public/images/tabbar-03.png">
+        <span slot="label">UGC</span>
+      </tabbar-item>
+      <tabbar-item link="/home/user">
+        <img slot="icon"
+             src="../../public/images/tabbar-04.png">
+        <span slot="label">我的</span>
+      </tabbar-item>
+    </tabbar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import https from '../https.js'
-import HelloWorld from '@/components/HelloWorld.vue'
-import {XHeader, VChart, VLine, VPoint, VScale, VTooltip } from 'vux'
+import {Tabbar,TabbarItem } from 'vux'
 export default {
   name: 'home',
   components: {
-    HelloWorld,
-    VChart,
-    VPoint,
-    VLine,
-    VScale,
-    VTooltip,
-    XHeader
+    Tabbar,
+    TabbarItem
   },
   data(){
     return{
@@ -65,3 +63,12 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.home {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+

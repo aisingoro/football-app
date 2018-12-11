@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Index from './views/Index.vue'
+import InternalReference from './views/InternalReference.vue'
+import Ugc from './views/UGC.vue'
+import User from './views/User.vue'
+
+
 
 Vue.use(Router)
 
@@ -15,7 +21,24 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [{
+        path: "index",
+        name: 'index',
+        component: Index,
+      }, {
+        path: "internal-reference",
+        name: 'internal-reference',
+        component: InternalReference,
+      }, {
+        path: "ugc",
+        name: 'ugc',
+        component: Ugc,
+      }, {
+        path: "user",
+        name: 'user',
+        component: User,
+      }]
     },
     {
       path: '/about',
