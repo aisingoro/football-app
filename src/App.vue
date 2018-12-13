@@ -26,10 +26,19 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'PingFangSC-Medium';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+}
+a {
+  text-decoration: none !important;
+}
+p,
+h1,
+h2,
+h3 {
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 </style>

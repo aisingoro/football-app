@@ -1,5 +1,7 @@
 <template>
-  <div class="ugc">ugc</div>
+  <div class="ugc">
+
+  </div>
 </template>
 
 <script>
@@ -8,5 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.ugc {
+}
 </style>

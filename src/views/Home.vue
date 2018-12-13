@@ -5,17 +5,23 @@
       <tabbar-item selected
                    link="/home/index">
         <img slot="icon"
+             src="../../public/images/tabbar-01.png">
+        <img slot="icon-active"
              src="../../public/images/tabbar-sel-01.png">
         <span slot="label">首页</span>
       </tabbar-item>
       <tabbar-item link="/home/internal-reference">
         <img slot="icon"
              src="../../public/images/tabbar-02.png">
+        <img slot="icon-active"
+             src="../../public/images/tabbar-sel-02.png">
         <span slot="label">内参</span>
       </tabbar-item>
       <tabbar-item link="/home/ugc">
         <img slot="icon"
              src="../../public/images/tabbar-03.png">
+        <img slot="icon-active"
+             src="../../public/images/tabbar-sel-03.png">
         <span slot="label">UGC</span>
       </tabbar-item>
       <tabbar-item link="/home/user">
@@ -63,12 +69,18 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .home {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+.weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon,
+.weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon > i,
+.weui-tabbar__item.weui-bar__item_on .weui-tabbar__label {
+  color: #01d0ff !important;
 }
 </style>
 
