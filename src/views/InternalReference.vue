@@ -319,7 +319,7 @@ export default {
           font-size: 14px;
           color: #313233;
           float: right;
-          font-weight: normal;
+          font-family: PingFangSC-Regular;
         }
       }
     }

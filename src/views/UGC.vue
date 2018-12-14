@@ -17,7 +17,8 @@
     </tab>
     <swiper v-model="index"
             height="244px"
-            :show-dots="false">
+            :show-dots="false"
+            style="box-shadow:0px 1px 0px 0px rgba(239,245,246,1);">
       <swiper-item v-for="(item, index) in list2"
                    :key="index">
         <div class="tab-swiper vux-center">
@@ -151,6 +152,7 @@ export default {
       float: right;
       font-size: 14px;
       font-weight: 400;
+      font-family: PingFangSC-Regular;
     }
   }
   .ugcList-info {
@@ -172,6 +174,7 @@ export default {
         font-size: 14px;
         font-weight: 400;
         margin-top: 6px;
+        font-family: PingFangSC-Regular;
       }
       &:nth-of-type(2) {
         float: right;
@@ -195,6 +198,7 @@ export default {
       tr {
         border-left: 1px solid #f1f4f6;
         border-right: 1px solid #f1f4f6;
+        font-family: PingFangSC-Regular;
       }
       td:first-child {
         color: #b4cae5;
