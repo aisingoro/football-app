@@ -158,14 +158,17 @@ export default {
           font-size: 12px;
           color: #7ba1d0;
           margin-top: 2px;
+          font-family: 'PingFangSC-Regular';
         }
         & > p:first-child,
         :last-child {
           color: #313233;
           margin-top: 5px;
+          font-family: 'PingFangSC-Medium';
         }
         & > p:last-child {
           margin-top: 15px;
+          font-family: 'PingFangSC-Regular';
         }
       }
       & > div:nth-child(2) {
@@ -199,6 +202,7 @@ export default {
             }
             p {
               color: #b4cae5;
+              font-family: 'PingFangSC-Regular';
             }
           }
         }

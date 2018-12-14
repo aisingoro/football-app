@@ -27,6 +27,8 @@
       <tabbar-item link="/home/user">
         <img slot="icon"
              src="../../public/images/tabbar-04.png">
+        <img slot="icon-active"
+             src="../../public/images/tabbar-sel-04.png">
         <span slot="label">我的</span>
       </tabbar-item>
     </tabbar>

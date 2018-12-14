@@ -605,7 +605,7 @@ export default {
   width: 91.5%;
   height: 80%;
 }
-.vux-table {
+.index .vux-table {
   border-radius: 6px;
   overflow: hidden;
   margin-top: 12px;

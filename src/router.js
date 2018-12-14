@@ -15,8 +15,9 @@ export default new Router({
   // base: process.env.BASE_URL,
   routes: [{
       path: '',
-      name: 'home',
-      component: Home
+      redirect: '/home/index',
+      name: 'index',
+      component: Index
     },
     {
       path: '/home',
