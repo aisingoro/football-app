@@ -93,7 +93,8 @@
           <div class="range">
             <div class="range-info"></div>
           </div>
-          <span class="more">查看完整版>></span>
+          <span class="more"
+                @click="getInternalInfo">查看完整版>></span>
         </div>
       </div>
     </div>
@@ -112,6 +113,11 @@ export default {
       percent:55,
       showInfo:false,
       internalList:[1,2,3,4,5,6]
+    }
+  },
+  methods:{
+    getInternalInfo(){
+      this.$router.push('/internal-info')
     }
   }
 

@@ -6,6 +6,10 @@ import InternalReference from './views/InternalReference.vue'
 import Ugc from './views/UGC.vue'
 import User from './views/User.vue'
 
+//内参详情
+import InternalInfo from './views/InternalInfo.vue'
+
+
 
 
 Vue.use(Router)
@@ -40,8 +44,11 @@ export default new Router({
         name: 'user',
         component: User,
       }]
-    },
-    {
+    }, , {
+      path: "/internal-info",
+      name: 'internal-info',
+      component: InternalInfo,
+    }, {
       path: '/about',
       name: 'about',
       // route level code-splitting
