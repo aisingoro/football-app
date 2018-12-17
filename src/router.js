@@ -8,9 +8,8 @@ import User from './views/User.vue'
 
 //内参详情
 import InternalInfo from './views/InternalInfo.vue'
-
-
-
+//专家详情
+import UgcInfo from './views/UgcInfo.vue'
 
 Vue.use(Router)
 
@@ -44,10 +43,14 @@ export default new Router({
         name: 'user',
         component: User,
       }]
-    }, , {
+    }, {
       path: "/internal-info",
       name: 'internal-info',
       component: InternalInfo,
+    }, {
+      path: "/ugc-info",
+      name: 'ugc-info',
+      component: UgcInfo,
     }, {
       path: '/about',
       name: 'about',

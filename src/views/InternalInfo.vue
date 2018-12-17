@@ -190,7 +190,7 @@
 <script>
 import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress } from 'vux'
 export default {
-components: {
+  components: {
     XHeader,
     ButtonTab,
     ButtonTabItem,

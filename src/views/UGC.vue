@@ -52,7 +52,7 @@
         <p>吴主任</p>
         <p>近期10中8 盈利100%</p>
       </div>
-      <div>立即查看</div>
+      <div @click="goUgcInfo">立即查看</div>
       <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
@@ -117,6 +117,11 @@ export default {
         label:'周老师',
         imgUrl:require('../../public/images/index-team-02.png')
       }]
+    }
+  },
+  methods:{
+    goUgcInfo(){
+      this.$router.push("/ugc-info")
     }
   }
 }
