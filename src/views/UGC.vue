@@ -69,7 +69,8 @@
         </tbody>
       </x-table>
     </div>
-    <div class="ugc-set">发单</div>
+    <div class="ugc-set"
+         @click="IssueOrder">发单</div>
     <img src="../../public/images/ugc-top.png"
          class="ugc-top" />
   </div>
@@ -122,6 +123,9 @@ export default {
   methods:{
     goUgcInfo(){
       this.$router.push("/ugc-info")
+    },
+    IssueOrder(){
+      this.$router.push("/issue-order")
     }
   }
 }

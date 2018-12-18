@@ -10,6 +10,9 @@ import User from './views/User.vue'
 import InternalInfo from './views/InternalInfo.vue'
 //专家详情
 import UgcInfo from './views/UgcInfo.vue'
+//发单
+import IssueOrder from './views/IssueOrder.vue'
+
 
 Vue.use(Router)
 
@@ -51,6 +54,10 @@ export default new Router({
       path: "/ugc-info",
       name: 'ugc-info',
       component: UgcInfo,
+    }, {
+      path: "/issue-order",
+      name: 'issue-order',
+      component: IssueOrder,
     }, {
       path: '/about',
       name: 'about',
