@@ -24,171 +24,176 @@
       </div>
     </div>
     <div class="button-tab">
-      <button-tab v-model="btnTab">
-        <button-tab-item>公共信息</button-tab-item>
-        <button-tab-item>独家内参</button-tab-item>
-      </button-tab>
-      <swiper v-model="btnTab"
-              :show-dots="false">
-        <swiper-item>公共信息</swiper-item>
-
-        <swiper-item>
-          <div class="show-info">
+      <sticky ref="sticky"
+              :offset="46"
+              :check-sticky-support="false"
+              :disabled="disabled">
+        <button-tab v-model="btnTab">
+          <button-tab-item>公共信息</button-tab-item>
+          <button-tab-item>独家内参</button-tab-item>
+        </button-tab>
+      </sticky>
+      <div class=""
+           v-if="btnTab==0">
+        <public-info></public-info>
+      </div>
+      <div class="show-info"
+           v-if="btnTab==1">
+        <div>
+          <p>大概率事件结果对比：
+            <span><img src="../../public/images/index-team-01.png" />自有赔率</span>
+            <span><img src="../../public/images/index-team-01.png" />竞彩赔率</span>
+          </p>
+          <div>
             <div>
-              <p>大概率事件结果对比：
-                <span><img src="../../public/images/index-team-01.png" />自有赔率</span>
-                <span><img src="../../public/images/index-team-01.png" />竞彩赔率</span>
-              </p>
-              <div>
-                <div>
-                  <span class="title">胜</span>
-                  <div class="percent1">
-                    <div class="percent-info">
-                      <span>9.40</span>
-                    </div>
-
-                  </div>
-                  <div class="percent1">
-                    <div class="percent-info">
-                      <span>7.10</span>
-                    </div>
-
-                  </div>
-                </div>
-                <div>
-                  <span class="title">平</span>
-                  <div class="percent1">
-                    <div class="percent-info">
-                      <span>9.40</span>
-                    </div>
-
-                  </div>
-                  <div class="percent1">
-                    <div class="percent-info">
-                      <span>7.10</span>
-                    </div>
-
-                  </div>
-                </div>
-                <div>
-                  <span class="title">负</span>
-                  <div class="percent1">
-                    <div class="percent-info">
-                      <span>9.40</span>
-                    </div>
-
-                  </div>
-                  <div class="percent1">
-                    <div class="percent-info">
-                      <span>7.10</span>
-                    </div>
-
-                  </div>
+              <span class="title">胜</span>
+              <div class="percent1">
+                <div class="percent-info">
+                  <span>9.40</span>
                 </div>
 
               </div>
-              <p>结果指数：</p>
-              <div>
-                <div>
-                  <x-circle :percent="percent"
-                            :stroke-width="6"
-                            stroke-color="#01D0FF">
-                    <span class="circle-bg">{{ percent }}%</span>
-                  </x-circle>
-                  胜让胜
-                </div>
-                <div>
-                  <x-circle :percent="percent"
-                            :stroke-width="6"
-                            stroke-color="#01D0FF">
-                    <span class="circle-bg">{{ percent }}%</span>
-                  </x-circle>
-                  胜让平
-                </div>
-                <div>
-                  <x-circle :percent="percent"
-                            :stroke-width="6"
-                            stroke-color="#01D0FF">
-                    <span class="circle-bg">{{ percent }}%</span>
-                  </x-circle>
-                  平让负
-                </div>
-                <div>
-                  <x-circle :percent="percent"
-                            :stroke-width="6"
-                            stroke-color="#01D0FF">
-                    <span class="circle-bg">{{ percent }}%</span>
-                  </x-circle>
-                  负让负
-                </div>
-              </div>
-              <p>比分指数：</p>
-              <div>
-                <div>
-                  <span>1:0</span>
-                  <span>{{percent1}}%</span>
-                  <x-progress :percent="percent1"
-                              :show-cancel="false"></x-progress>
-                </div>
-                <div>
-                  <span>2:1</span>
-                  <span>{{percent2}}%</span>
-                  <x-progress :percent="percent2"
-                              :show-cancel="false"></x-progress>
-                </div>
-                <div>
-                  <span>2:2</span>
-                  <span>{{percent3}}%</span>
-                  <x-progress :percent="percent3"
-                              :show-cancel="false"></x-progress>
+              <div class="percent1">
+                <div class="percent-info">
+                  <span>7.10</span>
                 </div>
 
               </div>
-              <p>爆冷指数：</p>
-              <div></div>
-              <p>独家内参：</p>
-              <div class="btn">
-                <span>5元</span>解锁</div>
             </div>
-            <div class="recommender">
-              <h1><img src="../../public/images/internal-info-badge.png" />推荐专家</h1>
-              <p>经验丰富 持续盈利 专家见解</p>
-              <div class="recommender-list">
-                <img src="../../public/images/index-team-01.png" />
-                <p class="list-name">赵教授</p>
-                <p>近期10中8 盈利100%</p>
-                <img src="../../public/images/user-arrow.png" />
+            <div>
+              <span class="title">平</span>
+              <div class="percent1">
+                <div class="percent-info">
+                  <span>9.40</span>
+                </div>
+
               </div>
-              <div class="recommender-list">
-                <img src="../../public/images/index-team-01.png" />
-                <p class="list-name">赵教授</p>
-                <p>近期10中8 盈利100%</p>
-                <img src="../../public/images/user-arrow.png" />
+              <div class="percent1">
+                <div class="percent-info">
+                  <span>7.10</span>
+                </div>
+
               </div>
-              <div class="recommender-list">
-                <img src="../../public/images/index-team-01.png" />
-                <p class="list-name">赵教授</p>
-                <p>近期10中8 盈利100%</p>
-                <img src="../../public/images/user-arrow.png" />
+            </div>
+            <div>
+              <span class="title">负</span>
+              <div class="percent1">
+                <div class="percent-info">
+                  <span>9.40</span>
+                </div>
+
               </div>
-              <div class="recommender-list">
-                <img src="../../public/images/index-team-01.png" />
-                <p class="list-name">赵教授</p>
-                <p>近期10中8 盈利100%</p>
-                <img src="../../public/images/user-arrow.png" />
+              <div class="percent1">
+                <div class="percent-info">
+                  <span>7.10</span>
+                </div>
+
               </div>
-              <span class="change-btn">换一换</span>
             </div>
 
           </div>
-        </swiper-item>
-      </swiper>
+          <p>结果指数：</p>
+          <div>
+            <div>
+              <x-circle :percent="percent"
+                        :stroke-width="6"
+                        stroke-color="#01D0FF">
+                <span class="circle-bg">{{ percent }}%</span>
+              </x-circle>
+              胜让胜
+            </div>
+            <div>
+              <x-circle :percent="percent"
+                        :stroke-width="6"
+                        stroke-color="#01D0FF">
+                <span class="circle-bg">{{ percent }}%</span>
+              </x-circle>
+              胜让平
+            </div>
+            <div>
+              <x-circle :percent="percent"
+                        :stroke-width="6"
+                        stroke-color="#01D0FF">
+                <span class="circle-bg">{{ percent }}%</span>
+              </x-circle>
+              平让负
+            </div>
+            <div>
+              <x-circle :percent="percent"
+                        :stroke-width="6"
+                        stroke-color="#01D0FF">
+                <span class="circle-bg">{{ percent }}%</span>
+              </x-circle>
+              负让负
+            </div>
+          </div>
+          <p>比分指数：</p>
+          <div>
+            <div>
+              <span>1:0</span>
+              <span>{{percent1}}%</span>
+              <x-progress :percent="percent1"
+                          :show-cancel="false"></x-progress>
+            </div>
+            <div>
+              <span>2:1</span>
+              <span>{{percent2}}%</span>
+              <x-progress :percent="percent2"
+                          :show-cancel="false"></x-progress>
+            </div>
+            <div>
+              <span>2:2</span>
+              <span>{{percent3}}%</span>
+              <x-progress :percent="percent3"
+                          :show-cancel="false"></x-progress>
+            </div>
+
+          </div>
+          <p>爆冷指数：</p>
+          <div></div>
+          <p>独家内参：</p>
+          <div class="btn">
+            <span>5元</span>解锁</div>
+        </div>
+        <div class="recommender">
+          <h1><img src="../../public/images/internal-info-badge.png" />推荐专家</h1>
+          <p>经验丰富 持续盈利 专家见解</p>
+          <div class="recommender-list">
+            <img src="../../public/images/index-team-01.png" />
+            <p class="list-name">赵教授</p>
+            <p>近期10中8 盈利100%</p>
+            <img src="../../public/images/user-arrow.png" />
+          </div>
+          <div class="recommender-list">
+            <img src="../../public/images/index-team-01.png" />
+            <p class="list-name">赵教授</p>
+            <p>近期10中8 盈利100%</p>
+            <img src="../../public/images/user-arrow.png" />
+          </div>
+          <div class="recommender-list">
+            <img src="../../public/images/index-team-01.png" />
+            <p class="list-name">赵教授</p>
+            <p>近期10中8 盈利100%</p>
+            <img src="../../public/images/user-arrow.png" />
+          </div>
+          <div class="recommender-list">
+            <img src="../../public/images/index-team-01.png" />
+            <p class="list-name">赵教授</p>
+            <p>近期10中8 盈利100%</p>
+            <img src="../../public/images/user-arrow.png" />
+          </div>
+          <span class="change-btn">换一换</span>
+        </div>
+
+      </div>
     </div>
+    <div style="clear:both;"></div>
   </div>
 </template>
 
 <script>
-import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress } from 'vux'
+import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress,Sticky } from 'vux'
+import PublicInfo from '../components/PublicInfo.vue'
 export default {
   components: {
     XHeader,
@@ -197,10 +202,13 @@ export default {
     Swiper,
     SwiperItem,
     XCircle,
-    XProgress
+    XProgress,
+    Sticky,
+    PublicInfo
   },
   data(){
     return{
+      disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
       btnTab:0,
       percent:55,
       percent1:15,
@@ -224,23 +232,35 @@ export default {
 <style lang="scss" scoped>
 .internal-info {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   // overflow: hidden;
   // overflow-y: scroll;
   background: #f2f5f8;
   .match-header {
     width: 100%;
     height: 174px;
+    overflow: hidden;
     background: linear-gradient(
       360deg,
       rgba(55, 103, 175, 1) 0%,
       rgba(29, 61, 126, 1) 100%
     );
     .vux-header {
-      background: none;
+      width: 100%;
+      height: 46px;
+      background: linear-gradient(
+        360deg,
+        #1a4891 0%,
+        rgba(29, 61, 126, 1) 100%
+      );
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
     }
     .internalList {
       position: relative;
+      top: 46px;
       .badge {
         position: absolute;
         width: 76px;
@@ -323,18 +343,7 @@ export default {
       }
     }
   }
-  .button-tab {
-    width: 100%;
-    height: calc(100% - 174px);
-    .vux-slider {
-      height: calc(100% - 80px);
-      overflow: hidden;
-      overflow-y: scroll;
-      & > .vux-swiper {
-        overflow-y: scroll;
-      }
-    }
-  }
+
   .vux-button-group {
     width: 100%;
     height: 80px;
@@ -386,7 +395,6 @@ export default {
   .show-info {
     clear: both;
     width: 100%;
-    height: 397px;
     .recommender {
       width: 100%;
       height: 550px;
@@ -639,11 +647,6 @@ export default {
 }
 </style>
 <style lang="scss">
-.internal-info .vux-slider > .vux-swiper {
-  height: 100% !important;
-  overflow-y: scroll;
-  // height: calc(100% - 254px) !important;
-}
 .internal-info .weui-progress__bar {
   height: 6px;
   background: rgba(255, 193, 49, 0.1);
