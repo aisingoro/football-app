@@ -12,6 +12,8 @@ import InternalInfo from './views/InternalInfo.vue'
 import UgcInfo from './views/UgcInfo.vue'
 //发单
 import IssueOrder from './views/IssueOrder.vue'
+import SetOrder from './views/SetOrder.vue'
+
 
 
 Vue.use(Router)
@@ -58,6 +60,10 @@ export default new Router({
       path: "/issue-order",
       name: 'issue-order',
       component: IssueOrder,
+    }, {
+      path: "/set-order",
+      name: 'set-order',
+      component: SetOrder,
     }, {
       path: '/about',
       name: 'about',

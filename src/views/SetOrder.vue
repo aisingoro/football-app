@@ -1,5 +1,5 @@
 <template>
-  <div class="issue-order">
+  <div class="set-order">
     <x-header :left-options="{backText: ''}"
               title="发单"></x-header>
     <div class="order-info">
@@ -9,6 +9,8 @@
           <p>周日001</p>
           <p>天皇杯</p>
           <p>02/08/02:30</p>
+          <x-icon type="ios-close-outline"
+                  size="20"></x-icon>
         </div>
         <div class="side-right">
           <p>哈萨克斯坦
@@ -27,24 +29,8 @@
           <p>周日001</p>
           <p>天皇杯</p>
           <p>02/08/02:30</p>
-        </div>
-        <div class="side-right">
-          <p>哈萨克斯坦
-            <span>vs</span> 葡萄牙</p>
-          <checker v-model="demo1"
-                   default-item-class="demo1-item"
-                   selected-item-class="demo1-item-selected">
-            <checker-item :value="item"
-                          v-for="(item, index) in items1"
-                          :key="index">{{itemsTitle[index]}}<br>{{item.value}}</checker-item>
-          </checker>
-        </div>
-      </div>
-      <div class="order-list">
-        <div class="side-left">
-          <p>周日001</p>
-          <p>天皇杯</p>
-          <p>02/08/02:30</p>
+          <x-icon type="ios-close-outline"
+                  size="20"></x-icon>
         </div>
         <div class="side-right">
           <p>哈萨克斯坦
@@ -60,7 +46,24 @@
       </div>
     </div>
     <div class="fixed-bottom">
-      <p>重选</p>
+      <h1>推荐理由</h1>
+      <group>
+        <x-textarea placeholder="点击输入推荐理由，不少于20个字"
+                    :show-counter="false"
+                    :rows="1"
+                    autosize></x-textarea>
+      </group>
+
+      <checklist :options="commonList"
+                 v-model="radioValue"
+                 :max="1"
+                 class="bor-none">
+      </checklist>
+      <div class="pay-input">
+        <input type="text" />
+        <span>¥</span>
+      </div>
+
       <div class="btn"
            @click="setOrder">确定</div>
     </div>
@@ -68,15 +71,20 @@
 </template>
 
 <script>
-import { XHeader,Checker, CheckerItem } from 'vux'
+import { XHeader,Checker, CheckerItem,XTextarea,Group,Checklist } from 'vux'
 export default {
   components: {
     XHeader,
     Checker,
-    CheckerItem
+    CheckerItem,
+    XTextarea,
+    Group,
+    Checklist
   },
   data(){
     return{
+      commonList: [ '免费', '收费' ],
+      radioValue:[],
       demo1:null,
       itemsTitle:['胜','平','负','胜','平','负'],
       items1: [{
@@ -102,14 +110,13 @@ export default {
   },
   methods:{
     setOrder(){
-      this.$router.push("/set-order")
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.issue-order {
+.set-order {
   width: 100%;
   height: 100%;
   background: #f8f9fa;
@@ -120,7 +127,6 @@ export default {
     width: 91.5%;
     margin: 0 auto;
     overflow: hidden;
-    padding-bottom: 100px;
     & > p {
       font-size: 16px;
       font-family: PingFangSC-Regular;
@@ -189,24 +195,30 @@ export default {
   }
   .fixed-bottom {
     width: 100%;
-    height: 96px;
+    height: 271px;
     background: #ffffff;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    p {
+    margin-top: 150px;
+    overflow: hidden;
+    // position: fixed;
+    // bottom: 0;
+    // left: 0;
+    .pay-input {
+      margin-top: 10px;
+      width: 15%;
       float: left;
-      font-size: 18px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(38, 215, 255, 1);
-      margin-left: 16px;
-      margin-top: 25px;
+      border-bottom: 1px solid #eff5f6;
+      input {
+        padding-left: 2px;
+        width: 60%;
+      }
+    }
+    h1 {
+      font-size: 16px;
+      margin: 16px;
     }
     .btn {
-      float: right;
-      margin-right: 15px;
-      margin-top: 15px;
+      margin: 0 auto;
+      margin-top: 70px;
       width: 187px;
       height: 44px;
       background: linear-gradient(
@@ -224,8 +236,53 @@ export default {
 }
 </style>
 <style lang="scss">
-.issue-order .vux-header .vux-header-title {
+.set-order .vux-header .vux-header-title {
   color: #313233;
+}
+.set-order .weui-cells:before {
+  border-top: none;
+}
+.set-order .weui-textarea::-webkit-input-placeholder {
+  font-size: 16px;
+  color: #b4cae5;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+}
+.set-order .weui-cells:after {
+  border-bottom: 1px solid #eff5f6;
+}
+.set-order .weui-cells__title + .weui-cells {
+  display: flex;
+}
+.bor-none {
+  width: 55%;
+  float: left;
+  .weui-cell__bd {
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+  }
+  .weui-cells:after {
+    border-bottom: none;
+  }
+  .weui-cell:before {
+    border-top: none;
+  }
+}
+
+.set-order
+  .weui-cells_checkbox
+  .weui-check:checked
+  + .weui-icon-checked:before {
+  color: #26d7ff;
+  content: '\EA08';
+}
+.set-order .weui-cells_checkbox .weui-icon-checked:before {
+  color: #eff5f6;
+}
+.set-order .vux-x-icon {
+  fill: red;
+  margin-top: 48px;
 }
 </style>
 
