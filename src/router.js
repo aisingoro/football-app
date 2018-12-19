@@ -13,8 +13,7 @@ import UgcInfo from './views/UgcInfo.vue'
 //发单
 import IssueOrder from './views/IssueOrder.vue'
 import SetOrder from './views/SetOrder.vue'
-
-
+import PaidInfo from './views/PaidInfo.vue'
 
 Vue.use(Router)
 
@@ -64,6 +63,10 @@ export default new Router({
       path: "/set-order",
       name: 'set-order',
       component: SetOrder,
+    }, {
+      path: "/paid-info",
+      name: 'paid-info',
+      component: PaidInfo,
     }, {
       path: '/about',
       name: 'about',
