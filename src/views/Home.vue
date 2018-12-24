@@ -27,6 +27,8 @@
       <tabbar-item link="/home/user">
         <img slot="icon"
              src="../../public/images/tabbar-04.png">
+        <img slot="icon-active"
+             src="../../public/images/tabbar-sel-04.png">
         <span slot="label">我的</span>
       </tabbar-item>
     </tabbar>
@@ -59,13 +61,13 @@ export default {
     }
   },
   mounted(){
-    let params ={'page': '1', 'pageSize': '10', 'openid': 'o3HY-5XljrBDFpzVdSYi66Z_9Af4','unionid':'oXhLb1M3dFxgwB97V79lzoqPxpQs'}
-                https.fetchGet('/listbooks',params ).then((data) => {
-                    console.log("结果啊啊啊啊",data)
-                }).catch(err=>{
-                        console.log(err)
-                    }
-                )
+    // let params ={'page': '1', 'pageSize': '10', 'openid': 'o3HY-5XljrBDFpzVdSYi66Z_9Af4','unionid':'oXhLb1M3dFxgwB97V79lzoqPxpQs'}
+		https.fetchPost('/index/index.jsp',{} ).then((data) => {
+				console.log("结果啊啊啊啊",data)
+		}).catch(err=>{
+						console.log(err)
+				}
+		)
   }
 }
 </script>

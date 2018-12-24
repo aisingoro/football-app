@@ -384,6 +384,14 @@ export default {
         paytype:1
       }]
     }
+  },
+  mounted(){
+    // https.fetchPost('/index/index.jsp').then((data) => {
+    //     console.log("结果啊啊啊啊",data)
+    // }).catch(err=>{
+    //         console.log(err)
+    //     }
+    // )
   }
   
 
@@ -410,6 +418,7 @@ export default {
         font-size: 14px;
         font-weight: 400;
         margin-top: 4px;
+        font-family: PingFangSC-Regular;
       }
     }
     .internalList {
@@ -425,6 +434,8 @@ export default {
         margin-top: 8px;
         font-size: 14px;
         line-height: 32px;
+        font-family: 'PingFangSC-Regular';
+        font-weight: 400;
         span:first-child {
           display: inline-block;
           width: 3px;
@@ -435,6 +446,8 @@ export default {
         }
         span:nth-child(2) {
           color: #b4cae5;
+          font-weight: 400;
+          font-family: 'PingFangSC-Regular';
         }
       }
       & > div {
@@ -475,6 +488,7 @@ export default {
               &:nth-child(2) {
                 color: #b4cae5;
                 margin-bottom: 12px;
+                font-family: 'PingFangSC-Regular';
               }
               &:nth-child(3) {
                 color: #01d0ff;
@@ -579,6 +593,7 @@ export default {
       font-size: 14px;
       text-align: center;
       line-height: 36px;
+      font-family: PingFangSC-Regular;
     }
   }
 }
@@ -605,7 +620,7 @@ export default {
   width: 91.5%;
   height: 80%;
 }
-.vux-table {
+.index .vux-table {
   border-radius: 6px;
   overflow: hidden;
   margin-top: 12px;
@@ -613,9 +628,14 @@ export default {
     font-size: 14px;
     &:nth-child(2) {
       color: #ff4359;
+      font-family: ArialMT;
+    }
+    &:nth-child(3) {
+      font-family: ArialMT;
     }
     &:nth-child(4) {
       color: #70d23e;
+      font-family: ArialMT;
     }
   }
 }

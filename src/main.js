@@ -5,7 +5,8 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import QS from 'qs'
-
+// import md5 from 'js-md5';
+// Vue.prototype.$md5 = md5;
 Vue.prototype.$axios = axios;
 Vue.prototype.qs = QS;
 Vue.config.productionTip = false
