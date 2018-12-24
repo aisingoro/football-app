@@ -8,7 +8,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://beijing.daxtech.com.cn/gulian/dfz',
+        target: 'http://39.104.189.104',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

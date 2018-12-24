@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { XHeader,XInput,XTextarea,Group } from 'vux'
+import { XHeader,XInput,XTextarea,Group,md5 } from 'vux'
 
 export default {
   components: {
@@ -40,6 +40,10 @@ export default {
       idCard:'',
       ugcName:''
     }
+  },
+  mounted(){
+    var md = md5('1545633812y73jkfks98ky9dgdfgv')
+    console.log(md)
   }
 }
 </script>

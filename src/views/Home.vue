@@ -61,13 +61,13 @@ export default {
     }
   },
   mounted(){
-    let params ={'page': '1', 'pageSize': '10', 'openid': 'o3HY-5XljrBDFpzVdSYi66Z_9Af4','unionid':'oXhLb1M3dFxgwB97V79lzoqPxpQs'}
-                https.fetchGet('/listbooks',params ).then((data) => {
-                    console.log("结果啊啊啊啊",data)
-                }).catch(err=>{
-                        console.log(err)
-                    }
-                )
+    // let params ={'page': '1', 'pageSize': '10', 'openid': 'o3HY-5XljrBDFpzVdSYi66Z_9Af4','unionid':'oXhLb1M3dFxgwB97V79lzoqPxpQs'}
+    //             https.fetchGet('/listbooks',params ).then((data) => {
+    //                 console.log("结果啊啊啊啊",data)
+    //             }).catch(err=>{
+    //                     console.log(err)
+    //                 }
+    //             )
   }
 }
 </script>

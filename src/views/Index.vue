@@ -384,6 +384,14 @@ export default {
         paytype:1
       }]
     }
+  },
+  mounted(){
+    // https.fetchPost('/index/index.jsp').then((data) => {
+    //     console.log("结果啊啊啊啊",data)
+    // }).catch(err=>{
+    //         console.log(err)
+    //     }
+    // )
   }
   
 
