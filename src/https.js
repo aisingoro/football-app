@@ -1,11 +1,20 @@
 import axios from 'axios'
 import qs from 'qs'
-// import md5 from 'js-md5';
+import md5 from 'js-md5';
 
-
+let t = String(Date.parse(new Date()));
+let newT = t.substring(0, t.length - 3);
 
 axios.defaults.timeout = 5000; //响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; //配置请求头
+axios.defaults.headers.common['channel'] = '';
+axios.defaults.headers.common['platform'] = '';
+axios.defaults.headers.common['package'] = '';
+axios.defaults.headers.common['version'] = '1.0.0';
+axios.defaults.headers.common['userid'] = '1';
+axios.defaults.headers.common['vcode'] = '1';
+axios.defaults.headers.common['t'] = newT;
+axios.defaults.headers.common['sign'] = md5(newT + 'y73jkfks98ky9dgdfgv');
 axios.defaults.baseURL = '/api'; //配置接口地址
 // axios.defaults.baseURL = 'http://39.104.189.104'
 //POST传参序列化(添加请求拦截器)
@@ -38,21 +47,6 @@ export function fetchPost(url, params) {
   // var newT = t.substring(0, t.length - 3);
   return new Promise((resolve, reject) => {
     axios.post(url, params
-        //  {
-        //   params: params
-        // }, {
-        //   headers: {
-        //     'channel': '',
-        //     "platform": '',
-        //     'package': '',
-        //     'version': '1.0.0',
-        //     'type': 'test',
-        //     'userid': '1',
-        //     'vcode': '1',
-        //     't': newT,
-        //     'sign': md5(newT + 'y73jkfks98ky9dgdfgv')
-        //   }
-        // }
       )
       .then(response => {
         resolve(response);
