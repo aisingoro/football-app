@@ -6,93 +6,94 @@
          :key="index">
       <div class="list-info">
         <div>
-          <p>周日001</p>
-          <p>国际A</p>
-          <p>02/08/02:30</p>
-          <p @click="showInfo=!showInfo">分析</p>
+          <p>{{item.matchnum}}</p>
+          <p>{{item.showntitle}}</p>
+          <p>{{item.matchtime}}</p>
+          <p @click="showInfo(index)">分析</p>
         </div>
         <div>
           <div>
-            <img src="../../public/images/index-team-01.png" />
-            <p>哈萨克斯坦</p>
+            <img :src="item.hometeampic" />
+            <p>{{item.hometeam}}</p>
           </div>
           <div>
             <img src="../../public/images/index-vs.png" />
             <p>未开赛</p>
           </div>
           <div>
-            <img src="../../public/images/index-team-02.png" />
-            <p>拉脱维亚</p>
+            <img :src="item.awayteampic" />
+            <p>{{item.awayteam}}</p>
           </div>
         </div>
         <img src="../../public/images/internal-badge.png" />
       </div>
       <div class="show-info"
-           v-if="showInfo">
+           v-if="item.showInfoItem">
         <div>
           <p>大概率事件结果对比：</p>
           <div>
             <div>胜
-              <span>65%</span>
+              <span>{{item.details.bigprobabilityevents.split(",")[0]}}%</span>
             </div>
             <div>平
-              <span>23%</span>
+              <span>{{item.details.bigprobabilityevents.split(",")[1]}}%</span>
             </div>
             <div>负
-              <span>12%</span>
+              <span>{{item.details.bigprobabilityevents.split(",")[2]}}%</span>
             </div>
           </div>
           <p>结果指数：</p>
           <div>
             <div>
-              <x-circle :percent="percent"
+              <x-circle :percent="Number(item.details.resultindex.split(',')[0].split(':')[1])"
                         :stroke-width="6"
                         stroke-color="#3761A3">
-                <span class="circle-bg">{{ percent }}%</span>
+                <span class="circle-bg">{{ item.details.resultindex.split(",")[0].split(":")[1] }}%</span>
               </x-circle>
-              胜让胜
+              {{item.details.resultindex.split(",")[0].split(":")[0]}}
             </div>
             <div>
-              <x-circle :percent="percent"
+              <x-circle :percent="Number(item.details.resultindex.split(',')[1].split(':')[1])"
                         :stroke-width="6"
                         stroke-color="#3761A3">
-                <span class="circle-bg">{{ percent }}%</span>
+                <span class="circle-bg">{{item.details.resultindex.split(",")[1].split(":")[1]}}%</span>
               </x-circle>
-              胜让平
+              {{item.details.resultindex.split(",")[1].split(":")[0]}}
             </div>
             <div>
-              <x-circle :percent="percent"
+              <x-circle :percent="Number(item.details.resultindex.split(',')[2].split(':')[1])"
                         :stroke-width="6"
                         stroke-color="#3761A3">
-                <span class="circle-bg">{{ percent }}%</span>
+                <span class="circle-bg">{{ item.details.resultindex.split(',')[2].split(':')[1] }}%</span>
               </x-circle>
-              平让负
+              {{item.details.resultindex.split(",")[2].split(":")[0]}}
             </div>
             <div>
-              <x-circle :percent="percent"
+              <x-circle :percent="Number(item.details.resultindex.split(',')[3].split(':')[1])"
                         :stroke-width="6"
                         stroke-color="#3761A3">
-                <span class="circle-bg">{{ percent }}%</span>
+                <span class="circle-bg">{{ item.details.resultindex.split(',')[3].split(':')[1] }}%</span>
               </x-circle>
-              负让负
+              {{item.details.resultindex.split(',')[3].split(':')[0]}}
             </div>
           </div>
           <p>比分指数：</p>
           <div>
-            <div>1:0
-              <span>15%</span>
+            <div>{{item.details.scoreindex.split(',')[0].split('(')[0]}}
+              <span>{{item.details.scoreindex.split(',')[0].split('(')[1].slice(0,item.details.scoreindex.split(',')[0].split('(')[1].length-1)}}</span>
             </div>
-            <div>2:1
-              <span>15%</span>
+            <div>{{item.details.scoreindex.split(',')[1].split('(')[0]}}
+              <span>{{item.details.scoreindex.split(',')[1].split('(')[1].slice(0,item.details.scoreindex.split(',')[1].split('(')[1].length-1)}}</span>
             </div>
-            <div>1:1
-              <span>15%</span>
+            <div>{{item.details.scoreindex.split(',')[2].split('(')[0]}}
+              <span>{{item.details.scoreindex.split(',')[2].split('(')[1].slice(0,item.details.scoreindex.split(',')[2].split('(')[1].length-1)}}</span>
             </div>
           </div>
           <p>爆冷指数：</p>
           <div class="range">
-            <div class="range-info"></div>
+            <div class="range-info" :style="{ width:item.details.coldindex  }"></div>
           </div>
+          <!-- <span>{{item.details.coldindex}}</span> -->
           <span class="more"
                 @click="getInternalInfo">查看完整版>></span>
         </div>
@@ -103,6 +104,7 @@
 
 <script>
 import {XCircle} from 'vux'
+import https from '../https.js'
 
 export default {
   components: {
@@ -111,14 +113,35 @@ export default {
   data(){
     return{
       percent:55,
-      showInfo:false,
       internalList:[1,2,3,4,5,6]
     }
   },
   methods:{
     getInternalInfo(){
       this.$router.push('/internal-info')
+    },
+    showInfo(index){
+      var showItem=this.internalList[index].showInfoItem;
+      for(var i=0;i<this.internalList.length;i++){
+        this.internalList[i].showInfoItem=false;
+      }
+      this.internalList[index].showInfoItem=!showItem
     }
+  },
+  mounted () {
+    https.fetchPost('/match/neican.jsp',{} ).then((data) => {
+        console.log("结果啊啊啊啊",data.data)
+        for (var i =0;i<data.data.list.length;i++){
+          data.data.list[i].showInfoItem=false
+        }
+        this.internalList = data.data.list
+        
+        
+		}).catch(err=>{
+						console.log(err)
+				}
+		)
+    
   }
 
 }
