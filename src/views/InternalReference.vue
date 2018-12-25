@@ -95,7 +95,7 @@
           </div>
           <!-- <span>{{item.details.coldindex}}</span> -->
           <span class="more"
-                @click="getInternalInfo">查看完整版>></span>
+                @click="getInternalInfo(item.id)">查看完整版>></span>
         </div>
       </div>
     </div>
@@ -105,7 +105,6 @@
 <script>
 import {XCircle} from 'vux'
 import https from '../https.js'
-
 export default {
   components: {
     XCircle
@@ -117,7 +116,9 @@ export default {
     }
   },
   methods:{
-    getInternalInfo(){
+    getInternalInfo(index){
+      console.log(index)
+      this.$store.commit('setInternalInfoItem',index)
       this.$router.push('/internal-info')
     },
     showInfo(index){
