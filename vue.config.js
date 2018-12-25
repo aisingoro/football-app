@@ -15,7 +15,8 @@ module.exports = {
           '^/api': '/'
         }
       }
-    }
+    },
+    disableHostCheck: true
     // proxy: {
     // '/api': {
     //   target: 'http://localhost:8080',
