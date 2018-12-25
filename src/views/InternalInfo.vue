@@ -194,6 +194,8 @@
 <script>
 import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress,Sticky } from 'vux'
 import PublicInfo from '../components/PublicInfo.vue'
+import https from '../https.js'
+
 export default {
   components: {
     XHeader,
@@ -225,6 +227,15 @@ export default {
         paytype:0
       }]
     }
+  },
+  mounted () {
+    https.fetchPost('/match/matchinfo.jsp',{id:this.$store.state.internalInfoItem} ).then((data) => {
+        console.log("结果啊啊啊啊",data.data)
+        
+		}).catch(err=>{
+						console.log(err)
+				}
+		)
   }
 }
 </script>

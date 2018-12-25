@@ -119,6 +119,7 @@ export default {
     getInternalInfo(index){
       console.log(index)
       this.$store.commit('setInternalInfoItem',index)
+      console.log("store",this.$store.state.internalInfoItem)
       this.$router.push('/internal-info')
     },
     showInfo(index){
