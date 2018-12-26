@@ -281,7 +281,7 @@ const baseList = [{
         img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
       }, {
         url: 'javascript:',
-        img: require('../../public/images/index-swiper-01.png'), 
+        img: require('../../public/images/index-swiper-01.png'),
       }]
 export default {
   directives: {
@@ -336,13 +336,13 @@ export default {
         this.matchlist=data.data.matchlist;//独家内参比赛列表
         this.oddsratiocomparisonlist = data.data.oddsratiocomparisonlist//真实赔率无数据
         // this. = data.data.resultdistributionlist;//七日（未调格式不对）
-        
+
 		}).catch(err=>{
 						console.log(err)
 				}
 		)
   }
-  
+
 
 }
 </script>
