@@ -3,22 +3,20 @@
     <div class="match-header">
       <x-header :left-options="{backText: ''}"
                 title="内参详情"></x-header>
-      <div class="internalList"
-           v-for="(item,index) in matchlist"
-           :key="index">
+      <div class="internalList">
         <div>
           <div>
-            <img :src="item.hometeampic" />
-            <p>{{item.hometeam}}</p>
+            <img :src="matchlist.hometeampic" />
+            <p>{{matchlist.hometeam}}</p>
           </div>
           <div>
             <img src="../../public/images/internal-info-vs.png" />
-            <p>未开赛</p>
-            <p>{{item.matchtime}}</p>
+            <p>{{matchlist.kickoff}}</p>
+            <p>{{matchlist.matchtime}}</p>
           </div>
           <div>
-            <img :src="item.awayteampic" />
-            <p>{{item.awayteam}}</p>
+            <img :src="matchlist.awayteampic" />
+            <p>{{matchlist.awayteam}}</p>
           </div>
         </div>
       </div>
@@ -48,14 +46,14 @@
             <div>
               <span class="title">胜</span>
               <div class="percent1">
-                <div class="percent-info">
-                  <span>9.40</span>
+                <div class="percent-info" :style="{ width:bigprobabilityevents.self.split(',')[0]+'%'  }">
+                  <span>{{bigprobabilityevents.self.split(',')[0]}}</span>
                 </div>
 
               </div>
               <div class="percent1">
-                <div class="percent-info">
-                  <span>7.10</span>
+                <div class="percent-info" :style="{ width:bigprobabilityevents.open.split(',')[0]+'%'  }">
+                  <span>{{bigprobabilityevents.open.split(',')[0]}}</span>
                 </div>
 
               </div>
@@ -63,14 +61,14 @@
             <div>
               <span class="title">平</span>
               <div class="percent1">
-                <div class="percent-info">
-                  <span>9.40</span>
+                <div class="percent-info" :style="{ width:bigprobabilityevents.self.split(',')[1]+'%'  }">
+                  <span>{{bigprobabilityevents.self.split(',')[1]}}</span>
                 </div>
 
               </div>
               <div class="percent1">
-                <div class="percent-info">
-                  <span>7.10</span>
+                <div class="percent-info" :style="{ width:bigprobabilityevents.open.split(',')[1]+'%'  }">
+                  <span>{{bigprobabilityevents.open.split(',')[1]}}</span>
                 </div>
 
               </div>
@@ -78,14 +76,15 @@
             <div>
               <span class="title">负</span>
               <div class="percent1">
-                <div class="percent-info">
-                  <span>9.40</span>
+                <div class="percent-info" :style="{ width:bigprobabilityevents.self.split(',')[2]+'%'  }">
+                  <span>{{bigprobabilityevents.self.split(',')[2]}}</span>
+                  
                 </div>
 
               </div>
               <div class="percent1">
-                <div class="percent-info">
-                  <span>7.10</span>
+                <div class="percent-info" :style="{ width:bigprobabilityevents.open.split(',')[2]+'%'}" >
+                  <span>{{bigprobabilityevents.open.split(',')[2]}}</span>
                 </div>
 
               </div>
@@ -94,60 +93,24 @@
           </div>
           <p>结果指数：</p>
           <div>
-            <div>
-              <x-circle :percent="percent"
+            <div v-for="(item,index) in resultList" :key="index">
+              <x-circle :percent="Number(item.split(':')[1])"
                         :stroke-width="6"
                         stroke-color="#01D0FF">
-                <span class="circle-bg">{{ percent }}%</span>
+                <span class="circle-bg">{{ item.split(':')[1] }}%</span>
               </x-circle>
-              胜让胜
+              {{item.split(':')[0]}}
             </div>
-            <div>
-              <x-circle :percent="percent"
-                        :stroke-width="6"
-                        stroke-color="#01D0FF">
-                <span class="circle-bg">{{ percent }}%</span>
-              </x-circle>
-              胜让平
-            </div>
-            <div>
-              <x-circle :percent="percent"
-                        :stroke-width="6"
-                        stroke-color="#01D0FF">
-                <span class="circle-bg">{{ percent }}%</span>
-              </x-circle>
-              平让负
-            </div>
-            <div>
-              <x-circle :percent="percent"
-                        :stroke-width="6"
-                        stroke-color="#01D0FF">
-                <span class="circle-bg">{{ percent }}%</span>
-              </x-circle>
-              负让负
-            </div>
+            
           </div>
           <p>比分指数：</p>
           <div>
-            <div>
-              <span>1:0</span>
-              <span>{{percent1}}%</span>
-              <x-progress :percent="percent1"
+            <div v-for="(item,index) in scoreList" :key="index">
+              <span>{{item.split('(')[0]}}</span>
+              <span>{{item.split('(')[1].slice(0,item.split('(')[1].length-1)}}</span>
+              <x-progress :percent="Number(item.split('(')[1].slice(0,item.split('(')[1].length-2))"
                           :show-cancel="false"></x-progress>
             </div>
-            <div>
-              <span>2:1</span>
-              <span>{{percent2}}%</span>
-              <x-progress :percent="percent2"
-                          :show-cancel="false"></x-progress>
-            </div>
-            <div>
-              <span>2:2</span>
-              <span>{{percent3}}%</span>
-              <x-progress :percent="percent3"
-                          :show-cancel="false"></x-progress>
-            </div>
-
           </div>
           <p>爆冷指数：</p>
           <div></div>
@@ -158,28 +121,10 @@
         <div class="recommender">
           <h1><img src="../../public/images/internal-info-badge.png" />推荐专家</h1>
           <p>经验丰富 持续盈利 专家见解</p>
-          <div class="recommender-list">
-            <img src="../../public/images/index-team-01.png" />
-            <p class="list-name">赵教授</p>
-            <p>近期10中8 盈利100%</p>
-            <img src="../../public/images/user-arrow.png" />
-          </div>
-          <div class="recommender-list">
-            <img src="../../public/images/index-team-01.png" />
-            <p class="list-name">赵教授</p>
-            <p>近期10中8 盈利100%</p>
-            <img src="../../public/images/user-arrow.png" />
-          </div>
-          <div class="recommender-list">
-            <img src="../../public/images/index-team-01.png" />
-            <p class="list-name">赵教授</p>
-            <p>近期10中8 盈利100%</p>
-            <img src="../../public/images/user-arrow.png" />
-          </div>
-          <div class="recommender-list">
-            <img src="../../public/images/index-team-01.png" />
-            <p class="list-name">赵教授</p>
-            <p>近期10中8 盈利100%</p>
+          <div class="recommender-list" v-for="(item,index) in recommenderList" :key="index">
+            <img :src="item.expertpic" />
+            <p class="list-name">{{item.expertname}}</p>
+            <p>近期10中{{item.fright}} 盈利{{item.fprofitrate}}</p>
             <img src="../../public/images/user-arrow.png" />
           </div>
           <span class="change-btn">换一换</span>
@@ -210,32 +155,37 @@ export default {
   },
   data(){
     return{
+      recommenderList:[],
+      bigprobabilityevents:{},//大概率
+      scoreList:[],
+      resultList:[],
       disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
       btnTab:0,
       percent:55,
       percent1:15,
       percent2:25,
       percent3:36,
-      matchlist:[{
-        matchnum:'周日001',
-        showntitle:'国际A',
-        hometeam:'哈萨克斯坦',
-        hometeampic:require('../../public/images/index-team-01.png'),
-        matchtime:'12-08 02:30',
-        awayteam:'拉脱维亚',
-        awayteampic:require('../../public/images/index-team-02.png'),
-        paytype:0
-      }]
+      matchlist:{}
     }
   },
   mounted () {
     https.fetchPost('/match/matchinfo.jsp',{id:this.$store.state.internalInfoItem} ).then((data) => {
-        console.log("结果啊啊啊啊",data.data)
-        
+        this.matchlist = data.data.matchinfo;//基本信息
+        this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
+        this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
+        this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents//大概率
 		}).catch(err=>{
 						console.log(err)
 				}
-		)
+    )
+    https.fetchPost('/expert/randexpert.jsp',{matchnum:this.$store.state.matchnum} ).then((data) => {
+      console.log("ugc",data.data.list)
+      this.recommenderList = data.data.list;
+		}).catch(err=>{
+						console.log(err)
+				}
+    )
+    
   }
 }
 </script>
@@ -334,7 +284,7 @@ export default {
               font-size: 12px;
               &:nth-child(2) {
                 color: #b4cae5;
-                margin-bottom: 12px;
+                margin-bottom: 5px;
                 font-family: 'PingFangSC-Regular';
               }
               &:nth-child(3) {

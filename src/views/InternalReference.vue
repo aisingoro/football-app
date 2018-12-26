@@ -95,7 +95,7 @@
           </div>
           <!-- <span>{{item.details.coldindex}}</span> -->
           <span class="more"
-                @click="getInternalInfo(item.id)">查看完整版>></span>
+                @click="getInternalInfo(item.id,item.matchnum)">查看完整版>></span>
         </div>
       </div>
     </div>
@@ -116,9 +116,11 @@ export default {
     }
   },
   methods:{
-    getInternalInfo(index){
+    getInternalInfo(index,matchnum){
       console.log(index)
       this.$store.commit('setInternalInfoItem',index)
+      this.$store.commit('setMatchnum',matchnum)
+      
       console.log("store",this.$store.state.internalInfoItem)
       this.$router.push('/internal-info')
     },

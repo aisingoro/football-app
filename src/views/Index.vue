@@ -26,7 +26,7 @@
           </div>
           <div>
             <img src="../../public/images/index-vs.png" />
-            <p>未开赛</p>
+            <p>{{item.kickoff}}</p>
             <p>{{item.matchtime}}</p>
           </div>
           <div>
@@ -79,185 +79,49 @@
       <h3 class="index-title">真实赔率与竞彩赔率对比<img src="../../public/images/index-question.png" /></h3>
       <x-table :cell-bordered="false"
                :content-bordered="false"
-               style="background-color:#fff;" v-for="(item,index) in oddsratiocomparisonlist">
+               style="background-color:#fff;" v-for="(item,index) in oddsratiocomparisonlist" >
         <thead>
           <tr class="tr-style">
             <th>{{item.matchnum}}</th>
-            <th v-for="(items,indexs) in item.showtitle.split(',')">{{items}}</th>
+            <th v-for="(items,indexs) in item.showtitle.split(',')" :key="indexs">{{items}}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td v-for="(items,indexs) in item.showvalue1.split(',')">{{items}}</td>
+            <td v-for="(items,indexs) in item.showvalue1.split(',')" :key="indexs">{{items}}</td>
           </tr>
           <tr>
-            <td v-for="(items,indexs) in item.showvalue2.split(',')">{{items}}</td>
+            <td v-for="(items,indexs) in item.showvalue2.split(',')" :key="indexs">{{items}}</td>
           </tr>
         </tbody>
       </x-table>
       <div class="all-match"
-           @click="showScrollBox=true">查看全部比赛</div>
+           @click="showAllMatch">查看全部比赛</div>
     </div>
     <div v-transfer-dom>
       <x-dialog v-model="showScrollBox"
                 hide-on-blur
                 class="dialog-demo">
-        <p class="dialog-title">Long content</p>
+        <p class="dialog-title">全部比赛竞彩赔率</p>
         <div class="img-box"
              style="height:400px;padding:15px 0;overflow:scroll;-webkit-overflow-scrolling:touch;background-color: #f8f9fa;">
           <x-table :cell-bordered="false"
                    :content-bordered="false"
-                   style="background-color:#fff;">
+                   style="background-color:#fff;" v-for="(item,index) in allMatchList" :key="index">
             <thead>
               <tr class="tr-style">
-                <th>周四001</th>
-                <th>胜</th>
-                <th>平</th>
-                <th>负</th>
+                <th>{{item.matchnum}}</th>
+                <th v-for="(items,indexs) in item.showtitle.split(',')">{{items}}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>竞彩赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
+                <td v-for="(items,indexs) in item.showvalue1.split(',')">{{items}}</td>
               </tr>
               <tr>
                 <td>真实赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-            </tbody>
-          </x-table>
-          <x-table :cell-bordered="false"
-                   :content-bordered="false"
-                   style="background-color:#fff;">
-            <thead>
-              <tr class="tr-style">
-                <th>周四001</th>
-                <th>胜</th>
-                <th>平</th>
-                <th>负</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>竞彩赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-              <tr>
-                <td>真实赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-            </tbody>
-          </x-table>
-          <x-table :cell-bordered="false"
-                   :content-bordered="false"
-                   style="background-color:#fff;">
-            <thead>
-              <tr class="tr-style">
-                <th>周四001</th>
-                <th>胜</th>
-                <th>平</th>
-                <th>负</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>竞彩赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-              <tr>
-                <td>真实赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-            </tbody>
-          </x-table>
-          <x-table :cell-bordered="false"
-                   :content-bordered="false"
-                   style="background-color:#fff;">
-            <thead>
-              <tr class="tr-style">
-                <th>周四001</th>
-                <th>胜</th>
-                <th>平</th>
-                <th>负</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>竞彩赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-              <tr>
-                <td>真实赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-            </tbody>
-          </x-table>
-          <x-table :cell-bordered="false"
-                   :content-bordered="false"
-                   style="background-color:#fff;">
-            <thead>
-              <tr class="tr-style">
-                <th>周四001</th>
-                <th>胜</th>
-                <th>平</th>
-                <th>负</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>竞彩赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-              <tr>
-                <td>真实赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-            </tbody>
-          </x-table>
-          <x-table :cell-bordered="false"
-                   :content-bordered="false"
-                   style="background-color:#fff;">
-            <thead>
-              <tr class="tr-style">
-                <th>周四001</th>
-                <th>胜</th>
-                <th>平</th>
-                <th>负</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>竞彩赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
-              </tr>
-              <tr>
-                <td>真实赔率</td>
-                <td>1.65</td>
-                <td>2.65</td>
-                <td>3.65</td>
+                <td v-for="(items,indexs) in item.showvalue2.split(',')">{{items}}</td>
               </tr>
             </tbody>
           </x-table>
@@ -292,6 +156,7 @@ export default {
   },
   data(){
     return {
+      allMatchList:[],
       oddsratiocomparisonlist:[],
       showScrollBox:false,
       swiperList:baseList,
@@ -341,6 +206,19 @@ export default {
 						console.log(err)
 				}
 		)
+  },
+  methods:{
+    showAllMatch(){
+      this.showScrollBox=true;
+      https.fetchPost('/index/oddsratiolist.jsp',{} ).then((data) => {
+        console.log("结果啊啊啊啊11",data.data)
+       this.allMatchList = data.data.oddsratiocomparisonlist;
+
+		}).catch(err=>{
+						console.log(err)
+				}
+		)
+    }
   }
 
 
