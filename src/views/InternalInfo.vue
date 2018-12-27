@@ -33,7 +33,7 @@
       </sticky>
       <div class=""
            v-if="btnTab==0">
-        <public-info></public-info>
+        <public-info :openInfo="openInfo"></public-info>
       </div>
       <div class="show-info"
            v-if="btnTab==1">
@@ -155,6 +155,7 @@ export default {
   },
   data(){
     return{
+      openInfo:{},
       recommenderList:[],
       bigprobabilityevents:{},//大概率
       scoreList:[],
@@ -174,6 +175,7 @@ export default {
         this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
         this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
         this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents//大概率
+        this.openInfo = data.data.open //传递公共信息
 		}).catch(err=>{
 						console.log(err)
 				}

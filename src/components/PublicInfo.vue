@@ -394,6 +394,12 @@ import { XTable } from 'vux'
 export default {
   components: {
     XTable
+  },
+  props: {
+    openInfo:{
+      type:Object
+    },
+    
   }
 }
 </script>
