@@ -20,6 +20,9 @@ import ExpertRule from './views/ExpertRule.vue'
 import UploadInfo from './views/UploadInfo.vue'
 import FillInfo from './views/FillInfo.vue'
 
+//登录
+import Login from './views/Login.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -84,6 +87,10 @@ export default new Router({
       path: "/fill-info",
       name: 'fill-info',
       component: FillInfo,
+    }, {
+      path: "/login",
+      name: 'login',
+      component: Login,
     }, {
       path: '/about',
       name: 'about',

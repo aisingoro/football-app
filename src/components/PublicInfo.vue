@@ -1,26 +1,207 @@
 <template>
   <div class="public-info">
-    <h3>联赛积分排名
-      <span>主客</span>
-      <span>全部</span>
-    </h3>
+    <h3>联赛积分排名</h3>
+    <div class="team-position">
+      <div class="home-team">
+        <h3>主队</h3>
+        <div class="bg-empty"></div>
+        <p>9</p>
+        <p>32</p>
+        <p>26</p>
+        <p>9</p>
+        <p>9</p>
+        <p>8</p>
+        <p>
+          <span>W</span>
+          <span>W</span>
+          <span>W</span>
+          <span class="lose">L</span>
+          <span class="draw">D</span>
+        </p>
+         <p>
+          <span>W</span>
+          <span>W</span>
+          <span>W</span>
+          <span class="lose">L</span>
+          <span class="draw">D</span>
+        </p>
+         <p>
+          <span>W</span>
+          <span>W</span>
+          <span>W</span>
+          <span class="lose">L</span>
+          <span class="draw">D</span>
+        </p>
+      </div>
+      <div class="team-title">
+        <img src="../../public/images/index-team-01.png"/>
+        <p>排名</p>
+        <p>轮数</p>
+        <p>得分</p>
+        <p>进球</p>
+        <p>失球</p>
+        <p>净胜</p>
+        <p>近5场</p>
+        <p>近5主场</p>
+        <p>近5客场</p>
+      </div>
+      <div class="away-team">
+        <h3>客队</h3>
+        <div class="bg-empty"></div>
+        <p>9</p>
+        <p>32</p>
+        <p>26</p>
+        <p>9</p>
+        <p>9</p>
+        <p>8</p>
+        <p>
+          <span>W</span>
+          <span>W</span>
+          <span>W</span>
+          <span class="lose">L</span>
+          <span class="draw">D</span>
+        </p>
+         <p>
+          <span>W</span>
+          <span>W</span>
+          <span>W</span>
+          <span class="lose">L</span>
+          <span class="draw">D</span>
+        </p>
+         <p>
+          <span>W</span>
+          <span>W</span>
+          <span>W</span>
+          <span class="lose">L</span>
+          <span class="draw">D</span>
+        </p>
+      </div>
+    </div>
+    <h3>赔率指数</h3>
+    <x-table :cell-bordered="false"
+             :content-bordered="false"
+             style="background-color:#fff;" class="table-bg-fff">
+      <thead>
+        <tr>
+          <th>公司名称</th>
+          <th>胜</th>
+          <th>平</th>
+          <th>负</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+        </tr>
+      </tbody>
+    </x-table>
+    <x-table :cell-bordered="false"
+             :content-bordered="false"
+             style="background-color:#fff" class="table-bg-fff">
+      <thead>
+        <tr>
+          <th>公司名称</th>
+          <th>让</th>
+          <th>让胜</th>
+          <th>让平</th>
+          <th>让负</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          
+        </tr>
+        <tr>
+          <td>竞彩官方</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          <td>1.5<br>1.8</td>
+          
+        </tr>
+      </tbody>
+    </x-table>
+    <h3>亚盘指数</h3>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
       <thead>
         <tr>
-          <th>排名</th>
-          <th>赛事</th>
-          <th>赛</th>
-          <th>胜/平/负</th>
-          <th>进/失</th>
-          <th>积分</th>
+          <th>来源</th>
+          <th>主队</th>
+          <th>水位</th>
+          <th>让球</th>
+          <th>客队</th>
+          <th>水位</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>9 <img src="../../public/images/index-team-01.png"
-                 width="12" />甲府</td>
+          <td>澳门</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
           <td>日职乙</td>
           <td>42</td>
           <td>16/11/15</td>
@@ -28,8 +209,80 @@
           <td>59</td>
         </tr>
         <tr>
-          <td>3 <img src="../../public/images/index-team-01.png"
-                 width="12" />鹿岛</td>
+          <td>bet45</td>
+          <td>日职乙</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
+          <td>日职乙</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
+          <td>日职乙</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+        </tr>
+      </tbody>
+    </x-table>
+    <h3>大小球</h3>
+    <x-table :cell-bordered="false"
+             :content-bordered="false"
+             style="background-color:#F2F5F8;">
+      <thead>
+        <tr>
+          <th>来源</th>
+          <th>主队</th>
+          <th>水位</th>
+          <th>让球</th>
+          <th>客队</th>
+          <th>水位</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>澳门</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
+          <td>日职乙</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
+          <td>日职乙</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
+          <td>日职乙</td>
+          <td>42</td>
+          <td>16/11/15</td>
+          <td>56/46</td>
+          <td>59</td>
+        </tr>
+        <tr>
+          <td>bet45</td>
           <td>日职乙</td>
           <td>42</td>
           <td>16/11/15</td>
@@ -39,12 +292,11 @@
       </tbody>
     </x-table>
     <h3>历史交战
-      <span>筛选</span>
     </h3>
     <p>近6场交战，甲府
       <span>1胜</span>1平
       <span>4负</span> 胜率17%</p>
-    <p>场均净胜-1.3球，场均总进3.0球，大球4次，小球2次</p>
+    <p></p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
@@ -115,12 +367,10 @@
       </tbody>
     </x-table>
     <h3>近期战绩
-      <span>筛选</span>
     </h3>
     <p>近10甲府
       <span>6胜</span>2平
       <span>2负</span> 胜率60%</p>
-    <p class="desc">场均净胜0.9球，场均失0.5球，大球1次，小球9次</p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
@@ -227,12 +477,10 @@
       </tbody>
     </x-table>
     <h3>近期战绩
-      <span>筛选</span>
     </h3>
     <p>近10鹿岛
       <span>4胜</span>4平
       <span>2负</span> 胜率40%</p>
-    <p class="desc">场均净胜0.9球，场均失0.5球，大球1次，小球9次</p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
@@ -335,54 +583,6 @@
           <td>
             <div class="result-lose">负</div>
           </td>
-        </tr>
-      </tbody>
-    </x-table>
-    <h3>未来赛事</h3>
-    <x-table :cell-bordered="false"
-             :content-bordered="false"
-             style="background-color:#F2F5F8;">
-      <thead>
-        <tr style="background-color: #fff">
-          <th style="font-size:16px;color:#313233">甲府</th>
-          <th>日期</th>
-          <th>主队</th>
-          <th>客队</th>
-          <th>相隔</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="5">暂无数据</td>
-        </tr>
-      </tbody>
-    </x-table>
-    <x-table :cell-bordered="false"
-             :content-bordered="false"
-             style="background-color:#F2F5F8;">
-      <thead>
-        <tr style="background-color: #fff">
-          <th style="font-size:16px;color:#313233">鹿岛</th>
-          <th>日期</th>
-          <th>主队</th>
-          <th>客队</th>
-          <th>相隔</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>日职</td>
-          <td>18-11-24</td>
-          <td>仙台</td>
-          <td>鹿岛</td>
-          <td>3天</td>
-        </tr>
-        <tr>
-          <td>日职</td>
-          <td>18-11-24</td>
-          <td>仙台</td>
-          <td>鹿岛</td>
-          <td>3天</td>
         </tr>
       </tbody>
     </x-table>
@@ -409,6 +609,86 @@ export default {
   background: #ffffff;
   width: 100%;
   overflow: hidden;
+  .team-position{
+    display:flex;
+    margin-top:12px;
+    .home-team,.team-title,.away-team{
+      flex:1;
+      text-align:center;
+      h3{
+        width:100%;
+        height:36px;
+        background:rgba(54,101,172,1);
+        border-radius:6px 6px 0px 0px;
+        color:#fff;
+        line-height:36px;
+        text-align:center;
+        font-size:14px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+      }
+      p{
+        font-size:14px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(54,101,172,1);
+        margin-bottom:22px;
+        span{
+          display:inline-block;
+          width:18px;
+          height:18px;
+          color:#fff;
+          line-height:18px;
+          text-align:center;
+          border-radius:50%;
+          background:#FF4359;
+          font-size:10px;
+          font-family:PingFangSC-Regular;
+        }
+        .lose{
+          background:#6DC21D;
+        }
+        .draw{
+          background:#3665AC;
+        }
+      }
+    }
+    .home-team{
+      margin-left:16px;
+      .bg-empty{
+        width:100%;
+        height:32px;
+        background:linear-gradient(360deg,rgba(102,158,214,0) 0%,rgba(54,101,172,1) 100%);
+        opacity:0.1047;
+      }
+    }
+    .team-title{
+      img{
+        width:32px;
+        height:36px;
+        margin:0 auto;
+        margin-bottom:25px;
+      }
+      p{
+        color:#313233;
+      }
+    }
+    .away-team{
+      margin-right:16px;
+      h3{
+        background:#42546F;
+      }
+      .bg-empty{
+        width:100%;
+        height:32px;
+        background:linear-gradient(360deg,rgba(66,84,111,0) 0%,rgba(66,84,111,1) 100%);
+        opacity:0.1047;
+      }
+      p{
+        color:#42546F;
+      }
+    }
+  }
   & > h3 {
     font-size: 16px;
     margin-left: 16px;
@@ -456,6 +736,26 @@ export default {
   .vux-table td:before,
   .vux-table th:before {
     border-bottom: none;
+  }
+  .table-bg-fff{
+    margin-top:0px;
+    tbody{
+      tr{
+        border-bottom:1px solid #E7EBF0;
+        padding-left:16px;
+        line-height:25px;
+        &:last-child{
+          border-bottom:none;
+        }
+      }
+    }
+    
+    thead{
+      height:28px;
+      line-height:28px;
+      background:#F2F5F8;
+      color:#A3ADB7;
+    }
   }
   .vux-table:after {
     border-top: none;
