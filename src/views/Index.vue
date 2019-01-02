@@ -17,7 +17,7 @@
              v-if="item.paytype==0" />
         <h3>{{item.matchnum}}
           <span></span>
-          <span>{{item.showntitle}}</span>
+          <span>{{item.showntitle}} {{item.matchtime}}</span>
         </h3>
         <div>
           <div>
@@ -27,13 +27,19 @@
           <div>
             <img src="../../public/images/index-vs.png" />
             <p>{{item.kickoff}}</p>
-            <p>{{item.matchtime}}</p>
+            <!-- <p>{{item.matchtime}}</p> -->
           </div>
           <div>
             <img :src="item.awayteampic" />
             <p>{{item.awayteam}}</p>
           </div>
+          <div class="weather-info">
+          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>{{item.weather.split(',')[0]}}</div>
+          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>{{item.weather.split(',')[1]}}</div>
+          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>{{item.weather.split(',')[2]}}</div>
         </div>
+        </div>
+        
       </div>
       <h3 class="index-title">竞彩7日赛果分布<img src="../../public/images/index-question.png" /></h3>
       <div class="seven-result">
@@ -277,9 +283,35 @@ export default {
           font-family: 'PingFangSC-Regular';
         }
       }
+      .weather-info{
+        clear:both;
+        width:96%;
+        height:36px;
+        margin:0 auto;
+        display:flex;
+        margin-top:9px;
+        border-top:1px solid #F2F5F8;
+        &>div{
+          flex:1;
+          font-size:14px;
+          line-height:36px;
+          color:#7BA1D0;
+          &:nth-child(2){
+            flex:1.2;
+          }
+          .weather-icon{
+            float:left;
+            width:17px;
+            height:17px;
+            margin-top:11px;
+            margin-left:4px;
+            margin-right:6px;
+          }
+        }
+      }
       & > div {
         width: 100%;
-        height: 134px;
+        height: 155px;
         background: #ffffff;
         box-shadow: 0px 0px 6px 0px rgba(54, 101, 175, 0.1);
         border-radius: 6px;
@@ -325,8 +357,13 @@ export default {
               }
             }
           }
-          &:last-child {
+          &:nth-child(3){
             margin-left: 18px;
+            margin-right: none;
+          }
+          &:nth-child(4){
+            margin-left: 2%;
+            clear:both;
             margin-right: none;
           }
         }
