@@ -82,7 +82,7 @@ export default {
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon,
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon > i,
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label {
-  color: #01d0ff !important;
+  color: #0393F8 !important;
 }
 </style>
 

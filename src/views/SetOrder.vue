@@ -188,7 +188,7 @@ export default {
         }
         .demo1-item-selected {
           color: #ffffff;
-          background: #01d0ff;
+          background: #0393F8;
         }
       }
     }
@@ -221,11 +221,7 @@ export default {
       margin-top: 70px;
       width: 187px;
       height: 44px;
-      background: linear-gradient(
-        90deg,
-        rgba(1, 208, 255, 1) 0%,
-        rgba(1, 186, 255, 1) 100%
-      );
+      background: #0393F8;
       border-radius: 24px;
       font-size: 20px;
       line-height: 44px;
@@ -274,7 +270,7 @@ export default {
   .weui-cells_checkbox
   .weui-check:checked
   + .weui-icon-checked:before {
-  color: #26d7ff;
+  color: #0393F8;
   content: '\EA08';
 }
 .set-order .weui-cells_checkbox .weui-icon-checked:before {

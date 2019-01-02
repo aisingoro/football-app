@@ -3,7 +3,7 @@
     <h1>UGC</h1>
     <tab :line-width=2
          custom-bar-width='16'
-         active-color='#01D0FF'
+         active-color='#0393F8'
          v-model="index"
          :scroll-threshold="6">
       <tab-item class="vux-center"
@@ -69,10 +69,11 @@
         </tbody>
       </x-table>
     </div>
-    <div class="ugc-set"
-         @click="IssueOrder">发单</div>
     <img src="../../public/images/ugc-top.png"
          class="ugc-top" />
+    <div class="ugc-set"
+         @click="IssueOrder">发单</div>
+    
   </div>
 </template>
 
@@ -193,7 +194,7 @@ export default {
         height: 36px;
         background: #ffffff;
         border-radius: 18px;
-        color: #01d0ff;
+        color: #0393F8;
         font-size: 14px;
         text-align: center;
         line-height: 36px;
@@ -220,7 +221,7 @@ export default {
     background: url('../../public/images/ugc-set.png') no-repeat 100% 100%/100%
       100%;
     position: fixed;
-    bottom: 122px;
+    bottom: 58px;
     right: 16px;
     color: #fff;
     font-size: 16px;
@@ -230,7 +231,7 @@ export default {
   .ugc-top {
     width: 64px;
     position: fixed;
-    bottom: 58px;
+    bottom: 122px;
     right: 16px;
   }
 }

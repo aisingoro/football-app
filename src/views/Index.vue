@@ -41,7 +41,7 @@
           <div>
             <x-circle :percent="percent"
                       :stroke-width="5"
-                      stroke-color="#01D0FF">
+                      stroke-color="#FF4359">
               <span class="circle-bg circle-win">胜</span>
             </x-circle>
             {{ percent }}%
@@ -49,7 +49,7 @@
           <div>
             <x-circle :percent="percent"
                       :stroke-width="5"
-                      stroke-color="#34548E">
+                      stroke-color="#6DC21D">
               <span class="circle-bg circle-lose">让负</span>
             </x-circle>
             {{ percent }}%
@@ -60,7 +60,7 @@
           <div>
             <x-circle :percent="percent"
                       :stroke-width="5"
-                      stroke-color="#34548E">
+                      stroke-color="#6DC21D">
               <span class="circle-bg circle-lose">负</span>
             </x-circle>
             {{ percent }}%
@@ -68,12 +68,12 @@
           <div>
             <x-circle :percent="percent"
                       :stroke-width="5"
-                      stroke-color="#01D0FF">
+                      stroke-color="#FF4359">
               <span class="circle-bg circle-win">让胜</span>
             </x-circle>
             {{ percent }}%
           </div>
-          <p class="result-badge result-badge-red">+1</p>
+          <p class="result-badge">+1</p>
         </div>
       </div>
       <h3 class="index-title">真实赔率与竞彩赔率对比<img src="../../public/images/index-question.png" /></h3>
@@ -267,7 +267,7 @@ export default {
           display: inline-block;
           width: 3px;
           height: 12px;
-          background: #01d0ff;
+          background: #0393F8;
           border-radius: 2px;
           margin: 0 3px;
         }
@@ -381,10 +381,10 @@ export default {
               line-height: 40px;
             }
             .circle-win {
-              background: #01d0ff;
+              background: #FF4359;
             }
             .circle-lose {
-              background: #34548e;
+              background: #6DC21D;
             }
           }
         }
@@ -398,7 +398,7 @@ export default {
           text-align: center;
           font-size: 12px;
           line-height: 18px;
-          background: #70d23e;
+          background: #0393F8;
           color: #ffffff;
         }
         .result-badge-red {
@@ -416,7 +416,7 @@ export default {
       height: 36px;
       background: rgba(255, 255, 255, 1);
       border-radius: 18px;
-      color: #01d0ff;
+      color: #0393F8;
       font-size: 14px;
       text-align: center;
       line-height: 36px;
@@ -472,7 +472,7 @@ export default {
 .tr-style {
   width: 100%;
   height: 26px;
-  background: rgba(1, 208, 255, 1);
+  background: #0393F8;
   border-radius: 6px 6px 0px 0px;
   font-size: 12px;
   color: #fff;

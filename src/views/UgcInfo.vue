@@ -103,7 +103,7 @@ components: {
         height: 18px;
         font-size: 12px;
         padding-left: 18px;
-        color: #01d0ff;
+        color: #0393F8;
         background: url('../../public/images/ugc-info-badge.png') no-repeat 100%
           100%/100% 100%;
       }
@@ -146,11 +146,7 @@ components: {
         &:nth-child(3) {
           width: 68px;
           height: 36px;
-          background: linear-gradient(
-            90deg,
-            rgba(1, 208, 255, 1) 0%,
-            rgba(1, 186, 255, 1) 100%
-          );
+          background: #0393F8;
           color: #ffffff;
           line-height: 36px;
           text-align: center;
@@ -190,11 +186,7 @@ components: {
     float: left;
     width: 68px;
     height: 66px;
-    background: linear-gradient(
-      90deg,
-      rgba(1, 208, 255, 1) 0%,
-      rgba(1, 186, 255, 1) 100%
-    );
+    background:#0393F8;
     color: #ffffff;
     padding-top: 18px;
     text-align: center;
