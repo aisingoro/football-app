@@ -20,12 +20,15 @@
           </div>
         </div>
         <div class="weather-info">
-          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>晴20c</div>
-          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>风速4.4mph</div>
-          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>降水2%</div>
-          
+          <div><img src="../../public/images/index-team-01.png"
+                 class="weather-icon" />晴20c</div>
+          <div><img src="../../public/images/index-team-01.png"
+                 class="weather-icon" />风速4.4mph</div>
+          <div><img src="../../public/images/index-team-01.png"
+                 class="weather-icon" />降水2%</div>
+
         </div>
-        
+
       </div>
     </div>
     <div class="button-tab">
@@ -40,70 +43,74 @@
       </sticky>
       <div class=""
            v-if="btnTab==0">
-        <public-info :openInfo="openInfo"></public-info>
+        <public-info :hometeam="matchlist.hometeam"
+                     :awayteam="matchlist.awayteam"
+                     :openInfo="openInfo"></public-info>
       </div>
       <div class="show-info"
            v-if="btnTab==1">
         <div class="part-one">
           <div>
-          <p>大概率事件结果对比：</p>
-          <div>
-           <div class="big-result-circle">
-              <x-circle percent="55"
-                        :stroke-width="6"
-                        stroke-color="#FF4359">
-                <span class="circle-bg">胜<br>55%</span>
-              </x-circle>
-            </div>
-            <div class="big-result-circle">
-              <x-circle percent="55"
-                        :stroke-width="6"
-                        stroke-color="#3665AC">
-                <span class="circle-bg">平<br>55%</span>
-              </x-circle>
-            </div>
-            <div class="big-result-circle">
-              <x-circle percent="55"
-                        :stroke-width="6"
-                        stroke-color="#6DC21D">
-                <span class="circle-bg">负<br>55%</span>
-              </x-circle>
-            </div>
-          </div>
-          <p>结果指数：</p>
-          <div>
-            <div v-for="(item,index) in resultList" :key="index">
-              <x-circle :percent="Number(item.split(':')[1])"
-                        :stroke-width="6"
-                        stroke-color="#01D0FF">
-                <span class="circle-bg">{{ item.split(':')[1] }}%</span>
-              </x-circle>
-              {{item.split(':')[0]}}
-            </div>
-            
-          </div>
-          <p>比分指数：</p>
-          <div>
+            <p>大概率事件结果对比：</p>
             <div>
-              <span>1:0</span>
-              <span>34</span>
-              <x-progress percent="45"
-                          :show-cancel="false"></x-progress>
+              <div class="big-result-circle">
+                <x-circle percent="55"
+                          :stroke-width="6"
+                          stroke-color="#FF4359">
+                  <span class="circle-bg">胜<br>55%</span>
+                </x-circle>
+              </div>
+              <div class="big-result-circle">
+                <x-circle percent="55"
+                          :stroke-width="6"
+                          stroke-color="#3665AC">
+                  <span class="circle-bg">平<br>55%</span>
+                </x-circle>
+              </div>
+              <div class="big-result-circle">
+                <x-circle percent="55"
+                          :stroke-width="6"
+                          stroke-color="#6DC21D">
+                  <span class="circle-bg">负<br>55%</span>
+                </x-circle>
+              </div>
             </div>
-          </div>
-          <p>爆冷指数：</p>
-          <div class="cold-point">
-            <x-circle percent="50"
+            <p>结果指数：</p>
+            <div>
+              <div v-for="(item,index) in resultList"
+                   :key="index">
+                <x-circle :percent="Number(item.split(':')[1])"
+                          :stroke-width="6"
+                          stroke-color="#01D0FF">
+                  <span class="circle-bg">{{ item.split(':')[1] }}%</span>
+                </x-circle>
+                {{item.split(':')[0]}}
+              </div>
+
+            </div>
+            <p>比分指数：</p>
+            <div>
+              <div>
+                <span>1:0</span>
+                <span>34</span>
+                <x-progress percent="45"
+                            :show-cancel="false"></x-progress>
+              </div>
+            </div>
+            <p>爆冷指数：</p>
+            <div class="cold-point">
+              <x-circle percent="50"
                         :stroke-width="8"
                         :trail-width="8"
-                        :stroke-color="['#FFDE2E','#FFB726']" trail-color="rgba(255, 193, 49, 0.1)" >
-              <span class="circle-bg">50%</span>
-            </x-circle>
-            <p>小球仙大数据即时爆冷指数分析， 本场比赛爆冷概率为50%</p>
-          </div>
-          <p>独家内参：</p>
-          <div class="btn">
-            <span>5元</span>解锁</div>
+                        :stroke-color="['#FFDE2E','#FFB726']"
+                        trail-color="rgba(255, 193, 49, 0.1)">
+                <span class="circle-bg">50%</span>
+              </x-circle>
+              <p>小球仙大数据即时爆冷指数分析， 本场比赛爆冷概率为50%</p>
+            </div>
+            <p>独家内参：</p>
+            <div class="btn">
+              <span>5元</span>解锁</div>
           </div>
         </div>
         <p class="contain-title">【星级评分】</p>
@@ -113,11 +120,11 @@
             <div class="home-cli-body">11</div>
             <div class="home-cli-body">11</div>
             <div class="home-cli-body">11</div>
-            
+
           </div>
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
-            
+
           </div>
         </div>
         <p class="contain-title">【距离交通】</p>
@@ -150,7 +157,9 @@
           <div class="away-cli">
             <div class="away-cli-header">客队禁赛</div>
             <div class="home-cli-body">
-              <p>Alexandre Letellier<span class="cli-badge">主力</span></p>
+              <p>Alexandre Letellier
+                <span class="cli-badge">主力</span>
+              </p>
             </div>
           </div>
         </div>
@@ -158,17 +167,27 @@
           <div class="home-cli">
             <div class="home-cli-header">主队上阵成疑</div>
             <div class="home-cli-body">
-              <p>Jeremy Clement<span class="cli-badge">主力</span></p>
-              <p>Vincent Marchetti<span class="cli-badge">主力</span></p>
-              <p>Anthony Koura<span class="cli-badge">主力</span></p>
-              <p>Mons Bassouamina<span class="cli-badge">主力</span></p>
-              
+              <p>Jeremy Clement
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Vincent Marchetti
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Anthony Koura
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Mons Bassouamina
+                <span class="cli-badge">主力</span>
+              </p>
+
             </div>
           </div>
           <div class="away-cli">
             <div class="away-cli-header">客队上阵成疑</div>
             <div class="home-cli-body">
-              <p>Alexandre Letellier<span class="cli-badge">主力</span></p>
+              <p>Alexandre Letellier
+                <span class="cli-badge">主力</span>
+              </p>
             </div>
           </div>
         </div>
@@ -192,13 +211,13 @@
           <div class="home-cli">
             <div class="home-cli-header">主队</div>
             <div class="home-cli-body">
-              与上赛季同期相比下降明显 表现不佳 
+              与上赛季同期相比下降明显 表现不佳
             </div>
           </div>
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
             <div class="home-cli-body">
-              特鲁瓦凯文·福琼特鲁瓦以 总计6球，场均0.55 球/场 的佳绩列助攻榜榜首 
+              特鲁瓦凯文·福琼特鲁瓦以 总计6球，场均0.55 球/场 的佳绩列助攻榜榜首
             </div>
           </div>
         </div>
@@ -207,13 +226,13 @@
           <div class="home-cli">
             <div class="home-cli-header">主队</div>
             <div class="home-cli-body">
-               Muratori上阵成疑，伤病问 题已基本清除 
+              Muratori上阵成疑，伤病问 题已基本清除
             </div>
           </div>
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
             <div class="home-cli-body">
-              特罗斯和冈萨尔维斯伤缺 
+              特罗斯和冈萨尔维斯伤缺
             </div>
           </div>
         </div>
@@ -239,7 +258,7 @@
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
             <div class="home-cli-body">
-              特罗斯和冈萨尔维斯伤缺 
+              特罗斯和冈萨尔维斯伤缺
             </div>
           </div>
         </div>
@@ -265,32 +284,48 @@
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
             <div class="home-cli-body">
-              特罗斯和冈萨尔维斯伤缺 
+              特罗斯和冈萨尔维斯伤缺
             </div>
           </div>
         </div>
         <div class="contain-info">
           <p>1.南希在冬假前计划拿下15分。为了实现这一目标，他们需要 赢得这场比赛由于下周末对阵领头羊梅斯，难度更大，因此 拿下此场比赛尤为重要</p>
-          <p>2.经验丰富的后卫Mathieu Deplagne尽管身体健康，在上周 末被忽视之后将离开俱乐部</p>          
+          <p>2.经验丰富的后卫Mathieu Deplagne尽管身体健康，在上周 末被忽视之后将离开俱乐部</p>
         </div>
         <p class="contain-title">【预计首发】</p>
         <div class="team-cli">
           <div class="home-cli">
             <div class="home-cli-header">主队</div>
             <div class="home-cli-body">
-              <p>Jeremy Clement<span class="cli-badge">主力</span></p>
-              <p>Vincent Marchetti<span class="cli-badge">主力</span></p>
-              <p>Anthony Koura<span class="cli-badge">主力</span></p>
-              <p>Mons Bassouamina<span class="cli-badge">主力</span></p>
+              <p>Jeremy Clement
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Vincent Marchetti
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Anthony Koura
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Mons Bassouamina
+                <span class="cli-badge">主力</span>
+              </p>
             </div>
           </div>
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
             <div class="home-cli-body">
-              <p>Jeremy Clement<span class="cli-badge">主力</span></p>
-              <p>Vincent Marchetti<span class="cli-badge">主力</span></p>
-              <p>Anthony Koura<span class="cli-badge">主力</span></p>
-              <p>Mons Bassouamina<span class="cli-badge">主力</span></p>
+              <p>Jeremy Clement
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Vincent Marchetti
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Anthony Koura
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Mons Bassouamina
+                <span class="cli-badge">主力</span>
+              </p>
             </div>
           </div>
         </div>
@@ -299,26 +334,44 @@
           <div class="home-cli">
             <div class="home-cli-header">主队</div>
             <div class="home-cli-body">
-              <p>Jeremy Clement<span class="cli-badge">主力</span></p>
-              <p>Vincent Marchetti<span class="cli-badge">主力</span></p>
-              <p>Anthony Koura<span class="cli-badge">主力</span></p>
-              <p>Mons Bassouamina<span class="cli-badge">主力</span></p>
+              <p>Jeremy Clement
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Vincent Marchetti
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Anthony Koura
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Mons Bassouamina
+                <span class="cli-badge">主力</span>
+              </p>
             </div>
           </div>
           <div class="away-cli">
             <div class="away-cli-header">客队</div>
             <div class="home-cli-body">
-              <p>Jeremy Clement<span class="cli-badge">主力</span></p>
-              <p>Vincent Marchetti<span class="cli-badge">主力</span></p>
-              <p>Anthony Koura<span class="cli-badge">主力</span></p>
-              <p>Mons Bassouamina<span class="cli-badge">主力</span></p>
+              <p>Jeremy Clement
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Vincent Marchetti
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Anthony Koura
+                <span class="cli-badge">主力</span>
+              </p>
+              <p>Mons Bassouamina
+                <span class="cli-badge">主力</span>
+              </p>
             </div>
           </div>
         </div>
         <div class="recommender">
           <h1><img src="../../public/images/internal-info-badge.png" />推荐专家</h1>
           <p>经验丰富 持续盈利 专家见解</p>
-          <div class="recommender-list" v-for="(item,index) in recommenderList" :key="index">
+          <div class="recommender-list"
+               v-for="(item,index) in recommenderList"
+               :key="index">
             <img :src="item.expertpic" />
             <p class="list-name">{{item.expertname}}</p>
             <p>近期10中{{item.fright}} 盈利{{item.fprofitrate}}</p>
@@ -368,11 +421,12 @@ export default {
   },
   mounted () {
     https.fetchPost('/match/matchinfo.jsp',{id:this.$store.state.internalInfoItem} ).then((data) => {
+        this.openInfo = data.data.open //传递公共信息
+        console.log('openInfo',data.data.open)
         this.matchlist = data.data.matchinfo;//基本信息
         this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
         this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
         this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents//大概率
-        this.openInfo = data.data.open //传递公共信息
 		}).catch(err=>{
 						console.log(err)
 				}
@@ -397,7 +451,6 @@ export default {
   // overflow-y: scroll;
   background: #f2f5f8;
   .match-header {
-    
     width: 100%;
     height: 216px;
     overflow: hidden;
@@ -420,10 +473,10 @@ export default {
       z-index: 999;
     }
     .internalList {
-      height:170px;
+      height: 170px;
       position: relative;
       top: 46px;
-      
+
       .badge {
         position: absolute;
         width: 76px;
@@ -441,7 +494,7 @@ export default {
           display: inline-block;
           width: 3px;
           height: 12px;
-          background: #0393F8;
+          background: #0393f8;
           border-radius: 2px;
           margin: 0 3px;
         }
@@ -490,7 +543,7 @@ export default {
                 font-family: 'PingFangSC-Regular';
               }
               &:nth-child(3) {
-                color: #0393F8;
+                color: #0393f8;
                 padding: 2px 6px;
                 background: rgba(1, 208, 255, 0.1);
                 border-radius: 10px;
@@ -504,42 +557,41 @@ export default {
           }
         }
       }
-      .weather-info{
-        width:100%;
-        height:36px;
-        background:#215696;
-        display:flex;
-        &>div{
-          flex:1;
-          font-size:14px;
-          line-height:36px;
-          color:#7BA1D0;
-          .weather-icon{
-            float:left;
-            width:17px;
-            height:17px;
-            margin-top:11px;
-            margin-left:19px;
-            margin-right:7px;
+      .weather-info {
+        width: 100%;
+        height: 36px;
+        background: #215696;
+        display: flex;
+        & > div {
+          flex: 1;
+          font-size: 14px;
+          line-height: 36px;
+          color: #7ba1d0;
+          .weather-icon {
+            float: left;
+            width: 17px;
+            height: 17px;
+            margin-top: 11px;
+            margin-left: 19px;
+            margin-right: 7px;
           }
         }
       }
     }
   }
-  
 
   .vux-button-group {
     width: 100%;
     height: 80px;
     background: #ffffff;
     & > a.vux-button-group-current {
-      background: #0393F8;
+      background: #0393f8;
       color: #ffffff;
       font-family: PingFangSC-Regular;
     }
     & > a.vux-button-tab-item-first:after {
-      border: 2px solid #0393F8;
-      color: #0393F8;
+      border: 2px solid #0393f8;
+      color: #0393f8;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       border-radius: 5px 0px 0px 5px;
@@ -565,11 +617,11 @@ export default {
       margin-top: 20px;
     }
     & > a.vux-button-tab-item-last:after {
-      border-right: 2px solid #0393F8;
-      border-top: 2px solid #0393F8;
-      border-bottom: 2px solid #0393F8;
+      border-right: 2px solid #0393f8;
+      border-top: 2px solid #0393f8;
+      border-bottom: 2px solid #0393f8;
       border-left: none;
-      color: #0393F8;
+      color: #0393f8;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-radius: 0px 5px 5px 0px;
@@ -579,9 +631,9 @@ export default {
   .show-info {
     clear: both;
     width: 100%;
-    .part-one{
-      overflow:hidden;
-      background:#fff;
+    .part-one {
+      overflow: hidden;
+      background: #fff;
     }
     .contain-title {
       font-size: 14px;
@@ -601,38 +653,37 @@ export default {
       margin-left: 14px;
       margin-right: 16px;
     }
-    .team-cli{
+    .team-cli {
       // display:flex;
-      overflow:hidden;
-      margin-bottom:7px;
-      &>div{
+      overflow: hidden;
+      margin-bottom: 7px;
+      & > div {
         // flex:1;
-        background:#fff;  
-        padding-bottom:15px;
-        float:left;
-        width:46%;
-        margin-left:2%;
-        &>div:first-child{
-          width:calc(100% - 10px);
-          height:28px;
-          background:#3665AC;
-          padding-left:10px;
-          font-size:12px;
-          color:#fff;
-          line-height:28px;
-        } 
-             
+        background: #fff;
+        padding-bottom: 15px;
+        float: left;
+        width: 46%;
+        margin-left: 2%;
+        & > div:first-child {
+          width: calc(100% - 10px);
+          height: 28px;
+          background: #3665ac;
+          padding-left: 10px;
+          font-size: 12px;
+          color: #fff;
+          line-height: 28px;
+        }
       }
-      .home-cli-body{
-        font-size:10px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        padding-left:11px;
-        margin-top:10px;
-        p{
-          float:left;
-          width:100%;
-          margin-top:5px;
+      .home-cli-body {
+        font-size: 10px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        padding-left: 11px;
+        margin-top: 10px;
+        p {
+          float: left;
+          width: 100%;
+          margin-top: 5px;
         }
         .red-contain {
           overflow: hidden;
@@ -651,45 +702,45 @@ export default {
             margin-right: 2%;
             float: right;
             margin-top: -5px;
-            font-size:18px;
+            font-size: 18px;
           }
         }
       }
-      .cli-badge{
-        float:right;
-        margin-right:8px;
-        font-size:9px;
-        border-radius:7px;
-        padding:0 5px;
-        border:1px solid rgba(255,67,89,1);
+      .cli-badge {
+        float: right;
+        margin-right: 8px;
+        font-size: 9px;
+        border-radius: 7px;
+        padding: 0 5px;
+        border: 1px solid rgba(255, 67, 89, 1);
       }
-      .traffic-text{
-          font-size:14px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(123,161,208,1);
-          padding-left:15px;
-          margin-top:12px;
-        }
-      .home-cli{
-        margin-right:2%;
-        .home-cli-header{
-          background:#3665AC;
+      .traffic-text {
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(123, 161, 208, 1);
+        padding-left: 15px;
+        margin-top: 12px;
+      }
+      .home-cli {
+        margin-right: 2%;
+        .home-cli-header {
+          background: #3665ac;
         }
       }
-      .away-cli{
-        .away-cli-header{
-          background:#42546F;
+      .away-cli {
+        .away-cli-header {
+          background: #42546f;
         }
       }
     }
-    
+
     .recommender {
       width: 100%;
       height: 550px;
       background: #ffffff;
       overflow: hidden;
-      margin-top:14px;
+      margin-top: 14px;
       .change-btn {
         display: block;
         width: 120px;
@@ -775,13 +826,12 @@ export default {
       }
       & > div:nth-of-type(1) {
         margin-top: 10px;
-        overflow:hidden;
-        .big-result-circle{
-          float:left;
-          margin-right:30px;
-          width:72px;
-          height:72px;
-          
+        overflow: hidden;
+        .big-result-circle {
+          float: left;
+          margin-right: 30px;
+          width: 72px;
+          height: 72px;
         }
       }
       & > div:nth-of-type(2) {
@@ -862,35 +912,35 @@ export default {
           border-radius: 18px;
         }
       }
-      .cold-point{
-        margin-top:10px;
-        width:100%;
-        height:88px;
-        background:rgba(245,246,247,1);
-        border-radius:6px;
-        overflow:hidden;
-        .vux-circle{
-          float:left;
-          margin-right:23px;          
-          width:52px;
-          height:52px;
-          margin:18px;
-          .circle-bg{
-            color:#FFD168;
-            font-size:14px;
-            font-family:PingFangSC-Regular;
+      .cold-point {
+        margin-top: 10px;
+        width: 100%;
+        height: 88px;
+        background: rgba(245, 246, 247, 1);
+        border-radius: 6px;
+        overflow: hidden;
+        .vux-circle {
+          float: left;
+          margin-right: 23px;
+          width: 52px;
+          height: 52px;
+          margin: 18px;
+          .circle-bg {
+            color: #ffd168;
+            font-size: 14px;
+            font-family: PingFangSC-Regular;
           }
         }
-        p{
-          float:left;
-          width:210px;
-          margin-top:24px;
-          font-size:14px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
+        p {
+          float: left;
+          width: 210px;
+          margin-top: 24px;
+          font-size: 14px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
         }
       }
-      
+
       .btn {
         width: 100%;
         height: 40px;
@@ -917,7 +967,7 @@ export default {
   border-radius: 3px;
 }
 .internal-info .weui-progress__inner-bar {
-  background-color: #FFB726 !important;
+  background-color: #ffb726 !important;
   border-radius: 3px;
 }
 </style>

@@ -1,6 +1,12 @@
 <template>
   <div class="internal-reference">
     <h1>独家内参</h1>
+    <tab>
+      <tab-item @on-item-click="onItemClick">{{yesterdayWeek}}<br>{{yesterday}}</tab-item>
+      <tab-item selected
+                @on-item-click="onItemClick">{{todayWeek}}<br>{{today}}</tab-item>
+      <tab-item @on-item-click="onItemClick">{{tomorrowWeek}}<br>{{tomorrow}}</tab-item>
+    </tab>
     <div class="internalList"
          v-for="(item,index) in internalList"
          :key="index">
@@ -34,7 +40,6 @@
           <div>
             <div>胜
               <span>11%</span>
-              
               <!-- <span>{{item.details.bigprobabilityevents.split(",")[0]}}%</span> -->
             </div>
             <div>平
@@ -45,11 +50,13 @@
             </div>
           </div>
           <p>结果指数：</p>
-          <!-- <div>
+          <div>
             <div>
               <x-circle :percent="Number(item.details.resultindex.split(',')[0].split(':')[1])"
                         :stroke-width="6"
-                        stroke-color="#3761A3">
+                        :trail-width="6"
+                        trail-color="rgba(255,67,89,0.1)"
+                        stroke-color="#FF4359">
                 <span class="circle-bg">{{ item.details.resultindex.split(",")[0].split(":")[1] }}%</span>
               </x-circle>
               {{item.details.resultindex.split(",")[0].split(":")[0]}}
@@ -57,7 +64,9 @@
             <div>
               <x-circle :percent="Number(item.details.resultindex.split(',')[1].split(':')[1])"
                         :stroke-width="6"
-                        stroke-color="#3761A3">
+                        :trail-width="6"
+                        trail-color="rgba(255,67,89,0.1)"
+                        stroke-color="#FF4359">
                 <span class="circle-bg">{{item.details.resultindex.split(",")[1].split(":")[1]}}%</span>
               </x-circle>
               {{item.details.resultindex.split(",")[1].split(":")[0]}}
@@ -65,7 +74,9 @@
             <div>
               <x-circle :percent="Number(item.details.resultindex.split(',')[2].split(':')[1])"
                         :stroke-width="6"
-                        stroke-color="#3761A3">
+                        :trail-width="6"
+                        trail-color="rgba(109,194,29,0.1)"
+                        stroke-color="#6DC21D">
                 <span class="circle-bg">{{ item.details.resultindex.split(',')[2].split(':')[1] }}%</span>
               </x-circle>
               {{item.details.resultindex.split(",")[2].split(":")[0]}}
@@ -73,12 +84,14 @@
             <div>
               <x-circle :percent="Number(item.details.resultindex.split(',')[3].split(':')[1])"
                         :stroke-width="6"
-                        stroke-color="#3761A3">
+                        :trail-width="6"
+                        trail-color="rgba(109,194,29,0.1)"
+                        stroke-color="#6DC21D">
                 <span class="circle-bg">{{ item.details.resultindex.split(',')[3].split(':')[1] }}%</span>
               </x-circle>
               {{item.details.resultindex.split(',')[3].split(':')[0]}}
             </div>
-          </div> -->
+          </div>
           <p>比分指数：</p>
           <!-- <div>
             <div>{{item.details.scoreindex.split(',')[0].split('(')[0]}}
@@ -93,7 +106,8 @@
           </div> -->
           <p>爆冷指数：</p>
           <div class="range">
-            <div class="range-info" :style="{ width:item.details.coldindex  }"></div>
+            <div class="range-info"
+                 :style="{ width:item.details.coldindex  }"></div>
           </div>
           <!-- <span>{{item.details.coldindex}}</span> -->
           <span class="more"
@@ -105,19 +119,45 @@
 </template>
 
 <script>
-import {XCircle} from 'vux'
+import {XCircle,Tab,TabItem} from 'vux'
 import https from '../https.js'
 export default {
   components: {
-    XCircle
+    XCircle,
+    Tab,
+    TabItem
   },
   data(){
     return{
+      dayVal:'',
+      yesterdayWeek:'',
+      yesterday:'',
+      todayWeek:'',
+      today:'',
+      tomorrowWeek:'',
+      tomorrow:'',
       percent:55,
       internalList:[1,2,3,4,5,6]
     }
   },
   methods:{
+    //请求切换日期渲染对应比赛列表
+    changeMatch(date){
+      https.fetchPost('/match/neican.jsp',date ).then((data) => {
+        console.log("结果啊啊啊啊",data.data)
+        for (var i =0;i<data.data.list.length;i++){
+          data.data.list[i].showInfoItem=false
+        }
+        this.internalList = data.data.list
+      }).catch(err=>{
+              console.log(err)
+          }
+      )
+    },
+    onItemClick(index){
+      this.GetDateStr(index-1);
+      this.changeMatch({matchtime:this.dayVal})
+    },
     getInternalInfo(index,matchnum){
       console.log(index)
       this.$store.commit('setInternalInfoItem',index)
@@ -132,21 +172,49 @@ export default {
         this.internalList[i].showInfoItem=false;
       }
       this.internalList[index].showInfoItem=!showItem
+    },
+  //获取日期方法
+    GetDateStr(AddDayCount) {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();
+        var m = (dd.getMonth()+1).toString();//获取当前月份的日期
+        var d = dd.getDate().toString();
+        var day = dd.getDay();
+        var arr_week = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        var week = arr_week[day];
+        if(m.length<=1){
+            m='0'+m;
+        }
+        if(d.length<=1){
+            d='0'+d;
+        }
+        this.dayVal=y+m+d;
+        console.log("dayVal",this.dayVal)
+        return m+"-"+d+'/'+week;
     }
+
   },
   mounted () {
-    https.fetchPost('/match/neican.jsp',{} ).then((data) => {
-        console.log("结果啊啊啊啊",data.data)
-        for (var i =0;i<data.data.list.length;i++){
-          data.data.list[i].showInfoItem=false
-        }
-        this.internalList = data.data.list
+    this.yesterdayWeek=this.GetDateStr(-1).split('/')[0];
+    this.yesterday=this.GetDateStr(-1).split('/')[1];
+    this.todayWeek=this.GetDateStr(0).split('/')[0];
+    this.today=this.GetDateStr(0).split('/')[1];
+    this.tomorrowWeek=this.GetDateStr(1).split('/')[0];
+    this.tomorrow=this.GetDateStr(1).split('/')[1];
+    this.changeMatch({})
+    // https.fetchPost('/match/neican.jsp',{} ).then((data) => {
+    //     console.log("结果啊啊啊啊",data.data)
+    //     for (var i =0;i<data.data.list.length;i++){
+    //       data.data.list[i].showInfoItem=false
+    //     }
+    //     this.internalList = data.data.list
         
         
-		}).catch(err=>{
-						console.log(err)
-				}
-		)
+		// }).catch(err=>{
+		// 				console.log(err)
+		// 		}
+		// )
     
   }
 
@@ -162,13 +230,22 @@ export default {
   background: #f8f9fa;
   padding-bottom: 22px;
   & > h1 {
-    width: 91.5%;
-    margin: 7px auto;
+    padding-left: 16px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     font-size: 22px;
     font-weight: 500;
     color: #313233;
-    margin-bottom: 24px;
+    background: #fff;
   }
+  .vux-tab-wrap {
+    margin-bottom: 26px;
+  }
+  .vux-tab .vux-tab-item.vux-tab-selected {
+    color: #0393f8;
+    border-bottom: none;
+  }
+
   .internalList {
     width: 100%;
     margin-bottom: 30px;
@@ -357,6 +434,30 @@ export default {
           font-family: PingFangSC-Regular;
         }
       }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.internal-reference .vux-tab-ink-bar {
+  background-color: #fff !important;
+}
+.internal-reference .vux-tab .vux-tab-item {
+  background: none;
+  line-height: inherit;
+}
+.internal-reference .vux-tab .vux-tab-item:after {
+  content: '|';
+  color: #e0e7ed;
+  float: right;
+  margin-top: -10px;
+}
+.internal-reference .vux-tab .vux-tab-item {
+  &:nth-child(3) {
+    &:after {
+      content: '';
+      color: #e0e7ed;
+      float: right;
     }
   }
 }
