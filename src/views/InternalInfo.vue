@@ -53,25 +53,15 @@
           <div>
             <p>大概率事件结果对比：</p>
             <div>
-              <div class="big-result-circle">
-                <x-circle percent="55"
+              <div class="big-result-circle"
+                   v-for="(item,index) in bigprobabilityevents"
+                   :key="index">
+                <x-circle :percent="Number(item)"
                           :stroke-width="6"
-                          stroke-color="#FF4359">
-                  <span class="circle-bg">胜<br>55%</span>
-                </x-circle>
-              </div>
-              <div class="big-result-circle">
-                <x-circle percent="55"
-                          :stroke-width="6"
-                          stroke-color="#3665AC">
-                  <span class="circle-bg">平<br>55%</span>
-                </x-circle>
-              </div>
-              <div class="big-result-circle">
-                <x-circle percent="55"
-                          :stroke-width="6"
-                          stroke-color="#6DC21D">
-                  <span class="circle-bg">负<br>55%</span>
+                          :trail-width="6"
+                          trail-color="rgba(34,53,91,0.05)"
+                          :stroke-color="bigTitle[index].color">
+                  <span class="circle-bg">{{bigTitle[index].title}}<br>{{item}}%</span>
                 </x-circle>
               </div>
             </div>
@@ -81,7 +71,9 @@
                    :key="index">
                 <x-circle :percent="Number(item.split(':')[1])"
                           :stroke-width="6"
-                          stroke-color="#01D0FF">
+                          :trail-width="6"
+                          trail-color="rgba(34,53,91,0.05)"
+                          :stroke-color="(item.split(':')[0]=='胜让胜'||item.split(':')[0]=='胜让平')?'#FF4359':'#6DC21D'">
                   <span class="circle-bg">{{ item.split(':')[1] }}%</span>
                 </x-circle>
                 {{item.split(':')[0]}}
@@ -90,279 +82,316 @@
             </div>
             <p>比分指数：</p>
             <div>
-              <div>
-                <span>1:0</span>
-                <span>34</span>
-                <x-progress percent="45"
+              <div v-for="(item,index) in scoreList"
+                   :key="index">
+                <span>{{item.split('(')[0]}}</span>
+                <span>{{item.split('(')[1].split('%')[0]}}%</span>
+                <x-progress :percent="Number(item.split('(')[1].split('%')[0])"
                             :show-cancel="false"></x-progress>
               </div>
             </div>
+
             <p>爆冷指数：</p>
             <div class="cold-point">
-              <x-circle percent="50"
+              <x-circle :percent="Number(coldindex)"
                         :stroke-width="8"
                         :trail-width="8"
                         :stroke-color="['#FFDE2E','#FFB726']"
                         trail-color="rgba(255, 193, 49, 0.1)">
-                <span class="circle-bg">50%</span>
+                <span class="circle-bg">{{coldindex}}%</span>
               </x-circle>
-              <p>小球仙大数据即时爆冷指数分析， 本场比赛爆冷概率为50%</p>
+              <p>小球仙大数据即时爆冷指数分析， 本场比赛爆冷概率为{{coldindex}}%</p>
             </div>
             <p>独家内参：</p>
             <div class="btn">
               <span>5元</span>解锁</div>
           </div>
         </div>
-        <p class="contain-title">【星级评分】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">11</div>
-            <div class="home-cli-body">11</div>
-            <div class="home-cli-body">11</div>
+        <div v-if="needbuy==0">
+          <p class="contain-title">【星级评分】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">11</div>
+              <div class="home-cli-body">11</div>
+              <div class="home-cli-body">11</div>
 
-          </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-
-          </div>
-        </div>
-        <p class="contain-title">【距离交通】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body traffic-text">
-              <p>距球场：132km</p>
-              <p>交通方式：汽车2H</p>
             </div>
-          </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body traffic-text">
-              <p>距球场：132km</p>
-              <p>交通方式：汽车2H</p>
-            </div>
-          </div>
-        </div>
-        <p class="contain-title">【主帅&主裁】</p>
-        <p class="contain-info">双方近6次交战，南锡3胜1平2负，进6球，失4球， 大球1次，小球5次双方近6次交战，南锡3胜1平2负，进6球，失4球， 大球1次，小球5次</p>
-        <p class="contain-title">【伤停及复出】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队禁赛</div>
-            <div class="home-cli-body">
-              <p>托比亚斯巴迪拉</p>
-            </div>
-          </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队禁赛</div>
-            <div class="home-cli-body">
-              <p>Alexandre Letellier
-                <span class="cli-badge">主力</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队上阵成疑</div>
-            <div class="home-cli-body">
-              <p>Jeremy Clement
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Vincent Marchetti
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Anthony Koura
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Mons Bassouamina
-                <span class="cli-badge">主力</span>
-              </p>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
 
             </div>
           </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队上阵成疑</div>
-            <div class="home-cli-body">
-              <p>Alexandre Letellier
-                <span class="cli-badge">主力</span>
-              </p>
+          <p class="contain-title">【距离交通】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body traffic-text">
+                <p>距球场：{{buyDetailInfo.hometeam.distance}}km</p>
+                <p>交通方式：{{buyDetailInfo.hometeam.trip}}{{buyDetailInfo.hometeam.triptime}}</p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body traffic-text">
+                <p>距球场：{{buyDetailInfo.awayteam.distance}}km</p>
+                <p>交通方式：{{buyDetailInfo.awayteam.trip}}{{buyDetailInfo.awayteam.triptime}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <p class="contain-title">【未来赛事】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              7天后即19年1月5日将客场 出战澳超排名第1的梅斯
+          <p class="contain-title">【主帅&主裁】</p>
+          <p class="contain-info">{{buyDetailInfo.referee}}</p>
+          <p class="contain-title">【伤停及复出】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队禁赛</div>
+              <div class="home-cli-body">
+                <p>{{buyDetailInfo.hometeam.playerssuspended}}</p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队禁赛</div>
+              <div class="home-cli-body">
+                <p>{{buyDetailInfo.awayteam.playerssuspended}}</p>
+              </div>
             </div>
           </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              7天后即19年1月5日将客场 出战澳超排名第1的梅斯
+          <!-- TODO:人名格式未修改 -->
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队上阵成疑</div>
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playersdoubtful.split('↵')"
+                   :key="index">{{item}}
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队上阵成疑</div>
+              <div class="home-cli-body">
+                <p>Alexandre Letellier
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <p class="contain-title">【实力及战意】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              与上赛季同期相比下降明显 表现不佳
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队不可上场</div>
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playerunavailable.split('↵')"
+                   :key="index">{{item}}
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队不可上场</div>
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playerunavailable.split('↵')"
+                   :key="index">{{item}}
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
             </div>
           </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              特鲁瓦凯文·福琼特鲁瓦以 总计6球，场均0.55 球/场 的佳绩列助攻榜榜首
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队休息</div>
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playersrested.split('↵')"
+                   :key="index">{{item}}
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队休息</div>
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playersrested.split('↵')"
+                   :key="index">{{item}}
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <p class="contain-title">【Brief】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              Muratori上阵成疑，伤病问 题已基本清除
+          <p class="contain-title">【未来赛事】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">
+                7天后即19年1月5日将客场 出战澳超排名第1的梅斯
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body">
+                7天后即19年1月5日将客场 出战澳超排名第1的梅斯
+              </div>
             </div>
           </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              特罗斯和冈萨尔维斯伤缺
+          <p class="contain-title">【实力及战意】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">
+                {{buyDetailInfo.hometeam.strength}}
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body">
+                {{buyDetailInfo.awayteam.strength}}
+              </div>
             </div>
           </div>
-        </div>
-        <p class="contain-title">【回顾】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              <p class="red-contain">
-                <span>上周末在法国杯以2：0击 败圣路易斯诺维奇</span>
-                <span>·</span>
-              </p>
-              <p class="red-contain">
-                <span>在佩兰监督下，南锡已经 五次不败，并且在他们的 最后三场法乙比赛中有9 次射门7粒入球</span>
-                <span>·</span>
-              </p>
-              <p class="red-contain">
-                <span>Alain Perrin表现强势，此 仗虽然赢球但是表现依然 差强人意这是他们整个赛 季赢得超过一个进球的第 一场比赛</span>
-                <span>·</span>
-              </p>
+          <p class="contain-title">【Brief】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body"
+                   v-for="(item,index) in buyDetailInfo.hometeam.brief.split('↵')"
+                   :key="index">
+                {{item}}
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body"
+                   v-for="(item,index) in buyDetailInfo.awayteam.brief.split('↵')"
+                   :key="index">
+                {{item}}
+              </div>
             </div>
           </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              特罗斯和冈萨尔维斯伤缺
+          <p class="contain-title">【回顾】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">
+                <p class="red-contain">
+                  <span>上周末在法国杯以2：0击 败圣路易斯诺维奇</span>
+                  <span>·</span>
+                </p>
+                <p class="red-contain">
+                  <span>在佩兰监督下，南锡已经 五次不败，并且在他们的 最后三场法乙比赛中有9 次射门7粒入球</span>
+                  <span>·</span>
+                </p>
+                <p class="red-contain">
+                  <span>Alain Perrin表现强势，此 仗虽然赢球但是表现依然 差强人意这是他们整个赛 季赢得超过一个进球的第 一场比赛</span>
+                  <span>·</span>
+                </p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body">
+                特罗斯和冈萨尔维斯伤缺
+              </div>
             </div>
           </div>
-        </div>
-        <p class="contain-title">【前瞻】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              <p class="red-contain">
-                <span>上周末在法国杯以2：0击 败圣路易斯诺维奇</span>
-                <span>·</span>
-              </p>
-              <p class="red-contain">
-                <span>在佩兰监督下，南锡已经 五次不败，并且在他们的 最后三场法乙比赛中有9 次射门7粒入球</span>
-                <span>·</span>
-              </p>
-              <p class="red-contain">
-                <span>Alain Perrin表现强势，此 仗虽然赢球但是表现依然 差强人意这是他们整个赛 季赢得超过一个进球的第 一场比赛</span>
-                <span>·</span>
-              </p>
+          <p class="contain-title">【前瞻】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">
+                <p class="red-contain">
+                  <span>上周末在法国杯以2：0击 败圣路易斯诺维奇</span>
+                  <span>·</span>
+                </p>
+                <p class="red-contain">
+                  <span>在佩兰监督下，南锡已经 五次不败，并且在他们的 最后三场法乙比赛中有9 次射门7粒入球</span>
+                  <span>·</span>
+                </p>
+                <p class="red-contain">
+                  <span>Alain Perrin表现强势，此 仗虽然赢球但是表现依然 差强人意这是他们整个赛 季赢得超过一个进球的第 一场比赛</span>
+                  <span>·</span>
+                </p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body">
+                特罗斯和冈萨尔维斯伤缺
+              </div>
             </div>
           </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              特罗斯和冈萨尔维斯伤缺
+          <div class="contain-info">
+            <p>{{buyDetailInfo.tips}}</p>
+          </div>
+          <p class="contain-title">【预计首发】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">
+                <p>Jeremy Clement
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Vincent Marchetti
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Anthony Koura
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Mons Bassouamina
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
+            </div>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body">
+                <p>Jeremy Clement
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Vincent Marchetti
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Anthony Koura
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Mons Bassouamina
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="contain-info">
-          <p>1.南希在冬假前计划拿下15分。为了实现这一目标，他们需要 赢得这场比赛由于下周末对阵领头羊梅斯，难度更大，因此 拿下此场比赛尤为重要</p>
-          <p>2.经验丰富的后卫Mathieu Deplagne尽管身体健康，在上周 末被忽视之后将离开俱乐部</p>
-        </div>
-        <p class="contain-title">【预计首发】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              <p>Jeremy Clement
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Vincent Marchetti
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Anthony Koura
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Mons Bassouamina
-                <span class="cli-badge">主力</span>
-              </p>
+          <p class="contain-title">【替补】</p>
+          <div class="team-cli">
+            <div class="home-cli">
+              <div class="home-cli-header">主队</div>
+              <div class="home-cli-body">
+                <p>Jeremy Clement
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Vincent Marchetti
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Anthony Koura
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Mons Bassouamina
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              <p>Jeremy Clement
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Vincent Marchetti
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Anthony Koura
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Mons Bassouamina
-                <span class="cli-badge">主力</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <p class="contain-title">【替补】</p>
-        <div class="team-cli">
-          <div class="home-cli">
-            <div class="home-cli-header">主队</div>
-            <div class="home-cli-body">
-              <p>Jeremy Clement
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Vincent Marchetti
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Anthony Koura
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Mons Bassouamina
-                <span class="cli-badge">主力</span>
-              </p>
-            </div>
-          </div>
-          <div class="away-cli">
-            <div class="away-cli-header">客队</div>
-            <div class="home-cli-body">
-              <p>Jeremy Clement
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Vincent Marchetti
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Anthony Koura
-                <span class="cli-badge">主力</span>
-              </p>
-              <p>Mons Bassouamina
-                <span class="cli-badge">主力</span>
-              </p>
+            <div class="away-cli">
+              <div class="away-cli-header">客队</div>
+              <div class="home-cli-body">
+                <p>Jeremy Clement
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Vincent Marchetti
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Anthony Koura
+                  <span class="cli-badge">主力</span>
+                </p>
+                <p>Mons Bassouamina
+                  <span class="cli-badge">主力</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -405,9 +434,13 @@ export default {
   },
   data(){
     return{
+      bigTitle:[{title:'胜',color:'#FF4359'},{title:'平',color:'#3665AC'},{title:'负',color:'#6DC21D'}],
       openInfo:{},
       recommenderList:[],
       bigprobabilityevents:{},//大概率
+      coldindex:'',
+      needbuy:0,
+      buyDetailInfo:{},
       scoreList:[],
       resultList:[],
       disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
@@ -426,7 +459,10 @@ export default {
         this.matchlist = data.data.matchinfo;//基本信息
         this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
         this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
-        this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents//大概率
+        this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents.open.split(',')//大概率
+        this.coldindex = data.data.inside.details.coldindex.split("%")[0];
+        this.needbuy = data.data.inside.needbuy;
+        this.buyDetailInfo = data.data.inside.buydetails;
 		}).catch(err=>{
 						console.log(err)
 				}
