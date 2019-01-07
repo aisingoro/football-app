@@ -11,6 +11,8 @@ import InternalInfo from './views/InternalInfo.vue'
 //专家详情
 import UgcInfo from './views/UgcInfo.vue'
 import UgcList from './views/UgcList.vue'
+import FormListDetail from './views/FormListDetail.vue'
+
 //发单
 import IssueOrder from './views/IssueOrder.vue'
 import SetOrder from './views/SetOrder.vue'
@@ -102,6 +104,10 @@ export default new Router({
       path: "/register",
       name: 'register',
       component: Register,
+    }, {
+      path: "/form-list-detail",
+      name: 'form-list-detail',
+      component: FormListDetail,
     }, {
       path: '/about',
       name: 'about',

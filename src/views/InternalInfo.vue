@@ -7,7 +7,7 @@
         <div>
           <div>
             <img :src="matchlist.hometeampic" />
-            <p>{{matchlist.hometeam}}</p>
+            <p>{{matchlist.awayteamname}}</p>
           </div>
           <div>
             <img src="../../public/images/internal-info-vs.png" />
@@ -16,7 +16,7 @@
           </div>
           <div>
             <img :src="matchlist.awayteampic" />
-            <p>{{matchlist.awayteam}}</p>
+            <p>{{matchlist.awayteamname}}</p>
           </div>
         </div>
         <div class="weather-info">

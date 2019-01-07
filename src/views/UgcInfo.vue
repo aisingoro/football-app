@@ -40,7 +40,8 @@
           </tr>
         </tbody>
       </x-table>
-      <div class="table-result">
+      <div class="table-result"
+           @click="listDetail(item.fid)">
         <div>{{item.fresult==0?'立即查看':(item.fresult==-1?'未中':'荐中')}}</div>
       </div>
     </div>
@@ -64,6 +65,10 @@ export default {
     }
   },
   methods:{
+    //跳转荐单详情
+    listDetail(index){
+      this.$router.push('/form-list-detail')
+    },
     followUgc(){
       var args={expertid:this.$route.query.ugcId}
       if(this.isFollow){

@@ -34,12 +34,15 @@
             <p>{{item.awayteam}}</p>
           </div>
           <div class="weather-info">
-          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>{{item.weather.split(',')[0]}}</div>
-          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>{{item.weather.split(',')[1]}}</div>
-          <div><img src="../../public/images/index-team-01.png" class="weather-icon"/>{{item.weather.split(',')[2]}}</div>
+            <div><img src="../../public/images/index-team-01.png"
+                   class="weather-icon" />{{item.weather.split(',')[0]}}</div>
+            <div><img src="../../public/images/index-team-01.png"
+                   class="weather-icon" />{{item.weather.split(',')[1]}}</div>
+            <div><img src="../../public/images/index-team-01.png"
+                   class="weather-icon" />{{item.weather.split(',')[2]}}</div>
+          </div>
         </div>
-        </div>
-        
+
       </div>
       <h3 class="index-title">竞彩7日赛果分布<img src="../../public/images/index-question.png" /></h3>
       <div class="seven-result">
@@ -85,19 +88,24 @@
       <h3 class="index-title">真实赔率与竞彩赔率对比<img src="../../public/images/index-question.png" /></h3>
       <x-table :cell-bordered="false"
                :content-bordered="false"
-               style="background-color:#fff;" v-for="(item,index) in oddsratiocomparisonlist" >
+               style="background-color:#fff;"
+               v-for="(item,index) in oddsratiocomparisonlist"
+               :key="index">
         <thead>
           <tr class="tr-style">
             <th>{{item.matchnum}}</th>
-            <th v-for="(items,indexs) in item.showtitle.split(',')" :key="indexs">{{items}}</th>
+            <th v-for="(items,indexs) in item.showtitle.split(',')"
+                :key="indexs">{{items}}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td v-for="(items,indexs) in item.showvalue1.split(',')" :key="indexs">{{items}}</td>
+            <td v-for="(items,indexs) in item.showvalue1.split(',')"
+                :key="indexs">{{items}}</td>
           </tr>
           <tr>
-            <td v-for="(items,indexs) in item.showvalue2.split(',')" :key="indexs">{{items}}</td>
+            <td v-for="(items,indexs) in item.showvalue2.split(',')"
+                :key="indexs">{{items}}</td>
           </tr>
         </tbody>
       </x-table>
@@ -113,21 +121,26 @@
              style="height:400px;padding:15px 0;overflow:scroll;-webkit-overflow-scrolling:touch;background-color: #f8f9fa;">
           <x-table :cell-bordered="false"
                    :content-bordered="false"
-                   style="background-color:#fff;" v-for="(item,index) in allMatchList" :key="index">
+                   style="background-color:#fff;"
+                   v-for="(item,index) in allMatchList"
+                   :key="index">
             <thead>
               <tr class="tr-style">
                 <th>{{item.matchnum}}</th>
-                <th v-for="(items,indexs) in item.showtitle.split(',')">{{items}}</th>
+                <th v-for="(items,indexs) in item.showtitle.split(',')"
+                    :key="indexs">{{items}}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>竞彩赔率</td>
-                <td v-for="(items,indexs) in item.showvalue1.split(',')">{{items}}</td>
+                <td v-for="(items,indexs) in item.showvalue1.split(',')"
+                    :key="indexs">{{items}}</td>
               </tr>
               <tr>
                 <td>真实赔率</td>
-                <td v-for="(items,indexs) in item.showvalue2.split(',')">{{items}}</td>
+                <td v-for="(items,indexs) in item.showvalue2.split(',')"
+                    :key="indexs">{{items}}</td>
               </tr>
             </tbody>
           </x-table>
@@ -273,7 +286,7 @@ export default {
           display: inline-block;
           width: 3px;
           height: 12px;
-          background: #0393F8;
+          background: #0393f8;
           border-radius: 2px;
           margin: 0 3px;
         }
@@ -283,29 +296,29 @@ export default {
           font-family: 'PingFangSC-Regular';
         }
       }
-      .weather-info{
-        clear:both;
-        width:96%;
-        height:36px;
-        margin:0 auto;
-        display:flex;
-        margin-top:9px;
-        border-top:1px solid #F2F5F8;
-        &>div{
-          flex:1;
-          font-size:14px;
-          line-height:36px;
-          color:#7BA1D0;
-          &:nth-child(2){
-            flex:1.2;
+      .weather-info {
+        clear: both;
+        width: 96%;
+        height: 36px;
+        margin: 0 auto;
+        display: flex;
+        margin-top: 9px;
+        border-top: 1px solid #f2f5f8;
+        & > div {
+          flex: 1;
+          font-size: 14px;
+          line-height: 36px;
+          color: #7ba1d0;
+          &:nth-child(2) {
+            flex: 1.2;
           }
-          .weather-icon{
-            float:left;
-            width:17px;
-            height:17px;
-            margin-top:11px;
-            margin-left:4px;
-            margin-right:6px;
+          .weather-icon {
+            float: left;
+            width: 17px;
+            height: 17px;
+            margin-top: 11px;
+            margin-left: 4px;
+            margin-right: 6px;
           }
         }
       }
@@ -357,13 +370,13 @@ export default {
               }
             }
           }
-          &:nth-child(3){
+          &:nth-child(3) {
             margin-left: 18px;
             margin-right: none;
           }
-          &:nth-child(4){
+          &:nth-child(4) {
             margin-left: 2%;
-            clear:both;
+            clear: both;
             margin-right: none;
           }
         }
@@ -418,10 +431,10 @@ export default {
               line-height: 40px;
             }
             .circle-win {
-              background: #FF4359;
+              background: #ff4359;
             }
             .circle-lose {
-              background: #6DC21D;
+              background: #6dc21d;
             }
           }
         }
@@ -435,7 +448,7 @@ export default {
           text-align: center;
           font-size: 12px;
           line-height: 18px;
-          background: #0393F8;
+          background: #0393f8;
           color: #ffffff;
         }
         .result-badge-red {
@@ -453,7 +466,7 @@ export default {
       height: 36px;
       background: rgba(255, 255, 255, 1);
       border-radius: 18px;
-      color: #0393F8;
+      color: #0393f8;
       font-size: 14px;
       text-align: center;
       line-height: 36px;
@@ -509,7 +522,7 @@ export default {
 .tr-style {
   width: 100%;
   height: 26px;
-  background: #0393F8;
+  background: #0393f8;
   border-radius: 6px 6px 0px 0px;
   font-size: 12px;
   color: #fff;
