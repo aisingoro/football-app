@@ -39,14 +39,13 @@
           <p>大概率事件结果对比：</p>
           <div>
             <div>胜
-              <span>11%</span>
-              <!-- <span>{{item.details.bigprobabilityevents.split(",")[0]}}%</span> -->
+              <span>{{item.details.bigprobabilityevents.open.split(",")[0]}}%</span>
             </div>
             <div>平
-              <!-- <span>{{item.details.bigprobabilityevents.split(",")[1]}}%</span> -->
+              <span>{{item.details.bigprobabilityevents.open.split(",")[1]}}%</span>
             </div>
             <div>负
-              <!-- <span>{{item.details.bigprobabilityevents.split(",")[2]}}%</span> -->
+              <span>{{item.details.bigprobabilityevents.open.split(",")[2]}}%</span>
             </div>
           </div>
           <p>结果指数：</p>
@@ -93,7 +92,7 @@
             </div>
           </div>
           <p>比分指数：</p>
-          <!-- <div>
+          <div>
             <div>{{item.details.scoreindex.split(',')[0].split('(')[0]}}
               <span>{{item.details.scoreindex.split(',')[0].split('(')[1].slice(0,item.details.scoreindex.split(',')[0].split('(')[1].length-1)}}</span>
             </div>
@@ -103,7 +102,7 @@
             <div>{{item.details.scoreindex.split(',')[2].split('(')[0]}}
               <span>{{item.details.scoreindex.split(',')[2].split('(')[1].slice(0,item.details.scoreindex.split(',')[2].split('(')[1].length-1)}}</span>
             </div>
-          </div> -->
+          </div>
           <p>爆冷指数：</p>
           <div class="range">
             <div class="range-info"

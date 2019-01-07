@@ -9,10 +9,10 @@
       <tab-item class="vux-center"
                 :selected="demo2 === item"
                 v-for="(item, index) in list2"
-                @click="demo2 = item"
+                @on-item-click="changeTab(index+1)"
                 :key="index">{{item}}</tab-item>
       <tab-item class="vux-center"
-                @click="demo2 = item"><img class="ugc-badge"
+                @on-item-click="changeTab(index+1)"><img class="ugc-badge"
              src="../../public/images/ugc-badge.png" /></tab-item>
     </tab>
     <swiper v-model="index"
@@ -30,9 +30,10 @@
                 :show-vertical-dividers="false">
             <grid-item v-for="(item,index) in ugcList"
                        :key="index"
-                       :label="item.label">
+                       :label="item.expertname"
+                       @on-item-click="onItemClick(item.expertid)">
               <img slot="icon"
-                   :src="item.imgUrl">
+                   :src="item.expertpic">
             </grid-item>
           </grid>
         </div>
@@ -45,14 +46,14 @@
       <span>更多></span>
     </h2>
     <div class="ugcList-info"
-         v-for="i in 2"
-         :key="i">
-      <img src="../../public/images/index-team-01.png" />
+         v-for="(item,index) in bottomList"
+         :key="index">
+      <img :src="item.expertpic" />
       <div>
-        <p>吴主任</p>
-        <p>近期10中8 盈利100%</p>
+        <p>{{item.expertname}}</p>
+        <p>近期{{item.fcount}}中{{item.fright}} 盈利{{item.finfomation}}</p>
       </div>
-      <div @click="goUgcInfo">立即查看</div>
+      <div @click="onItemClick(item.expertid)">立即查看</div>
       <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
@@ -73,12 +74,14 @@
          class="ugc-top" />
     <div class="ugc-set"
          @click="IssueOrder">发单</div>
-    
+
   </div>
 </template>
 
 <script>
 import { Tab, TabItem,Swiper,SwiperItem,Grid,GridItem,XTable } from 'vux'
+import https from '../https.js'
+
 export default {
  components: {
     Tab,
@@ -94,40 +97,33 @@ export default {
       demo2: '牛人',
       index: 0,
       list2 : ['牛人', '命中', '盈利', '战绩', '关注'],
-      ugcList:[{
-        label:'周老师',
-        imgUrl:require('../../public/images/index-team-01.png')
-      },{
-        label:'张教授',
-        imgUrl:require('../../public/images/index-team-01.png')
-      },{
-        label:'李教授',
-        imgUrl:require('../../public/images/index-team-01.png')
-      },{
-        label:'王老师',
-        imgUrl:require('../../public/images/index-team-01.png')
-      },{
-        label:'赵老师',
-        imgUrl:require('../../public/images/index-team-01.png')
-      },{
-        label:'黄老师',
-        imgUrl:require('../../public/images/index-team-02.png')
-      },{
-        label:'李老师',
-        imgUrl:require('../../public/images/index-team-01.png')
-      },{
-        label:'周老师',
-        imgUrl:require('../../public/images/index-team-02.png')
-      }]
+      ugcList:[],
+      bottomList:[]
     }
   },
   methods:{
-    goUgcInfo(){
-      this.$router.push("/ugc-info")
-    },
     IssueOrder(){
       this.$router.push("/issue-order")
+    },
+    //点击专家 跳转详情页面
+    onItemClick(index){
+      this.$router.push({path:'/ugc-info', query: {ugcId:index}})
+    },
+    //切换顶部tab栏目
+    changeTab(args){
+      console.log(111)
+      https.fetchPost('/expert/expertlist.jsp',{type:args} ).then((data) => {
+        console.log("ugc",data.data)
+        this.ugcList = data.data.niurenlist;
+        this.bottomList = data.data.list
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
     }
+  },
+  mounted(){
+    this.changeTab(1)
   }
 }
 </script>
@@ -194,7 +190,7 @@ export default {
         height: 36px;
         background: #ffffff;
         border-radius: 18px;
-        color: #0393F8;
+        color: #0393f8;
         font-size: 14px;
         text-align: center;
         line-height: 36px;

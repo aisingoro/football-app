@@ -3,14 +3,14 @@
     <x-header :left-options="{backText: ''}"
               title="他的战绩"></x-header>
     <div class="ugc-header">
-      <img src="../../public/images/index-team-01.png" />
+      <img :src="expertinfo.expertpic" />
       <div class="ugc-name">
-        <p>吴主任</p>
-        <div>16</div>
+        <p>{{expertinfo.expertname}}</p>
+        <div>{{expertinfo.expertlevel}}</div>
       </div>
       <div class="ugc-desc">
-        <p>近期10中8 盈利192%</p>
-        <p>盈利率225%</p>
+        <p>近期{{expertinfo.fcount}}中8 盈利192%</p>
+        <p>盈利率{{expertinfo.finfomation}}</p>
       </div>
       <div class="desc-more">
         <div>
@@ -18,60 +18,77 @@
           <p>荐单</p>
         </div>
         <div>
-          <p>1220</p>
+          <p>{{expertinfo.followcount}}</p>
           <p>粉丝</p>
         </div>
-        <div>已关注</div>
+        <div class="followUgc"
+             @click="followUgc">已关注</div>
       </div>
     </div>
     <p class="title">近10荐单</p>
-    <div>
+    <div v-for="(item,index) in listInfo"
+         :key="index"
+         class="table-box">
       <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
-          <tr>
-            <td>周一008</td>
+          <tr v-for="(items,indexs) in item.title"
+              :key="indexs">
+            <td>{{items.match_num}}</td>
             <td>天狼星 VS 卡尔玛</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>周一008</td>
-            <td>天狼星 VS 卡尔玛</td>
-            <td>...</td>
+            <td>{{items.match_result}}</td>
           </tr>
         </tbody>
       </x-table>
-      <div class="table-result">立即<br>查看</div>
-    </div>
-    <div>
-      <x-table :cell-bordered="false"
-               style="background-color:#fff;">
-        <tbody>
-          <tr>
-            <td>周一008</td>
-            <td>天狼星 VS 卡尔玛</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>周一008</td>
-            <td>天狼星 VS 卡尔玛</td>
-            <td>...</td>
-          </tr>
-        </tbody>
-      </x-table>
-      <div class="table-result">立即<br>查看</div>
+      <div class="table-result">
+        <div>{{item.fresult==0?'暂无结果':(item.fresult==-1?'未中':'荐中')}}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import https from '../https.js'
 import { XHeader,XTable } from 'vux'
 
 export default {
-components: {
+  components: {
     XHeader,
     XTable
   },
+  data(){
+    return{
+      expertinfo:{},
+      listInfo:[],
+      isFollow:false//是否关注该专家
+    }
+  },
+  methods:{
+    followUgc(){
+      var args={expertid:this.$route.query.ugcId}
+      if(this.isFollow){
+        var args={expertid:this.$route.query.ugcId,type:-1}
+      }
+      https.fetchPost('/expert/follow.jsp',args ).then((data) => {
+        this.isFollow=!this.isFollow
+        console.log("ugcinfo",data.data)
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+    }
+  },
+  mounted(){
+    https.fetchPost('/forecast/expertforecast.jsp',{expertid:this.$route.query.ugcId} ).then((data) => {
+        console.log("ugcinfo",data.data)
+        this.expertinfo = data.data.expertinfo;
+        this.listInfo = data.data.list
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+    console.log(this.$route.query.ugcId)
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -103,7 +120,7 @@ components: {
         height: 18px;
         font-size: 12px;
         padding-left: 18px;
-        color: #0393F8;
+        color: #0393f8;
         background: url('../../public/images/ugc-info-badge.png') no-repeat 100%
           100%/100% 100%;
       }
@@ -146,7 +163,7 @@ components: {
         &:nth-child(3) {
           width: 68px;
           height: 36px;
-          background: #0393F8;
+          background: #0393f8;
           color: #ffffff;
           line-height: 36px;
           text-align: center;
@@ -167,30 +184,39 @@ components: {
     margin-left: 21px;
     margin-bottom: 16px;
   }
-  .vux-table {
-    float: left;
-    margin-left: 21px;
-    width: 71%;
-    font-size: 12px;
+  .table-box {
+    display: flex;
     margin-bottom: 18px;
-    tr {
-      border-left: 1px solid #f1f4f6;
-      border-right: 1px solid #f1f4f6;
-      font-family: PingFangSC-Regular;
+    .vux-table {
+      flex: 3;
+      margin-left: 21px;
+      // width: 71%;
+      font-size: 12px;
+      tr {
+        border-left: 1px solid #f1f4f6;
+        border-right: 1px solid #f1f4f6;
+        font-family: PingFangSC-Regular;
+      }
+      td:first-child {
+        color: #b4cae5;
+      }
     }
-    td:first-child {
-      color: #b4cae5;
+    .table-result {
+      flex: 1;
+      background: #0393f8;
+      color: #ffffff;
+      position: relative;
+      margin-right: 21px;
+      & > div {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+      }
+      // padding-top: 18px;
     }
-  }
-  .table-result {
-    float: left;
-    width: 68px;
-    height: 66px;
-    background:#0393F8;
-    color: #ffffff;
-    padding-top: 18px;
-    text-align: center;
-    font-size: 14px;
   }
 }
 </style>

@@ -146,32 +146,50 @@
             <div class="home-cli">
               <div class="home-cli-header">主队禁赛</div>
               <div class="home-cli-body">
-                <p>{{buyDetailInfo.hometeam.playerssuspended}}</p>
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playerssuspended"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
+                </p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队禁赛</div>
               <div class="home-cli-body">
-                <p>{{buyDetailInfo.awayteam.playerssuspended}}</p>
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playerssuspended"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
+                </p>
               </div>
             </div>
           </div>
-          <!-- TODO:人名格式未修改 -->
           <div class="team-cli">
             <div class="home-cli">
               <div class="home-cli-header">主队上阵成疑</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playersdoubtful.split('↵')"
-                   :key="index">{{item}}
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playersdoubtful"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队上阵成疑</div>
               <div class="home-cli-body">
-                <p>Alexandre Letellier
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playersdoubtful"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
@@ -180,18 +198,24 @@
             <div class="home-cli">
               <div class="home-cli-header">主队不可上场</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playerunavailable.split('↵')"
-                   :key="index">{{item}}
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playerunavailable"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队不可上场</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playerunavailable.split('↵')"
-                   :key="index">{{item}}
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playerunavailable"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
@@ -200,18 +224,24 @@
             <div class="home-cli">
               <div class="home-cli-header">主队休息</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playersrested.split('↵')"
-                   :key="index">{{item}}
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playersrested"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队休息</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playersrested.split('↵')"
-                   :key="index">{{item}}
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playersrested"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
@@ -236,13 +266,15 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                {{buyDetailInfo.hometeam.strength}}
+                <p v-for="(item,index) in buyDetailInfo.hometeam.strength"
+                   :key="index">{{item}}</p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                {{buyDetailInfo.awayteam.strength}}
+                <p v-for="(item,index) in buyDetailInfo.awayteam.strength"
+                   :key="index">{{item}}</p>
               </div>
             </div>
           </div>
@@ -250,18 +282,16 @@
           <div class="team-cli">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
-              <div class="home-cli-body"
-                   v-for="(item,index) in buyDetailInfo.hometeam.brief.split('↵')"
-                   :key="index">
-                {{item}}
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.hometeam.brief"
+                   :key="index">{{item}}</p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
-              <div class="home-cli-body"
-                   v-for="(item,index) in buyDetailInfo.awayteam.brief.split('↵')"
-                   :key="index">
-                {{item}}
+              <div class="home-cli-body">
+                <p v-for="(item,index) in buyDetailInfo.awayteam.brief"
+                   :key="index">{{item}}</p>
               </div>
             </div>
           </div>
@@ -270,16 +300,10 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p class="red-contain">
-                  <span>上周末在法国杯以2：0击 败圣路易斯诺维奇</span>
-                  <span>·</span>
-                </p>
-                <p class="red-contain">
-                  <span>在佩兰监督下，南锡已经 五次不败，并且在他们的 最后三场法乙比赛中有9 次射门7粒入球</span>
-                  <span>·</span>
-                </p>
-                <p class="red-contain">
-                  <span>Alain Perrin表现强势，此 仗虽然赢球但是表现依然 差强人意这是他们整个赛 季赢得超过一个进球的第 一场比赛</span>
+                <p class="red-contain"
+                   v-for="(item,index) in buyDetailInfo.hometeam.back"
+                   :key="index">
+                  <span>{{item}}</span>
                   <span>·</span>
                 </p>
               </div>
@@ -287,7 +311,12 @@
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                特罗斯和冈萨尔维斯伤缺
+                <p class="red-contain"
+                   v-for="(item,index) in buyDetailInfo.awayteam.back"
+                   :key="index">
+                  <span>{{item}}</span>
+                  <span>·</span>
+                </p>
               </div>
             </div>
           </div>
@@ -296,16 +325,10 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p class="red-contain">
-                  <span>上周末在法国杯以2：0击 败圣路易斯诺维奇</span>
-                  <span>·</span>
-                </p>
-                <p class="red-contain">
-                  <span>在佩兰监督下，南锡已经 五次不败，并且在他们的 最后三场法乙比赛中有9 次射门7粒入球</span>
-                  <span>·</span>
-                </p>
-                <p class="red-contain">
-                  <span>Alain Perrin表现强势，此 仗虽然赢球但是表现依然 差强人意这是他们整个赛 季赢得超过一个进球的第 一场比赛</span>
+                <p class="red-contain"
+                   v-for="(item,index) in buyDetailInfo.hometeam.ahead"
+                   :key="index">
+                  <span>{{item}}</span>
                   <span>·</span>
                 </p>
               </div>
@@ -313,46 +336,42 @@
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                特罗斯和冈萨尔维斯伤缺
+                <p class="red-contain"
+                   v-for="(item,index) in buyDetailInfo.awayteam.ahead"
+                   :key="index">
+                  <span>{{item}}</span>
+                  <span>·</span>
+                </p>
               </div>
             </div>
           </div>
           <div class="contain-info">
-            <p>{{buyDetailInfo.tips}}</p>
+            <p v-for="(item,index) in buyDetailInfo.tips"
+               :key="index">{{item}}</p>
           </div>
           <p class="contain-title">【预计首发】</p>
           <div class="team-cli">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p>Jeremy Clement
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Vincent Marchetti
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Anthony Koura
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Mons Bassouamina
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playerslineup"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <p>Jeremy Clement
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Vincent Marchetti
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Anthony Koura
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Mons Bassouamina
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playerslineup"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
@@ -362,34 +381,24 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p>Jeremy Clement
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Vincent Marchetti
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Anthony Koura
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Mons Bassouamina
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.hometeam.playersbenched"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <p>Jeremy Clement
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Vincent Marchetti
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Anthony Koura
-                  <span class="cli-badge">主力</span>
-                </p>
-                <p>Mons Bassouamina
-                  <span class="cli-badge">主力</span>
+                <p v-for="(item,index) in buyDetailInfo.awayteam.playersbenched"
+                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                  <span class="cli-badge"
+                        v-if="item.indexOf('/')!==-1"
+                        v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
+                        :key="indexs">{{items}}</span>
                 </p>
               </div>
             </div>
