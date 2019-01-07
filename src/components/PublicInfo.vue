@@ -198,9 +198,9 @@
     </x-table>
     <h3>近期战绩
     </h3>
-    <p>近甲府
-      <span>6胜</span>2平
-      <span>2负</span> 胜率60%</p>
+    <p>近{{hometeam}}
+      <span>{{openInfo.homerecentcount.win}}胜</span>{{openInfo.homerecentcount.drawn}}平
+      <span>{{openInfo.homerecentcount.loose}}负</span> 胜率{{openInfo.homerecentcount.percentage}}%</p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
@@ -228,9 +228,9 @@
     </x-table>
     <h3>近期战绩
     </h3>
-    <p>近鹿岛
-      <span>4胜</span>4平
-      <span>2负</span> 胜率40%</p>
+    <p>近{{awayteam}}
+      <span>{{openInfo.awayrecentcount.win}}胜</span>{{openInfo.awayrecentcount.drawn}}平
+      <span>{{openInfo.awayrecentcount.loose}}负</span> 胜率{{openInfo.awayrecentcount.percentage}}%</p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">

@@ -14,15 +14,15 @@
       </div>
       <div class="desc-more">
         <div>
-          <p>68</p>
+          <p>{{expertinfo.fcount}}</p>
           <p>荐单</p>
         </div>
         <div>
           <p>{{expertinfo.followcount}}</p>
           <p>粉丝</p>
         </div>
-        <div class="followUgc"
-             @click="followUgc">已关注</div>
+        <div :class="expertinfo.isfollow==0?'followUgc':'unfollowUgc'"
+             @click="followUgc">{{expertinfo.isfollow==0?'关注':'已关注'}}</div>
       </div>
     </div>
     <p class="title">近10荐单</p>
@@ -35,13 +35,13 @@
           <tr v-for="(items,indexs) in item.title"
               :key="indexs">
             <td>{{items.match_num}}</td>
-            <td>天狼星 VS 卡尔玛</td>
-            <td>{{items.match_result}}</td>
+            <td>{{items.hometeam}} VS {{items.awayteam}}</td>
+            <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'平')}}</td>
           </tr>
         </tbody>
       </x-table>
       <div class="table-result">
-        <div>{{item.fresult==0?'暂无结果':(item.fresult==-1?'未中':'荐中')}}</div>
+        <div>{{item.fresult==0?'立即查看':(item.fresult==-1?'未中':'荐中')}}</div>
       </div>
     </div>
   </div>
@@ -163,7 +163,6 @@ export default {
         &:nth-child(3) {
           width: 68px;
           height: 36px;
-          background: #0393f8;
           color: #ffffff;
           line-height: 36px;
           text-align: center;
@@ -188,7 +187,7 @@ export default {
     display: flex;
     margin-bottom: 18px;
     .vux-table {
-      flex: 3;
+      flex: 3.5;
       margin-left: 21px;
       // width: 71%;
       font-size: 12px;
@@ -199,6 +198,9 @@ export default {
       }
       td:first-child {
         color: #b4cae5;
+      }
+      td:last-child {
+        padding-right: 10px;
       }
     }
     .table-result {
@@ -218,6 +220,12 @@ export default {
       // padding-top: 18px;
     }
   }
+}
+.followUgc {
+  background: #0393f8;
+}
+.unfollowUgc {
+  background: #ececec;
 }
 </style>
 

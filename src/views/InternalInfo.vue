@@ -43,8 +43,8 @@
       </sticky>
       <div class=""
            v-if="btnTab==0">
-        <public-info :hometeam="matchlist.hometeam"
-                     :awayteam="matchlist.awayteam"
+        <public-info :hometeam="matchlist.hometeamname"
+                     :awayteam="matchlist.awayteamname"
                      :openInfo="openInfo"></public-info>
       </div>
       <div class="show-info"

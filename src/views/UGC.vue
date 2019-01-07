@@ -43,7 +43,6 @@
       </swiper-item>
     </swiper>
     <h2 class="title">牛人战绩
-      <span>更多></span>
     </h2>
     <div class="ugcList-info"
          v-for="(item,index) in bottomList"
