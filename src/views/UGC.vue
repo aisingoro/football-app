@@ -23,7 +23,7 @@
                    :key="index">
         <div class="tab-swiper vux-center">
           <h2 class="title">选拔牛人
-            <span>更多></span>
+            <span @click="getUgcList">更多></span>
           </h2>
           <grid :cols="4"
                 :show-lr-borders="false"
@@ -101,6 +101,9 @@ export default {
     }
   },
   methods:{
+    getUgcList(){
+      this.$router.push('/ugc-list')
+    },
     IssueOrder(){
       this.$router.push("/issue-order")
     },
