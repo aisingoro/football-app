@@ -1,10 +1,8 @@
 <template>
   <div class="login">
     <x-header :left-options="{backText: ''}">
-      <a slot="right"
-         @click="signIn">注册</a>
     </x-header>
-    <div class="title">{{pswTap?'密码登录':'验证码登录'}}</div>
+    <div class="title">注册</div>
     <x-input placeholder="请输入登录账号"
              v-model="username">
       <img slot="label"
@@ -12,11 +10,10 @@
            src="../../public/images/login-phone.png"
            width="18"
            height="26"></x-input>
-    <x-input placeholder="请输入密码"
+    <x-input placeholder="请设置密码"
              :type="inputType"
              :show-clear="false"
-             v-model="userpsw"
-             v-if="pswTap">
+             v-model="userpsw">
       <img slot="label"
            style="padding-right:10px;display:block;"
            src="../../public/images/login-psw.png"
@@ -26,22 +23,18 @@
     <x-input placeholder="请输入验证码"
              :type="inputType"
              :show-clear="false"
-             v-model="userpsw"
-             v-if="!pswTap">
+             v-model="userpsw">
       <div slot="right"
            class="get-num">获取验证码</div>
     </x-input>
-    <div class="sign-in"
-         @click="forgetPsw"
-         v-if="pswTap">找回密码</div>
+
     <x-button type="primary"
               @click="getLogin"
               :loading="loadbtn"
               :disabled="username!==''&&userpsw!==''?false:true"
               :text="loginText"></x-button>
-    <span class="change-btn"
-          @click="pswTap=!pswTap">切换/验证码登录</span>
-    <p>版权所有 ©️ 小球仙 2019</p>
+
+    <!-- <p>版权所有 ©️ 小球仙 2019</p> -->
   </div>
 </template>
 
@@ -56,10 +49,9 @@ import { XInput,XButton,XHeader } from 'vux'
       },
         data() {
             return {
-                pswTap:true,
                 isPsw: true,
                 loadbtn: false,
-                loginText: '登录',
+                loginText: '注册',
                 inputType: "password",
                 username: 'wangwei@aos',
                 userpsw: 'e10adc3949ba59abbe56e057f20f883e'
@@ -100,7 +92,7 @@ import { XInput,XButton,XHeader } from 'vux'
                 // })
             },
             signIn(){
-              this.$router.push("/register")
+              this.$router.push("/")
             },
             forgetPsw(){
               

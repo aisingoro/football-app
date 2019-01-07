@@ -23,6 +23,8 @@ import FillInfo from './views/FillInfo.vue'
 
 //登录
 import Login from './views/Login.vue'
+//注册
+import Register from './views/Register.vue'
 
 Vue.use(Router)
 
@@ -96,6 +98,10 @@ export default new Router({
       path: "/ugc-list",
       name: 'ugc-list',
       component: UgcList,
+    }, {
+      path: "/register",
+      name: 'register',
+      component: Register,
     }, {
       path: '/about',
       name: 'about',
