@@ -12,7 +12,6 @@
            height="26"></x-input>
     <x-input placeholder="请设置密码"
              :type="inputType"
-             :show-clear="false"
              v-model="userpsw">
       <img slot="label"
            style="padding-right:10px;display:block;"
@@ -23,13 +22,14 @@
     <x-input placeholder="请输入验证码"
              :type="inputType"
              :show-clear="false"
-             v-model="userpsw">
+             v-model="userNum">
       <div slot="right"
-           class="get-num">获取验证码</div>
+           class="get-num"
+           @click="sendauthsms">获取验证码</div>
     </x-input>
 
     <x-button type="primary"
-              @click="getLogin"
+              @click.native="getRegister"
               :loading="loadbtn"
               :disabled="username!==''&&userpsw!==''?false:true"
               :text="loginText"></x-button>
@@ -39,8 +39,10 @@
 </template>
 
 <script>
-import { XInput,XButton,XHeader } from 'vux'
-
+import https from '../https.js'
+import { XInput,XButton,XHeader,ToastPlugin } from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
     export default {
       components: {
         XInput,
@@ -53,22 +55,45 @@ import { XInput,XButton,XHeader } from 'vux'
                 loadbtn: false,
                 loginText: '注册',
                 inputType: "password",
-                username: 'wangwei@aos',
-                userpsw: 'e10adc3949ba59abbe56e057f20f883e'
+                username: '18518040722',
+                userpsw: '123456',
+                userNum:''
             }
         },
         methods: {
-            getLogin(){
-                let vm = this
-                vm.loadbtn = true;
-                vm.loginText = '登录中'
-                vm.$router.push("/home/workbench") //展示屏蔽接口
-                
-                let data = {
-                    "grant_type": "password",
-                    "password": this.userpsw,//"e10adc3949ba59abbe56e057f20f883e",//md5 123456
-                    "username": this.username//"wangwei@aos"
-                }
+          //发送短信验证码
+          sendauthsms(){
+            https.fetchPost('/system/sendauthsms.jsp',{account:this.username,m:'reguser'} ).then((data) => {
+                  console.log("ugcinfo",data.data)
+                }).catch(err=>{
+                      console.log(err)
+                  }
+                )
+
+          },
+          
+          //注册用户
+            getRegister(){
+              console.log(1111)
+                https.fetchPost('/system/checkauthcode.jsp',{account:this.username,autcode:this.userNum} ).then((data) => {
+                  console.log("ugcinfo",data.data)
+                }).catch(err=>{
+                  this.$vux.toast.show({
+                    text: '验证码有误！',
+                  })
+                  }
+                )
+                https.fetchPost('/user/reguser.jsp',{account:this.username,pass:this.userpsw,autcode:this.userNum} ).then((data) => {
+                  console.log("ugcinfo",data.data)
+
+                  this.$vux.toast.show({
+                    text: '注册成功！',
+                  })
+                  this.$router.go(-1)
+                }).catch(err=>{
+                      console.log(err)
+                  }
+                )
 
 
                 // ServicesManager.getService(ServicesNames.AUTHORIZATION, data).then(res => {
@@ -91,13 +116,7 @@ import { XInput,XButton,XHeader } from 'vux'
                 //     })
                 // })
             },
-            signIn(){
-              this.$router.push("/")
-            },
-            forgetPsw(){
-              
-            }
-
+            
         }
     };
 </script>

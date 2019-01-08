@@ -26,16 +26,17 @@
     <x-input placeholder="请输入验证码"
              :type="inputType"
              :show-clear="false"
-             v-model="userpsw"
+             v-model="userNum"
              v-if="!pswTap">
       <div slot="right"
-           class="get-num">获取验证码</div>
+           class="get-num"
+           @click="getNum">获取验证码</div>
     </x-input>
     <div class="sign-in"
          @click="forgetPsw"
          v-if="pswTap">找回密码</div>
     <x-button type="primary"
-              @click="getLogin"
+              @click.native="getLogin"
               :loading="loadbtn"
               :disabled="username!==''&&userpsw!==''?false:true"
               :text="loginText"></x-button>
@@ -46,8 +47,10 @@
 </template>
 
 <script>
-import { XInput,XButton,XHeader } from 'vux'
-
+import https from '../https.js'
+import { XInput,XButton,XHeader,ToastPlugin } from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
     export default {
       components: {
         XInput,
@@ -56,48 +59,47 @@ import { XInput,XButton,XHeader } from 'vux'
       },
         data() {
             return {
+              userNum:'',
                 pswTap:true,
                 isPsw: true,
                 loadbtn: false,
                 loginText: '登录',
                 inputType: "password",
-                username: 'wangwei@aos',
-                userpsw: 'e10adc3949ba59abbe56e057f20f883e'
+                username: '18518040722',
+                userpsw: '123456'
             }
         },
         methods: {
+          //发送短信验证码
+          getNum(){
+            https.fetchPost('/system/sendauthsms.jsp',{account:this.username,m:''} ).then((data) => {
+                  console.log("ugcinfo",data.data)
+                }).catch(err=>{
+                      console.log(err)
+                  }
+                )
+          },
             getLogin(){
-                let vm = this
-                vm.loadbtn = true;
-                vm.loginText = '登录中'
-                vm.$router.push("/home/workbench") //展示屏蔽接口
-                
-                let data = {
-                    "grant_type": "password",
-                    "password": this.userpsw,//"e10adc3949ba59abbe56e057f20f883e",//md5 123456
-                    "username": this.username//"wangwei@aos"
+              var args={
+                    account:this.username,
+                    vcode:this.userNum
+                  }
+                if(this.pswTap){
+                  args={
+                    account:this.username,
+                    pass:this.userpsw,
+                  }
                 }
-
-
-                // ServicesManager.getService(ServicesNames.AUTHORIZATION, data).then(res => {
-                //     let str = res.data.OutArgs.msg;
-                //     var obj = JSON.parse(str);
-                //     sessionStorage.setItem('aToken', obj.access_token.trim());
-                //     let subData = {"userId":1}
-                //     ServicesManager.getService(ServicesNames.LOGINSERVICE, subData).then(res => {
-                //         console.log('LOGINSERVICE', res);
-                //         vm.loadbtn = false
-                //         vm.loginText = '登录'
-                //         vm.$router.push("/home/workbench")
-                //     })
-                // }).catch(res => {
-                //     vm.loadbtn = false;
-                //     vm.loginText = '登录'
-                //     vm.$aui.toast.show({
-                //         text: '用户名密码错误',
-                //         type: 'warn'
-                //     })
-                // })
+                https.fetchPost('/user/login.jsp',args ).then((data) => {
+                  this.$store.state.userid=data.data.user.userid
+                  this.$vux.toast.show({
+                    text: '登录成功！',
+                  })
+                  this.$router.go(-1)
+                }).catch(err=>{
+                      console.log(err)
+                  }
+                )
             },
             signIn(){
               this.$router.push("/register")

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 import md5 from 'js-md5';
-
+// import Vuex from 'vuex'
+import store from './store'
 let t = String(Date.parse(new Date()));
 let newT = t.substring(0, t.length - 3);
 
@@ -23,6 +24,7 @@ axios.defaults.baseURL = '/api'; //配置接口地址
 // axios.defaults.baseURL = 'http://39.104.189.104'
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use((config) => {
+  console.log('userid', store.state.userid)
   //在发送请求之前做某件事
   if (config.method === 'post') {
     config.data = qs.stringify(config.data);
@@ -31,7 +33,7 @@ axios.interceptors.request.use((config) => {
   config.headers.common['platform'] = '';
   config.headers.common['package'] = '';
   config.headers.common['version'] = '1.0.0';
-  config.headers.common['userid'] = '2';
+  config.headers.common['userid'] = store.state.userid;
   config.headers.common['vcode'] = '1';
   config.headers.common['t'] = newT;
   config.headers.common['sign'] = md5(newT + 'y73jkfks98ky9dgdfgv');
