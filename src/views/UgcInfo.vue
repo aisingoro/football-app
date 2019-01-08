@@ -21,8 +21,9 @@
           <p>{{expertinfo.followcount}}</p>
           <p>粉丝</p>
         </div>
-        <div :class="expertinfo.isfollow==0?'followUgc':'unfollowUgc'"
-             @click="followUgc">{{expertinfo.isfollow==0?'关注':'已关注'}}</div>
+        <div :class="isFollow=='1'?'unfollowUgc':'followUgc'"
+             @click="followUgc">{{isFollow=='1' ?'已关注': '关注'}}
+        </div>
       </div>
     </div>
     <p class="title">近10荐单</p>
@@ -61,7 +62,7 @@ export default {
     return{
       expertinfo:{},
       listInfo:[],
-      isFollow:false//是否关注该专家
+      isFollow:'0'//是否关注该专家
     }
   },
   methods:{
@@ -71,12 +72,20 @@ export default {
     },
     followUgc(){
       var args={expertid:this.$route.query.ugcId}
-      if(this.isFollow){
-        var args={expertid:this.$route.query.ugcId,type:-1}
+      
+      if(this.isFollow=='1'){
+        args={expertid:this.$route.query.ugcId,type:'-1'}
       }
       https.fetchPost('/expert/follow.jsp',args ).then((data) => {
-        this.isFollow=!this.isFollow
-        console.log("ugcinfo",data.data)
+        
+        if(data.data.statuscode=='-1098'||data.data.statuscode=='-1030'){
+          this.$router.push('/login')
+        }
+        if(this.isFollow=='0'){
+          this.isFollow='1'
+        }{
+          this.isFollow='0'
+        }
       }).catch(err=>{
             console.log(err)
         }
@@ -85,9 +94,9 @@ export default {
   },
   mounted(){
     https.fetchPost('/forecast/expertforecast.jsp',{expertid:this.$route.query.ugcId} ).then((data) => {
-        console.log("ugcinfo",data.data)
         this.expertinfo = data.data.expertinfo;
-        this.listInfo = data.data.list
+        this.listInfo = data.data.list;
+        this.isFollow = data.data.expertinfo.isfollow
       }).catch(err=>{
             console.log(err)
         }

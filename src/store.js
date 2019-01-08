@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     internalInfoItem: '223', //比赛列表点击进入详情id
     matchnum: '', //场次编号
-    userid: '0' //用户唯一标识 userid
+    userid: '', //用户唯一标识 userid
+    vcode: '1'
 
   },
   mutations: {

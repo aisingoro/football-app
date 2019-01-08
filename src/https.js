@@ -34,7 +34,7 @@ axios.interceptors.request.use((config) => {
   config.headers.common['package'] = '';
   config.headers.common['version'] = '1.0.0';
   config.headers.common['userid'] = store.state.userid;
-  config.headers.common['vcode'] = '1';
+  config.headers.common['vcode'] = store.state.vcode;
   config.headers.common['t'] = newT;
   config.headers.common['sign'] = md5(newT + 'y73jkfks98ky9dgdfgv');
 

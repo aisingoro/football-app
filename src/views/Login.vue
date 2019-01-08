@@ -92,6 +92,7 @@ Vue.use(ToastPlugin)
                 }
                 https.fetchPost('/user/login.jsp',args ).then((data) => {
                   this.$store.state.userid=data.data.user.userid
+                  this.$store.state.vcode=data.data.user.vcode
                   this.$vux.toast.show({
                     text: '登录成功！',
                   })
