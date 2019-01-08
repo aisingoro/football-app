@@ -167,9 +167,11 @@
     </x-table>
     <h3>历史交战
     </h3>
-    <p>近{{Number(hisclashcount.win)+Number(hisclashcount.loose)+Number(hisclashcount.drawn)}}场交战，{{hometeam}}
+    <p>
+      近{{Number(hisclashcount.win)+Number(hisclashcount.loose)+Number(hisclashcount.drawn)}}场交战，{{hometeam}}
       <span>{{hisclashcount.win}}胜</span>{{hisclashcount.drawn}}平
-      <span>{{hisclashcount.loose}}负</span> 胜率{{hisclashcount.percentage}}%</p>
+      <span>{{hisclashcount.loose}}负</span> 胜率{{hisclashcount.percentage}}%
+    </p>
     <p></p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
@@ -199,8 +201,9 @@
     <h3>近期战绩
     </h3>
     <p>近{{hometeam}}
-      <span>{{openInfo.homerecentcount.win}}胜</span>{{openInfo.homerecentcount.drawn}}平
-      <span>{{openInfo.homerecentcount.loose}}负</span> 胜率{{openInfo.homerecentcount.percentage}}%</p>
+      <span>{{homerecentcount.win}}胜</span>{{homerecentcount.drawn}}平
+      <span>{{homerecentcount.loose}}负</span> 胜率{{homerecentcount.percentage}}%
+    </p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
@@ -229,8 +232,9 @@
     <h3>近期战绩
     </h3>
     <p>近{{awayteam}}
-      <span>{{openInfo.awayrecentcount.win}}胜</span>{{openInfo.awayrecentcount.drawn}}平
-      <span>{{openInfo.awayrecentcount.loose}}负</span> 胜率{{openInfo.awayrecentcount.percentage}}%</p>
+      <span>{{awayrecentcount.win}}胜</span>{{awayrecentcount.drawn}}平
+      <span>{{awayrecentcount.loose}}负</span> 胜率{{awayrecentcount.percentage}}%
+    </p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
              style="background-color:#F2F5F8;">
@@ -286,7 +290,9 @@ export default {
       awaylastmatches:[],
       awaylasthomematches:[],
       awaylastawaymatches:[],
-      hisclashcount:{}
+      hisclashcount:{},
+      homerecentcount:{},
+      awayrecentcount:{}
       // openInfo:openInfo
     }
   },
@@ -301,6 +307,8 @@ export default {
       this.awaylasthomematches = newVal.away.lasthomematches.split(',')
       this.awaylastawaymatches = newVal.away.lastawaymatches.split(',')
       this.hisclashcount = newVal.hisclashcount
+      this.homerecentcount = newVal.homerecentcount;
+      this.awayrecentcount = newVal.awayrecentcount;
     }
   },
   mounted(){
