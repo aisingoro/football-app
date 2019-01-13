@@ -4,19 +4,12 @@
               title="成为专家"></x-header>
     <div class="ugc-list-item"
          v-for="(item,index) in ugcList"
-         :key="index">
-      <img src="../../public/images/index-team-01.png" />
+         :key="index"
+         @click="getUgcInfo(item.expertid)">
+      <img :src="item.expertpic" />
       <div>
-        <p>赵教授</p>
-        <p>近期10中8 盈利100%</p>
-      </div>
-      <span class="more">></span>
-    </div>
-    <div class="ugc-list-item">
-      <img src="../../public/images/index-team-01.png" />
-      <div>
-        <p>赵教授</p>
-        <p>近期10中8 盈利100%</p>
+        <p>{{item.expertname}}</p>
+        <p>近期10中8 盈利{{item.fprofitrate}}</p>
       </div>
       <span class="more">></span>
     </div>
@@ -25,6 +18,7 @@
 
 <script>
 import { XHeader } from 'vux'
+import https from '../https.js'
 
 export default {
   components: {
@@ -35,7 +29,20 @@ export default {
       ugcList:[]
     }
   },
+  methods:{
+    getUgcInfo(index){
+      this.$router.push({path:'/ugc-info', query: {ugcId:index}})
+    },
+  },
   mounted(){
+    https.fetchPost('/expert/expertlist.jsp',{type:this.$route.query.ugcId} ).then((data) => {
+        console.log("ugc",data.data)
+        this.ugcList = data.data.list;
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+    
   }
 }
 </script>

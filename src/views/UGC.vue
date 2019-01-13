@@ -102,7 +102,7 @@ export default {
   },
   methods:{
     getUgcList(){
-      this.$router.push('/ugc-list')
+      this.$router.push({path:'/ugc-list',query:{ugcId:this.index+1}})
     },
     IssueOrder(){
       this.$router.push("/issue-order")
@@ -114,7 +114,7 @@ export default {
     //切换顶部tab栏目
     changeTab(args){
       console.log(111)
-      https.fetchPost('/expert/expertlist.jsp',{type:args} ).then((data) => {
+      https.fetchPost('/forecast/forecastlist.jsp',{type:args} ).then((data) => {
         console.log("ugc",data.data)
         this.ugcList = data.data.niurenlist;
         this.bottomList = data.data.list
