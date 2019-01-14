@@ -105,7 +105,11 @@ export default {
       this.$router.push({path:'/ugc-list',query:{ugcId:this.index+1}})
     },
     IssueOrder(){
-      this.$router.push("/issue-order")
+      if(this.$store.state.userid==''){
+        this.$router.push("/login")
+      }else{
+        this.$router.push("/issue-order")
+      }
     },
     //点击专家 跳转详情页面
     onItemClick(index){
