@@ -42,7 +42,7 @@ export default {
       list2:[{
         src: require('../../public/images/user-pannel-01.png'),
         title: '设置',
-        url: '/component/cell'
+        url: '/setting'
       }],
       list: [{
         src: require('../../public/images/user-pannel-01.png'),
@@ -55,11 +55,11 @@ export default {
       }, {
         src: require('../../public/images/user-pannel-03.png'),
         title: '意见反馈',
-        url: '/component/cell'
+        url: '/feedBack'
       }, {
         src: require('../../public/images/user-pannel-04.png'),
         title: '关于我们',
-        url: '/component/cell'
+        url: '/About'
       }],
     }
   }
