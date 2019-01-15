@@ -4,14 +4,14 @@
 		<div class="Purchase-content">
 			<div class="Purchase-p">
 				<div class="Purchase-list">
-					<div class="Purchase-item">
-						<div class="Purchase-date">2018-01-08</div>
-						<div class="Purchase-item-list">
+					<div class="Purchase-item" v-for="(item, index) in PurchaseData" :key="index">
+						<div class="Purchase-date">{{item.date}}</div>
+						<div class="Purchase-item-list" v-for="(items, _index) in item.purchaseList" :key="_index">
 							<div class="Purchase-item-list-l">
 								<img src="../../public/images/Purchase-icon.png" class="Purchase-icon">
-								<div class="Purchase-text">购买内参</div>
+								<div class="Purchase-text">{{items.purchaseText}}</div>
 							</div>
-							<div class="Purchase-money">5元</div>
+							<div class="Purchase-money">{{items.purchaseMoney}}</div>
 						</div>
 					</div>
 				</div>
@@ -21,7 +21,47 @@
 </template>
 <script>
 export default {
-
+	data () {
+		return {
+			PurchaseData: [
+				{
+					date: '2018-01-08',
+					purchaseList: [
+						{
+							purchaseText: '购买内参',
+							purchaseMoney: '5元'
+						}
+					]
+				},
+				{
+					date: '2018-01-08',
+					purchaseList: [
+						{
+							purchaseText: '购买内参',
+							purchaseMoney: '5元'
+						},
+						{
+							purchaseText: '购买内参',
+							purchaseMoney: '5元'
+						}
+					]
+				},
+				{
+					date: '2018-01-08',
+					purchaseList: [
+						{
+							purchaseText: '购买内参',
+							purchaseMoney: '5元'
+						},
+						{
+							purchaseText: '购买内参',
+							purchaseMoney: '5元'
+						}
+					]
+				}
+			]
+		}
+	}
 }
 </script>
 <style lang="scss" scope>
@@ -52,6 +92,7 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		margin-bottom: 2px;
 
 	}
 	.Purchase-item-list-l {
@@ -62,7 +103,6 @@ export default {
 		.Purchase-icon {
 			width:18px;
 			height: 18px;
-			background: #B4CAE5;
 			display: inline-block;
 		}
 		.Purchase-text {
@@ -75,7 +115,8 @@ export default {
 	}
 
 	.Purchase-money {
-
+		color: #FF455B;
+		font-size: 18px;
 	}
 </style>
 

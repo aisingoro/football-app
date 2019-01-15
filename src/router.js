@@ -33,6 +33,11 @@ import withdraw from './views/withdraw.vue'
 import withdrawResult from './views/withdrawResult.vue'
 // 我的购买
 import myPurchase from './views/myPurchase.vue'
+// 意见反馈
+import feedBack from './views/feedBack.vue'
+// 设置
+import setting from './views/setting.vue'
+
 
 Vue.use(Router)
 
@@ -128,6 +133,14 @@ export default new Router({
       path: "/myPurchase",
       name: 'myPurchase',
       component: myPurchase,
+    },{
+      path: "/feedBack",
+      name: 'feedBack',
+      component: feedBack,
+    },{
+      path: "/setting",
+      name: 'setting',
+      component: setting,
     },{
       path: '/about',
       name: 'about',
