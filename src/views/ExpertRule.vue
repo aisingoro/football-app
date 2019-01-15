@@ -8,8 +8,9 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.
       </p>
     </div>
-    <check-icon :value.sync="demo1">同意此协议</check-icon>
+    <check-icon :value.sync="isRule">同意此协议</check-icon>
     <button class="btn"
+            :class="isRule?'sure-btn':''"
             @click="nextRule">下一步</button>
   </div>
 </template>
@@ -24,12 +25,14 @@ export default {
   },
   data(){
     return{
-      demo1: false
+      isRule: false
     }
   },
   methods:{
     nextRule(){
-      this.$router.push("/upload-info")
+      if(this.isRule){
+        this.$router.push("/upload-info")
+      }
     }
   }
 }
@@ -83,6 +86,9 @@ export default {
     margin-left: -93.5px;
     border: none;
   }
+  .sure-btn {
+    background: #0393f8;
+  }
 }
 </style>
 <style>
@@ -90,15 +96,15 @@ export default {
   color: #313233;
 }
 .expert-rule .weui-icon-circle:before {
-  color: rgba(1, 208, 255, 1);
+  color: #0393f8;
 }
 .expert-rule .vux-check-icon > .weui-icon-success:before,
 .vux-check-icon > .weui-icon-success-circle:before {
-  color: rgba(1, 208, 255, 1);
+  color: #0393f8;
 }
 .expert-rule .weui-icon-success {
   font-size: 18px !important;
-  color: rgba(1, 208, 255, 1) !important;
+  color: #0393f8 !important;
 }
 .expert-rule .weui-icon-circle {
   font-size: 18px !important;

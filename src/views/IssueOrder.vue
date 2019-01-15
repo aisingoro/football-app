@@ -4,57 +4,23 @@
               title="发单"></x-header>
     <div class="order-info">
       <p>请至少选择1场比赛</p>
-      <div class="order-list">
+      <div class="order-list"
+           v-for="(item,index) in orderList"
+           :key="index">
         <div class="side-left">
-          <p>周日001</p>
-          <p>天皇杯</p>
-          <p>02/08/02:30</p>
+          <p>{{item.matchnum}}</p>
+          <p>{{item.league}}</p>
+          <p>{{item.matchtime}}</p>
         </div>
         <div class="side-right">
-          <p>哈萨克斯坦
-            <span>vs</span> 葡萄牙</p>
+          <p>{{item.hometeam}}
+            <span>vs</span> {{item.awayteam}}</p>
           <checker v-model="demo1"
                    default-item-class="demo1-item"
                    selected-item-class="demo1-item-selected">
             <checker-item :value="item"
-                          v-for="(item, index) in items1"
-                          :key="index">{{itemsTitle[index]}}<br>{{item.value}}</checker-item>
-          </checker>
-        </div>
-      </div>
-      <div class="order-list">
-        <div class="side-left">
-          <p>周日001</p>
-          <p>天皇杯</p>
-          <p>02/08/02:30</p>
-        </div>
-        <div class="side-right">
-          <p>哈萨克斯坦
-            <span>vs</span> 葡萄牙</p>
-          <checker v-model="demo1"
-                   default-item-class="demo1-item"
-                   selected-item-class="demo1-item-selected">
-            <checker-item :value="item"
-                          v-for="(item, index) in items1"
-                          :key="index">{{itemsTitle[index]}}<br>{{item.value}}</checker-item>
-          </checker>
-        </div>
-      </div>
-      <div class="order-list">
-        <div class="side-left">
-          <p>周日001</p>
-          <p>天皇杯</p>
-          <p>02/08/02:30</p>
-        </div>
-        <div class="side-right">
-          <p>哈萨克斯坦
-            <span>vs</span> 葡萄牙</p>
-          <checker v-model="demo1"
-                   default-item-class="demo1-item"
-                   selected-item-class="demo1-item-selected">
-            <checker-item :value="item"
-                          v-for="(item, index) in items1"
-                          :key="index">{{itemsTitle[index]}}<br>{{item.value}}</checker-item>
+                          v-for="(item1, index1) in items"
+                          :key="index1">{{itemsTitle[index]}}<br>{{item}}</checker-item>
           </checker>
         </div>
       </div>
@@ -68,6 +34,7 @@
 </template>
 
 <script>
+import https from '../https.js'
 import { XHeader,Checker, CheckerItem } from 'vux'
 export default {
   components: {
@@ -79,6 +46,8 @@ export default {
     return{
       demo1:null,
       itemsTitle:['胜','平','负','胜','平','负'],
+      items:[1.45,3.40,6.85,2.72,3.10,2.28],
+      orderList:[],
       items1: [{
         key: '胜1',
         value: '1.65'
@@ -104,6 +73,15 @@ export default {
     setOrder(){
       this.$router.push("/set-order")
     }
+  },
+  mounted(){
+    https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
+      this.orderList=data.data.list
+      console.log(data.data)
+    }).catch(err=>{
+          console.log(err)
+      }
+    )
   }
 }
 </script>
@@ -182,7 +160,7 @@ export default {
         }
         .demo1-item-selected {
           color: #ffffff;
-          background: #0393F8;
+          background: #0393f8;
         }
       }
     }
@@ -199,7 +177,7 @@ export default {
       font-size: 18px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
-      color: #0393F8;
+      color: #0393f8;
       margin-left: 16px;
       margin-top: 25px;
     }
@@ -209,7 +187,7 @@ export default {
       margin-top: 15px;
       width: 187px;
       height: 44px;
-      background:#0393F8;
+      background: #0393f8;
       border-radius: 24px;
       font-size: 20px;
       line-height: 44px;
