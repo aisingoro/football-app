@@ -27,6 +27,12 @@ import FillInfo from './views/FillInfo.vue'
 import Login from './views/Login.vue'
 //注册
 import Register from './views/Register.vue'
+// 提现
+import withdraw from './views/withdraw.vue'
+// 提现结果
+import withdrawResult from './views/withdrawResult.vue'
+// 我的购买
+import myPurchase from './views/myPurchase.vue'
 
 Vue.use(Router)
 
@@ -58,7 +64,7 @@ export default new Router({
       }, {
         path: "user",
         name: 'user',
-        component: User,
+				component: User
       }]
     }, {
       path: "/internal-info",
@@ -108,7 +114,21 @@ export default new Router({
       path: "/form-list-detail",
       name: 'form-list-detail',
       component: FormListDetail,
-    }, {
+		},
+		{
+      path: "/withdraw",
+      name: 'withdraw',
+      component: withdraw,
+		},
+		{
+      path: "/withdrawResult",
+      name: 'withdrawResult',
+      component: withdrawResult,
+    },{
+      path: "/myPurchase",
+      name: 'myPurchase',
+      component: myPurchase,
+    },{
       path: '/about',
       name: 'about',
       // route level code-splitting
