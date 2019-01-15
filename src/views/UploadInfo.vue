@@ -4,7 +4,26 @@
               title="成为专家"></x-header>
     <div class="upload">
       <h3>上传身份证</h3>
-      <div class="front-side">
+      <div class="front-side"
+           @click="uploadFront">
+        <div :class="obj"
+             :style='{"height":height,"width":width}'>
+          <img :style='{"height":height,"width":width}'
+               v-if="uploadImage"
+               class="img"
+               :src="uploadImage" />
+          <input class="aui-uploader__input"
+                 type="file"
+                 accept="image/*"
+                 @change="uploadFile"
+                 :class="{inputHide: inputHide}" />
+        </div>
+        <!-- <input class="upload"
+               @change='add_img'
+               type="file">
+        <img :src="imgItem"
+             width=50
+             height=50> -->
         <p><img src="../../public/images/upload.png" />上传正面</p>
       </div>
       <div class="other-side">
@@ -20,16 +39,102 @@
 </template>
 
 <script>
+import https from '../https.js'
 import { XHeader } from 'vux'
 
 export default {
   components: {
     XHeader
   },
-  methods:{
-    nextPage(){
-      this.$router.push("/fill-info")
+  data(){
+    return{
+      height:'50px',
+      width:'50px',
+      uploadImage:'',
+      inputHide: false,
+      obj: {
+        "aui-uploader__input-box": true,
+        "aui-uploader__input-box_after": false
+      },
+      imgItem:'',
+      formData:new FormData(),
+      imgs: {},
+      imgLen:0,
+      imgData: {
+            accept: 'image/gif, image/jpeg, image/png, image/jpg',
+        }
     }
+    
+  },
+  methods:{
+    uploadFront(){
+      //上传头像正面
+    },
+    nextPage(){
+      // this.$router.push("/fill-info")
+    },
+    uploadFile(event) {
+      let _this = this;
+      let file = event.target.files[0];
+
+      let fileReader = new FileReader();
+      fileReader.onload = function(e) {
+        _this.inputHide = true;
+        _this.obj["aui-uploader__input-box"] = false;
+        _this.obj["aui-uploader__input-box_after"] = true;
+        _this.$emit("change",e.target.result)
+        var args={imgfile:e.target.result}
+            https.fetchPost('/system/uploadimg.jsp',args).then((data) => {
+              console.log(data.data)
+            }).catch(err=>{
+                  console.log(err)
+              }
+            )
+      };
+      if (file) fileReader.readAsDataURL(file);
+      
+    },
+    //上传照片
+    
+        add_img(event){  
+            let reader =new FileReader();
+            let img1=event.target.files[0];
+            let type=img1.type;//文件的类型，判断是否是图片
+            let size=img1.size;//文件的大小，判断图片的大小
+            if(this.imgData.accept.indexOf(type) == -1){
+                alert('请选择我们支持的图片格式！');
+                return false;
+            }
+            if(size>3145728){
+                alert('请选择3M以内的图片！');
+                return false;
+            }
+            var uri = ''
+            let imgfile = new FormData(); 
+            imgfile.append('file',img1,img1.name);
+            console.log("imgfile",img1)
+            var args={imgfile:imgfile}
+            https.fetchPost('/system/uploadimg.jsp',imgfile).then((data) => {
+              console.log(data.data)
+            }).catch(err=>{
+                  console.log(err)
+              }
+            )
+            // this.$http.post('/file/upload',form,{
+            //     headers:{'Content-Type':'multipart/form-data'}
+            // }).then(response => {
+            //     console.log(response.data)
+            //     uri = response.data.url
+            //     reader.readAsDataURL(img1);
+            //     var that=this;
+            //     reader.onloadend=function(){
+            //         that.imgs.push(uri);
+            //     }
+            // }).catch(error => {
+            //     alert('上传图片出错！');
+            // })    
+}
+    
   }
 }
 </script>
