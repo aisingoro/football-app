@@ -52,7 +52,7 @@
         <p>{{item.expertname}}</p>
         <p>近期{{item.fcount}}中{{item.fright}} 盈利{{item.finfomation}}</p>
       </div>
-      <div @click="onItemClick(item.expertid)">立即查看</div>
+      <div @click="onItemClick(item.fid)">立即查看</div>
       <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
@@ -108,11 +108,17 @@ export default {
       if(this.$store.state.userid==''){
         this.$router.push("/login")
       }else{
-        this.$router.push("/issue-order")
+        if(this.$store.state.expertid=='0'){
+          //未认证专家
+          this.$router.push("/expert-rule")
+        }else{
+          this.$router.push("/issue-order")
+        }
       }
     },
     //点击专家 跳转详情页面
     onItemClick(index){
+      console.log("indexindex",index)
       this.$router.push({path:'/ugc-info', query: {ugcId:index}})
     },
     //切换顶部tab栏目

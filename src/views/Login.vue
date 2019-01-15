@@ -66,7 +66,8 @@ Vue.use(ToastPlugin)
                 loginText: '登录',
                 inputType: "password",
                 username: '18518040722',
-                userpsw: '123456'
+                userpsw: '123456',
+                a:{}
             }
         },
         methods: {
@@ -93,6 +94,7 @@ Vue.use(ToastPlugin)
                 https.fetchPost('/user/login.jsp',args ).then((data) => {
                   this.$store.state.userid=data.data.user.userid
                   this.$store.state.vcode=data.data.user.vcode
+                  this.$store.state.expertid=data.data.user.expertid//是否为专家
                   this.$vux.toast.show({
                     text: '登录成功！',
                   })
