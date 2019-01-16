@@ -95,6 +95,7 @@ export default {
   },
   methods:{
     onChange(val){
+      console.log(this.orderList)
       console.log('val',val)
       var match=val.split('/')[0];
       var matchIndex = val.split('/')[1];
@@ -166,6 +167,7 @@ export default {
                 //新增情况下
                 if(this.newArr.indexOf(this.matchnumItem)==-1 && this.orderList[i].matchnum==this.matchnumItem){
                     this.$set(this.orderList[i].bgColor, value.split('/')[1], true);
+                    console.log('999999')
                 }else{
                   //切换情况下
                   this.$set(this.orderList[i].bgColor, value.split('/')[1], false);
@@ -200,7 +202,7 @@ export default {
         matchtime: "2019-01-16 21:30:00",
         odds: ",3.90,3.52,1.70",
         weather: "",
-        bgColor:[false,false,false,false,false,false]
+        bgColor:['false','false','false','false','false','false']
       },
       {
         awayteam: "菲律宾",
@@ -212,7 +214,8 @@ export default {
         matchtime: "2019-01-16 21:30:00",
         odds: ",3.90,3.52,1.70",
         weather: "",
-        bgColor:[false,false,false,false,false,false]
+        bgColor:['false','false','false','false','false','false']
+        
       },
       {
         awayteam: "菲律宾",
@@ -224,7 +227,8 @@ export default {
         matchtime: "2019-01-16 21:30:00",
         odds: ",3.90,3.52,1.70",
         weather: "",
-        bgColor:[false,false,false,false,false,false]
+        bgColor:['false','false','false','false','false','false']
+        
       },
       {
         awayteam: "菲律宾",
@@ -236,15 +240,20 @@ export default {
         matchtime: "2019-01-16 21:30:00",
         odds: ",3.90,3.52,1.70",
         weather: "",
-        bgColor:[false,false,false,false,false,false]
+        bgColor:['false','false','false','false','false','false']
       }
     ]
+for(var i=0;i<this.orderList.length;i++){
+        this.orderList[i].bgColor=[false,false,false,false,false,false]
+      }
+
     // https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
+    //   for(var i=0;i<data.data.list.length;i++){
+    //     data.data.list[i].bgColor=[false,false,false,false,false,false]
+    //   }
     //   this.orderList=data.data.list
     //   for(var i=0;i<this.orderList.length;i++){
     //     this.orderList[i].selNum=''
-    //     this.orderList[i].bgColor=this.bgCol
-
     //   }
     //   console.log(data.data)
     // }).catch(err=>{
