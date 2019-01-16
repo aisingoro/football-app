@@ -15,12 +15,17 @@
         <div class="side-right">
           <p>{{item.hometeam}}
             <span>vs</span> {{item.awayteam}}</p>
-          <checker v-model="demo1"
+          <checker v-model="orderList[index].selNum"
                    default-item-class="demo1-item"
-                   selected-item-class="demo1-item-selected">
-            <checker-item :value="item"
-                          v-for="(item1, index1) in items"
-                          :key="index1">{{itemsTitle[index]}}<br>{{item}}</checker-item>
+                   selected-item-class="demo1-item-selected"
+                   @on-change="onChange">
+
+            <checker-item @on-item-click="onItemClick"
+                          :disabled="item.bgColor[index1]"
+                          :class="item.bgColor[index1]?'demo1-item-unsel':''"
+                          :value="orderList[index].matchnum+'/'+index1"
+                          v-for="(item1, index1) in item.odds.split(',')"
+                          :key="index1">{{itemsTitle[index1]}}<br>{{item1}}{{item.bgColor[index1]}}</checker-item>
           </checker>
         </div>
       </div>
@@ -35,7 +40,9 @@
 
 <script>
 import https from '../https.js'
-import { XHeader,Checker, CheckerItem } from 'vux'
+import { XHeader,Checker, CheckerItem,ToastPlugin } from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
   components: {
     XHeader,
@@ -45,9 +52,17 @@ export default {
   data(){
     return{
       demo1:null,
-      itemsTitle:['胜','平','负','胜','平','负'],
+      itemsTitle:['胜','平','负','让胜','让平','让负'],
       items:[1.45,3.40,6.85,2.72,3.10,2.28],
+      newCopyList:[],
+      newArr:[],//场次编号数组
+      matchnum1:'',
+      matchnum2:'',
+      matchnumItem:'',
       orderList:[],
+      // ifSel:false,
+      bgCol:[false,false,false,false,false,false],
+      selList:[],
       items1: [{
         key: '胜1',
         value: '1.65'
@@ -69,19 +84,173 @@ export default {
       }],
     }
   },
+  watch:{
+    // 'orderList':{//深度监听，可监听到对象、数组的变化
+    //         handler(val, oldVal){
+    //             console.log("监听orderlist: "+val, oldVal);//但是这两个值打印出来却都是一样的
+    //         },
+    //         deep:true
+    //     }
+
+  },
   methods:{
+    onChange(val){
+      console.log('val',val)
+      var match=val.split('/')[0];
+      var matchIndex = val.split('/')[1];
+      var index=0;//要删除
+      var changeIndex=0//切换的index
+      var Arr=[0,0,0,0,0,0];//上传荐单结果
+      Arr.splice(matchIndex,1,1)
+      
+          console.log('qiehuan',matchIndex)
+
+        // 如果matchIndex='',代表取消选项
+        if(matchIndex=='' || matchIndex==undefined){
+          //将重新把所有选项打开可以选择
+          for(var i=0;i<this.orderList.length;i++){
+            this.orderList[i].bgColor=[false,false,false,false,false,false]
+          }
+        //将已选择列表中删除该项
+          for(var i=0;i<this.selList.length;i++){
+            //长度超过2
+            if(this.selList[i].matchnum==this.matchnumItem){
+                var index = i;
+                this.selList.splice(index, 1);
+                var delIndex= this.newArr.indexOf(this.matchnumItem);
+                this.newArr.splice(delIndex, 1) //将场次编号数组中删除该项
+              }
+            
+          }
+              console.log('超过2selList',this.selList,this.newArr)
+          
+        }else{
+          //如果matchIndex!='',代表新增或切换选项
+          //新增
+          if(this.newArr.indexOf(this.matchnumItem)==-1){
+          //超过两场提示
+          console.log('newArr数量',this.newArr.length)
+          if(this.newArr.length>=2){
+            this.$vux.toast.show({
+              type:'warn',
+              text: '最多只能选择两场比赛！',
+            })
+            
+            return false
+          }
+          this.newArr.push(this.matchnumItem)//添加到场次编号列表
+          console.log('新增后',this.newArr)
+          //未添加过，添加到已选列表
+          this.selList.push({
+            matchnum:val.split('/')[0],
+            forceval:Arr.join('')
+          })
+        }else{
+          //切换
+           for(var i=0;i<this.selList.length;i++){
+              if(this.selList[i].matchnum==this.matchnumItem){
+                var changeIndex = i;//要切换的索引
+                this.selList[changeIndex].forceval=Arr.join('')
+              }
+            }
+        }
+      }
+    },
+    onItemClick (value, disabled) {
+      this.matchnumItem = value.split('/')[0]
+      console.log("111111",this.matchnumItem,disabled)
+      
+            for(var i=0;i<this.orderList.length;i++){
+              //达到选择最大长度
+              if(this.newArr.length>=2){
+                //新增情况下
+                if(this.newArr.indexOf(this.matchnumItem)==-1 && this.orderList[i].matchnum==this.matchnumItem){
+                    this.$set(this.orderList[i].bgColor, value.split('/')[1], true);
+                }else{
+                  //切换情况下
+                  this.$set(this.orderList[i].bgColor, value.split('/')[1], false);
+                  
+                }
+              
+            }
+          }
+          
+      // this.selList.push(value);
+      // if(this.selList.length>2) {
+      //   this.$vux.toast.show({
+      //     type:'warn',
+      //     text: '最多只能选择两场比赛！',
+      //   })
+      // }
+
+    },
     setOrder(){
       this.$router.push("/set-order")
     }
   },
   mounted(){
-    https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
-      this.orderList=data.data.list
-      console.log(data.data)
-    }).catch(err=>{
-          console.log(err)
+    this.orderList=[
+      {
+        awayteam: "菲律宾",
+        awayteampic: "菲律宾",
+        hometeam: "吉尔吉斯",
+        hometeampic: "吉尔吉斯",
+        league: "亚洲杯",
+        matchnum: "20190116029",
+        matchtime: "2019-01-16 21:30:00",
+        odds: ",3.90,3.52,1.70",
+        weather: "",
+        bgColor:[false,false,false,false,false,false]
+      },
+      {
+        awayteam: "菲律宾",
+        awayteampic: "菲律宾",
+        hometeam: "吉尔吉斯",
+        hometeampic: "吉尔吉斯",
+        league: "亚洲杯",
+        matchnum: "20190116030",
+        matchtime: "2019-01-16 21:30:00",
+        odds: ",3.90,3.52,1.70",
+        weather: "",
+        bgColor:[false,false,false,false,false,false]
+      },
+      {
+        awayteam: "菲律宾",
+        awayteampic: "菲律宾",
+        hometeam: "吉尔吉斯",
+        hometeampic: "吉尔吉斯",
+        league: "亚洲杯",
+        matchnum: "20190116031",
+        matchtime: "2019-01-16 21:30:00",
+        odds: ",3.90,3.52,1.70",
+        weather: "",
+        bgColor:[false,false,false,false,false,false]
+      },
+      {
+        awayteam: "菲律宾",
+        awayteampic: "菲律宾",
+        hometeam: "吉尔吉斯",
+        hometeampic: "吉尔吉斯",
+        league: "亚洲杯",
+        matchnum: "20190116032",
+        matchtime: "2019-01-16 21:30:00",
+        odds: ",3.90,3.52,1.70",
+        weather: "",
+        bgColor:[false,false,false,false,false,false]
       }
-    )
+    ]
+    // https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
+    //   this.orderList=data.data.list
+    //   for(var i=0;i<this.orderList.length;i++){
+    //     this.orderList[i].selNum=''
+    //     this.orderList[i].bgColor=this.bgCol
+
+    //   }
+    //   console.log(data.data)
+    // }).catch(err=>{
+    //       console.log(err)
+    //   }
+    // )
   }
 }
 </script>
@@ -161,6 +330,10 @@ export default {
         .demo1-item-selected {
           color: #ffffff;
           background: #0393f8;
+        }
+        .demo1-item-unsel {
+          color: #7ba1d0;
+          background: rgba(248, 249, 250, 1);
         }
       }
     }

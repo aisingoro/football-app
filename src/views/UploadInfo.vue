@@ -18,12 +18,6 @@
                  @change="uploadFile"
                  :class="{inputHide: inputHide}" />
         </div>
-        <!-- <input class="upload"
-               @change='add_img'
-               type="file">
-        <img :src="imgItem"
-             width=50
-             height=50> -->
         <p><img src="../../public/images/upload.png" />上传正面</p>
       </div>
       <div class="other-side">
@@ -73,6 +67,7 @@ export default {
     nextPage(){
       // this.$router.push("/fill-info")
     },
+    //上传照片
     uploadFile(event) {
       let _this = this;
       let file = event.target.files[0];
@@ -94,46 +89,7 @@ export default {
       if (file) fileReader.readAsDataURL(file);
       
     },
-    //上传照片
     
-        add_img(event){  
-            let reader =new FileReader();
-            let img1=event.target.files[0];
-            let type=img1.type;//文件的类型，判断是否是图片
-            let size=img1.size;//文件的大小，判断图片的大小
-            if(this.imgData.accept.indexOf(type) == -1){
-                alert('请选择我们支持的图片格式！');
-                return false;
-            }
-            if(size>3145728){
-                alert('请选择3M以内的图片！');
-                return false;
-            }
-            var uri = ''
-            let imgfile = new FormData(); 
-            imgfile.append('file',img1,img1.name);
-            console.log("imgfile",img1)
-            var args={imgfile:imgfile}
-            https.fetchPost('/system/uploadimg.jsp',imgfile).then((data) => {
-              console.log(data.data)
-            }).catch(err=>{
-                  console.log(err)
-              }
-            )
-            // this.$http.post('/file/upload',form,{
-            //     headers:{'Content-Type':'multipart/form-data'}
-            // }).then(response => {
-            //     console.log(response.data)
-            //     uri = response.data.url
-            //     reader.readAsDataURL(img1);
-            //     var that=this;
-            //     reader.onloadend=function(){
-            //         that.imgs.push(uri);
-            //     }
-            // }).catch(error => {
-            //     alert('上传图片出错！');
-            // })    
-}
     
   }
 }
