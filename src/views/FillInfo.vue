@@ -4,46 +4,82 @@
               title="成为专家"></x-header>
     <div class="fill">
       <x-input title="真实姓名"
-               v-model="name"
+               v-model="truename"
                placeholder="请输入您的真实姓名"></x-input>
       <x-input title="身份证号"
-               v-model="idCard"
+               v-model="idcard"
                placeholder="请输入您的身份证号"></x-input>
       <x-input title="昵称"
-               v-model="ugcName"
+               v-model="expertname"
                placeholder="请输入您的昵称"></x-input>
       <p>昵称是您的专家宣传标识，提交申请后，昵称将不可更改</p>
+      <x-input title="银行卡号"
+               v-model="cardnum"
+               placeholder="请输入您的银行卡号"></x-input>
+      <x-input title="开户行"
+               v-model="openingbank"
+               placeholder="请输入您的开户行"></x-input>
+      <!-- <selector ref="defaultValueRef"
+                title="开户行"
+                direction="rtl"
+                :options="list"
+                v-model="defaultValue"></selector> -->
+
       <h3>自我介绍</h3>
       <group class="text-bg">
-        <x-textarea :max="200"
+        <x-textarea v-model="expertdesc"
+                    :max="200"
                     placeholder="点击此处填写您的自我介绍、竞猜经验、相关经 历等，以提高您审核通过的机率，200字以内"></x-textarea>
       </group>
-      <button class="btn">提交</button>
+      <button class="btn"
+              @click="setFillInfo">提交</button>
     </div>
 
   </div>
 </template>
 
 <script>
-import { XHeader,XInput,XTextarea,Group,md5 } from 'vux'
+import https from '../https.js'
+import { XHeader,XInput,XTextarea,Group,Selector } from 'vux'
 
 export default {
   components: {
     XHeader,
     XInput,
     XTextarea,
-    Group
+    Group,
+    Selector
   },
   data(){
     return{
-      name:'',
-      idCard:'',
-      ugcName:''
+      expertname :'',
+      expertdesc :'',
+      expertpic :'',
+      truename :'',
+      idcard :'',
+      openingbank :'',
+      cardnum :'',
     }
   },
-  mounted(){
-    var md = md5('1545633812y73jkfks98ky9dgdfgv')
-    console.log(md)
+  methods:{
+    setFillInfo(){
+      let args={
+        expertname :this.expertname,
+          expertdesc :this.expertdesc,
+          expertpic :'',
+          truename :this.truename,
+          idcard :this.idcard,
+          openingbank :this.openingbank,
+          cardnum :this.cardnum
+      }
+      https.fetchPost('/user/regexpert.jsp',args).then((data) => {
+        console.log(data.data)
+        this.$router.push('/issue-order')
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+    }
   }
 }
 </script>
@@ -83,11 +119,8 @@ export default {
       );
       border-radius: 22px;
       color: #ffffff;
-      position: fixed;
-      bottom: 15px;
-      left: 50%;
-      margin-left: -93.5px;
       border: none;
+      margin: 20px auto;
     }
   }
 }
@@ -124,6 +157,7 @@ export default {
   height: 158px;
   background: rgba(248, 249, 250, 1);
   border-radius: 6px;
+  // padding-bottom: 50px;
   .weui-cell {
     border-bottom: none;
   }

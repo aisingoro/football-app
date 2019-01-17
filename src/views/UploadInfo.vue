@@ -5,24 +5,26 @@
     <div class="upload">
       <h3>上传身份证</h3>
       <div class="front-side"
-           @click="uploadFront">
-        <div :class="obj"
-             :style='{"height":height,"width":width}'>
-          <img :style='{"height":height,"width":width}'
-               v-if="uploadImage"
-               class="img"
-               :src="uploadImage" />
-          <input class="aui-uploader__input"
-                 type="file"
-                 accept="image/*"
-                 @change="uploadFile"
-                 :class="{inputHide: inputHide}" />
-        </div>
-        <p><img src="../../public/images/upload.png" />上传正面</p>
+           v-bind:style="{backgroundImage:'url(' + uploadImageFront + ')'}">
+        <input class="aui-uploader__input"
+               type="file"
+               accept="image/*"
+               @change="uploadFile"
+               :class="{inputHide: inputHide}" />
+        <p v-if="uploadImageFront==''"><img src="../../public/images/upload.png" />上传正面</p>
       </div>
-      <div class="other-side">
+      <div class="other-side"
+           v-bind:style="{backgroundImage:'url(' + uploadImageSide + ')'}">
+        <input class="aui-uploader__input"
+               type="file"
+               accept="image/*"
+               @change="uploadFileSide"
+               :class="{inputHide: inputHide}" />
+        <p v-if="uploadImageSide==''"><img src="../../public/images/upload.png" />上传反面</p>
+      </div>
+      <!-- <div class="other-side">
         <p><img src="../../public/images/upload.png" />上传反面</p>
-      </div>
+      </div> -->
       <p>上传规则：</p>
       <p class="rules">1.请注意正反面是否上传错误</p>
       <p class="rules">2.请身份证拍摄的清晰度，保证内容清晰</p>
@@ -42,6 +44,8 @@ export default {
   },
   data(){
     return{
+      uploadImageSide:'',
+      uploadImageFront:'',
       height:'50px',
       width:'50px',
       uploadImage:'',
@@ -61,14 +65,24 @@ export default {
     
   },
   methods:{
-    uploadFront(){
-      //上传头像正面
-    },
+    
     nextPage(){
+      let args={
+        idcardpic1:this.uploadImageFront,
+        idcardpic2:this.uploadImageSide
+      }
+      https.fetchPost('/user/saveidcard.jsp',args).then((data) => {
+        console.log(data.data)
+        this.$router.push("/fill-info")
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
       // this.$router.push("/fill-info")
     },
     //上传照片
     uploadFile(event) {
+
       let _this = this;
       let file = event.target.files[0];
 
@@ -80,7 +94,8 @@ export default {
         _this.$emit("change",e.target.result)
         var args={imgfile:e.target.result}
             https.fetchPost('/system/uploadimg.jsp',args).then((data) => {
-              console.log(data.data)
+              console.log(data.data.imgurl)
+              _this.uploadImageFront = data.data.imgurl
             }).catch(err=>{
                   console.log(err)
               }
@@ -89,6 +104,28 @@ export default {
       if (file) fileReader.readAsDataURL(file);
       
     },
+    //上传反面
+    uploadFileSide(){
+      let _this = this;
+      let file = event.target.files[0];
+
+      let fileReader = new FileReader();
+      fileReader.onload = function(e) {
+        _this.inputHide = true;
+        _this.obj["aui-uploader__input-box"] = false;
+        _this.obj["aui-uploader__input-box_after"] = true;
+        _this.$emit("change",e.target.result)
+        var args={imgfile:e.target.result}
+            https.fetchPost('/system/uploadimg.jsp',args).then((data) => {
+              console.log(data.data.imgurl)
+              _this.uploadImageSide = data.data.imgurl
+            }).catch(err=>{
+                  console.log(err)
+              }
+            )
+      };
+      if (file) fileReader.readAsDataURL(file);
+    }
     
     
   }
@@ -96,6 +133,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.front-side,
+.other-side {
+  background-size: 100% 100% !important;
+}
+.aui-uploader__input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
 .upload-info {
   .vux-header {
     background: #ffffff;
@@ -127,6 +173,7 @@ export default {
         color: rgba(49, 50, 51, 1);
         position: absolute;
         top: 50%;
+        left: 0;
         margin-top: -7px;
         display: inline-block;
         line-height: 20px;
