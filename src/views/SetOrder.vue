@@ -15,13 +15,13 @@
         <div class="side-right">
           <p>{{item.hometeam}}
             <span>vs</span> {{item.awayteam}}</p>
-          <checker v-model="orderList[index].selNum"
+          <checker v-model="checkNum"
                    default-item-class="demo1-item"
                    selected-item-class="demo1-item-selected">
 
             <checker-item disabled
                           :class="item.bgColor[index1]?'demo1-item-unsel':''"
-                          :value="orderList[index].matchnum+'/'+index1"
+                          :value="sureList[index].bgColor[index1]"
                           v-for="(item1, index1) in item.odds.split(',')"
                           :key="index1">{{itemsTitle[index1]}}<br>{{item1}}</checker-item>
           </checker>
@@ -77,6 +77,7 @@ export default {
   },
   data(){
     return{
+      checkNum:'1',
       isBack:true,
       fmoney:'',
       fconent:'',
