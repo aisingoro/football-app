@@ -156,6 +156,7 @@ export default {
             }
         }
       }
+      console.log("最后选择了：~~~~~~~~~~~~~~",this.selList)
     },
     onItemClick (value, disabled) {
       this.matchnumItem = value.split('/')[0]
@@ -177,89 +178,82 @@ export default {
             }
           }
           
-      // this.selList.push(value);
-      // if(this.selList.length>2) {
-      //   this.$vux.toast.show({
-      //     type:'warn',
-      //     text: '最多只能选择两场比赛！',
-      //   })
-      // }
 
     },
     setOrder(){
-      this.$router.push("/set-order")
+      this.$router.push({path:'/set-order',query:{selList:this.selList,orderList:this.orderList}})
     }
   },
   mounted(){
-    this.orderList=[
-      {
-        awayteam: "菲律宾",
-        awayteampic: "菲律宾",
-        hometeam: "吉尔吉斯",
-        hometeampic: "吉尔吉斯",
-        league: "亚洲杯",
-        matchnum: "20190116029",
-        matchtime: "2019-01-16 21:30:00",
-        odds: ",3.90,3.52,1.70",
-        weather: "",
-        bgColor:['false','false','false','false','false','false']
-      },
-      {
-        awayteam: "菲律宾",
-        awayteampic: "菲律宾",
-        hometeam: "吉尔吉斯",
-        hometeampic: "吉尔吉斯",
-        league: "亚洲杯",
-        matchnum: "20190116030",
-        matchtime: "2019-01-16 21:30:00",
-        odds: ",3.90,3.52,1.70",
-        weather: "",
-        bgColor:['false','false','false','false','false','false']
+//     this.orderList=[
+//       {
+//         awayteam: "菲律宾",
+//         awayteampic: "菲律宾",
+//         hometeam: "吉尔吉斯",
+//         hometeampic: "吉尔吉斯",
+//         league: "亚洲杯",
+//         matchnum: "20190116029",
+//         matchtime: "2019-01-16 21:30:00",
+//         odds: ",3.90,3.52,1.70",
+//         weather: "",
+//         bgColor:['false','false','false','false','false','false']
+//       },
+//       {
+//         awayteam: "菲律宾",
+//         awayteampic: "菲律宾",
+//         hometeam: "吉尔吉斯",
+//         hometeampic: "吉尔吉斯",
+//         league: "亚洲杯",
+//         matchnum: "20190116030",
+//         matchtime: "2019-01-16 21:30:00",
+//         odds: ",3.90,3.52,1.70",
+//         weather: "",
+//         bgColor:['false','false','false','false','false','false']
         
-      },
-      {
-        awayteam: "菲律宾",
-        awayteampic: "菲律宾",
-        hometeam: "吉尔吉斯",
-        hometeampic: "吉尔吉斯",
-        league: "亚洲杯",
-        matchnum: "20190116031",
-        matchtime: "2019-01-16 21:30:00",
-        odds: ",3.90,3.52,1.70",
-        weather: "",
-        bgColor:['false','false','false','false','false','false']
+//       },
+//       {
+//         awayteam: "菲律宾",
+//         awayteampic: "菲律宾",
+//         hometeam: "吉尔吉斯",
+//         hometeampic: "吉尔吉斯",
+//         league: "亚洲杯",
+//         matchnum: "20190116031",
+//         matchtime: "2019-01-16 21:30:00",
+//         odds: ",3.90,3.52,1.70",
+//         weather: "",
+//         bgColor:['false','false','false','false','false','false']
         
-      },
-      {
-        awayteam: "菲律宾",
-        awayteampic: "菲律宾",
-        hometeam: "吉尔吉斯",
-        hometeampic: "吉尔吉斯",
-        league: "亚洲杯",
-        matchnum: "20190116032",
-        matchtime: "2019-01-16 21:30:00",
-        odds: ",3.90,3.52,1.70",
-        weather: "",
-        bgColor:['false','false','false','false','false','false']
-      }
-    ]
-for(var i=0;i<this.orderList.length;i++){
-        this.orderList[i].bgColor=[false,false,false,false,false,false]
-      }
+//       },
+//       {
+//         awayteam: "菲律宾",
+//         awayteampic: "菲律宾",
+//         hometeam: "吉尔吉斯",
+//         hometeampic: "吉尔吉斯",
+//         league: "亚洲杯",
+//         matchnum: "20190116032",
+//         matchtime: "2019-01-16 21:30:00",
+//         odds: ",3.90,3.52,1.70",
+//         weather: "",
+//         bgColor:['false','false','false','false','false','false']
+//       }
+//     ]
+// for(var i=0;i<this.orderList.length;i++){
+//         this.orderList[i].bgColor=[false,false,false,false,false,false]
+//       }
 
-    // https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
-    //   for(var i=0;i<data.data.list.length;i++){
-    //     data.data.list[i].bgColor=[false,false,false,false,false,false]
-    //   }
-    //   this.orderList=data.data.list
-    //   for(var i=0;i<this.orderList.length;i++){
-    //     this.orderList[i].selNum=''
-    //   }
-    //   console.log(data.data)
-    // }).catch(err=>{
-    //       console.log(err)
-    //   }
-    // )
+    https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
+      for(var i=0;i<data.data.list.length;i++){
+        data.data.list[i].bgColor=[false,false,false,false,false,false]
+      }
+      this.orderList=data.data.list
+      // for(var i=0;i<this.orderList.length;i++){
+      //   this.orderList[i].selNum=''
+      // }
+      console.log(data.data)
+    }).catch(err=>{
+          console.log(err)
+      }
+    )
   }
 }
 </script>

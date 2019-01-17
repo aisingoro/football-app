@@ -2,53 +2,38 @@
   <div class="set-order">
     <x-header :left-options="{backText: ''}"
               title="发单"></x-header>
+    <!-- <keep-alive> -->
     <div class="order-info">
-      <p>请至少选择1场比赛</p>
-      <div class="order-list">
+      <div class="order-list"
+           v-for="(item,index) in sureList"
+           :key="index">
         <div class="side-left">
-          <p>周日001</p>
-          <p>天皇杯</p>
-          <p>02/08/02:30</p>
-          <x-icon type="ios-close-outline"
-                  size="20"></x-icon>
+          <p>{{item.matchnum}}</p>
+          <p>{{item.league}}</p>
+          <p>{{item.matchtime}}</p>
         </div>
         <div class="side-right">
-          <p>哈萨克斯坦
-            <span>vs</span> 葡萄牙</p>
-          <checker v-model="demo1"
+          <p>{{item.hometeam}}
+            <span>vs</span> {{item.awayteam}}</p>
+          <checker v-model="orderList[index].selNum"
                    default-item-class="demo1-item"
                    selected-item-class="demo1-item-selected">
-            <checker-item :value="item"
-                          v-for="(item, index) in items1"
-                          :key="index">{{itemsTitle[index]}}<br>{{item.value}}</checker-item>
+
+            <checker-item disabled
+                          :class="item.bgColor[index1]?'demo1-item-unsel':''"
+                          :value="orderList[index].matchnum+'/'+index1"
+                          v-for="(item1, index1) in item.odds.split(',')"
+                          :key="index1">{{itemsTitle[index1]}}<br>{{item1}}</checker-item>
           </checker>
         </div>
       </div>
-      <div class="order-list">
-        <div class="side-left">
-          <p>周日001</p>
-          <p>天皇杯</p>
-          <p>02/08/02:30</p>
-          <x-icon type="ios-close-outline"
-                  size="20"></x-icon>
-        </div>
-        <div class="side-right">
-          <p>哈萨克斯坦
-            <span>vs</span> 葡萄牙</p>
-          <checker v-model="demo1"
-                   default-item-class="demo1-item"
-                   selected-item-class="demo1-item-selected">
-            <checker-item :value="item"
-                          v-for="(item, index) in items1"
-                          :key="index">{{itemsTitle[index]}}<br>{{item.value}}</checker-item>
-          </checker>
-        </div>
-      </div>
+
     </div>
     <div class="fixed-bottom">
       <h1>推荐理由</h1>
       <group>
-        <x-textarea placeholder="点击输入推荐理由，不少于20个字"
+        <x-textarea v-model="fconent"
+                    placeholder="点击输入推荐理由，不少于20个字"
                     :show-counter="false"
                     :rows="1"
                     autosize></x-textarea>
@@ -60,18 +45,26 @@
                  class="bor-none">
       </checklist>
       <div class="pay-input">
-        <input type="text" />
+        <input type="text"
+               v-model="fmoney" />
         <span>¥</span>
+        <check-icon :value.sync="isBack"
+                    type="plain"> 不中返</check-icon>
       </div>
 
       <div class="btn"
            @click="setOrder">确定</div>
     </div>
+    <!-- </keep-alive> -->
   </div>
 </template>
 
 <script>
-import { XHeader,Checker, CheckerItem,XTextarea,Group,Checklist } from 'vux'
+import https from '../https.js'
+
+import { XHeader,Checker, CheckerItem,XTextarea,Group,Checklist,ToastPlugin,CheckIcon } from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
   components: {
     XHeader,
@@ -79,10 +72,17 @@ export default {
     CheckerItem,
     XTextarea,
     Group,
-    Checklist
+    Checklist,
+    CheckIcon
   },
   data(){
     return{
+      isBack:true,
+      fmoney:'',
+      fconent:'',
+      sureList:[],
+      selList:[],
+      orderList:[],
       commonList: [ '免费', '收费' ],
       radioValue:[],
       demo1:null,
@@ -109,8 +109,83 @@ export default {
     }
   },
   methods:{
+    //提交荐单
     setOrder(){
+      //判断推荐理由是否达到20字
+      if(this.fconent.length<20){
+        this.$vux.toast.show({
+          type:'warn',
+          text: '推荐理由不足20字哦～',
+        })
+        return false
+      }
+      var matchnum1,matchnum2,forceval1,forceval2,isback
+      if(this.selList.length==2){
+        matchnum1 = this.selList[0].matchnum;
+        forceval1 = this.selList[0].forceval;
+        matchnum2 = this.selList[1].matchnum;
+        forceval2 = this.selList[1].forceval;
+      }
+      if(this.selList.length==1){
+        matchnum1 = this.selList[0].matchnum;
+        forceval1 = this.selList[0].forceval;
+        matchnum2 = '';
+        forceval2 = '';
+      }
+      if(this.isBack==false){
+        isback=0
+      }else{
+        isback=1
+      }
+      let args={
+        matchnum1,
+        forceval1,
+        matchnum2,
+        forceval2,
+        fconent:this.fconent,
+        fmoney:this.fmoney,
+        isback
+      }
+      https.fetchPost('/forecast/recommendedsub.jsp',args ).then((data) => {
+        if(data.data.statuscode==-1000){
+          this.$router.push('/login')
+          return false
+        }
+        this.$vux.toast.show({
+          text: '保存荐单成功！',
+        })
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
     }
+  },
+  mounted(){
+     this.selList = this.$route.query.selList
+    this.orderList = this.$route.query.orderList
+      for(var i=0;i<this.orderList.length;i++){
+    
+        for(var j=0;j<this.selList.length;j++){
+          // console.log(this.selList[j].matchnum,this.orderList[i].matchnum,this.selList[j].matchnum==this.orderList[i].matchnum)
+        
+        if(this.selList[j].matchnum==this.orderList[i].matchnum){
+          this.sureList.push({
+            awayteam: this.orderList[i].awayteam,
+            bgColor: this.selList[j].forceval,
+            hometeam: this.orderList[i].hometeam,
+            league: this.orderList[i].league,
+            matchnum: this.orderList[i].matchnum,
+            matchtime: this.orderList[i].matchtime,
+            odds: this.orderList[i].odds,
+          })
+        }
+      }
+    }
+    console.log('sureList',this.sureList)
+    console.log('selList',this.$route.query.selList)
+    console.log('orderList',this.$route.query.orderList)
+   
+    
   }
 }
 </script>
@@ -136,7 +211,7 @@ export default {
     }
     .order-list {
       height: 136px;
-      margin-bottom: 14px;
+      margin-top: 14px;
       .side-left {
         float: left;
         width: 20%;
@@ -188,7 +263,7 @@ export default {
         }
         .demo1-item-selected {
           color: #ffffff;
-          background: #0393F8;
+          background: #0393f8;
         }
       }
     }
@@ -204,12 +279,13 @@ export default {
     // left: 0;
     .pay-input {
       margin-top: 10px;
-      width: 15%;
+      width: 25%;
       float: left;
-      border-bottom: 1px solid #eff5f6;
       input {
         padding-left: 2px;
         width: 60%;
+        border: none;
+        border-bottom: 1px solid #eff5f6;
       }
     }
     h1 {
@@ -221,7 +297,7 @@ export default {
       margin-top: 70px;
       width: 187px;
       height: 44px;
-      background: #0393F8;
+      background: #0393f8;
       border-radius: 24px;
       font-size: 20px;
       line-height: 44px;
@@ -270,7 +346,7 @@ export default {
   .weui-cells_checkbox
   .weui-check:checked
   + .weui-icon-checked:before {
-  color: #0393F8;
+  color: #0393f8;
   content: '\EA08';
 }
 .set-order .weui-cells_checkbox .weui-icon-checked:before {
@@ -279,6 +355,16 @@ export default {
 .set-order .vux-x-icon {
   fill: red;
   margin-top: 48px;
+}
+.set-order .vux-check-icon > span {
+  font-size: 12px;
+}
+.set-order .weui-icon-success-circle {
+  color: #0393f8;
+}
+.set-order .vux-check-icon > .weui-icon-success:before,
+.vux-check-icon > .weui-icon-success-circle:before {
+  color: #0393f8 !important;
 }
 </style>
 
