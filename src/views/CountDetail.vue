@@ -1,30 +1,30 @@
 <!--我的购买 -->
 <template>
-	<div class="myPurchase-wrapper">
-		<x-header :left-options="{backText: ''}"
-		          title="我的购买"></x-header>
-		<div class="Purchase-content">
-			<div class="Purchase-p">
-				<div class="Purchase-list">
-					<div class="Purchase-item"
-					     v-for="(item, index) in PurchaseData"
-					     :key="index">
-						<div class="Purchase-date">{{item.createtime}}</div>
-						<div class="Purchase-item-list"
-						     v-for="(items, _index) in item.purchaseList"
-						     :key="_index">
-							<div class="Purchase-item-list-l">
-								<img src="../../public/images/Purchase-icon.png"
-								     class="Purchase-icon">
-								<div class="Purchase-text">{{items.rechargetype}}</div>
-							</div>
-							<div class="Purchase-money">{{items.rechargeamount}}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="myPurchase-wrapper">
+    <x-header :left-options="{backText: ''}"
+              title="账户详情"></x-header>
+    <div class="Purchase-content">
+      <div class="Purchase-p">
+        <div class="Purchase-list">
+          <div class="Purchase-item"
+               v-for="(item, index) in PurchaseData"
+               :key="index">
+            <div class="Purchase-date">{{item.createtime}}</div>
+            <div class="Purchase-item-list"
+                 v-for="(items, _index) in item.purchaseList"
+                 :key="_index">
+              <div class="Purchase-item-list-l">
+                <img src="../../public/images/Purchase-icon.png"
+                     class="Purchase-icon">
+                <div class="Purchase-text">{{items.rechargetype}}</div>
+              </div>
+              <div class="Purchase-money">{{items.rechargeamount}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import https from '../https.js'

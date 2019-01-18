@@ -37,6 +37,8 @@ import myPurchase from './views/myPurchase.vue'
 import feedBack from './views/feedBack.vue'
 // 设置
 import setting from './views/setting.vue'
+//账户详情
+import CountDetail from './views/CountDetail.vue'
 
 
 Vue.use(Router)
@@ -69,7 +71,7 @@ export default new Router({
       }, {
         path: "user",
         name: 'user',
-				component: User
+        component: User
       }]
     }, {
       path: "/internal-info",
@@ -119,29 +121,33 @@ export default new Router({
       path: "/form-list-detail",
       name: 'form-list-detail',
       component: FormListDetail,
-		},
-		{
+    },
+    {
       path: "/withdraw",
       name: 'withdraw',
       component: withdraw,
-		},
-		{
+    },
+    {
       path: "/withdrawResult",
       name: 'withdrawResult',
       component: withdrawResult,
-    },{
+    }, {
       path: "/myPurchase",
       name: 'myPurchase',
       component: myPurchase,
-    },{
+    }, {
+      path: "/count-detail",
+      name: 'count-detail',
+      component: CountDetail,
+    }, {
       path: "/feedBack",
       name: 'feedBack',
       component: feedBack,
-    },{
+    }, {
       path: "/setting",
       name: 'setting',
       component: setting,
-    },{
+    }, {
       path: '/about',
       name: 'about',
       // route level code-splitting

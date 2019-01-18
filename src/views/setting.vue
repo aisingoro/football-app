@@ -1,12 +1,14 @@
 <!-- 设置 -->
 <template>
 	<div class="setting-wrapper">
+		<x-header :left-options="{backText: ''}"
+		          title="设置"></x-header>
 		<div class="setting-list">
 			<group>
 				<cell title="关于我们"
-					value="v1.0"
-					is-link
-					link="/About">
+				      value="v1.0"
+				      is-link
+				      link="/About">
 				</cell>
 			</group>
 		</div>
@@ -14,11 +16,12 @@
 	</div>
 </template>
 <script>
-import { Group, Cell } from 'vux'
+import { Group, Cell,XHeader } from 'vux'
 export default {
 	components: {
 		Group,
-		Cell
+		Cell,
+		XHeader
   },
 	data () {
 		return {
@@ -35,27 +38,41 @@ export default {
 }
 </script>
 <style lang="scss" scope>
-	.setting-wrapper {
-		width: 100%;
-		height: 100%;
-		background:rgba(242,245,248,1);
-		overflow: hidden;
-	}
-	.setting-list {
-		margin-top: 20px;
-	}
+.setting-wrapper {
+  width: 100%;
+  height: 100%;
+  background: rgba(242, 245, 248, 1);
+  overflow: hidden;
+  .vux-header {
+    background: #ffffff;
+  }
+}
+.setting-list {
+  margin-top: 20px;
+}
 
-	.login-out {
-		width:331px;
-		height:40px;
-		background:rgba(255,255,255,1);
-		border-radius:6px;
-		border:1px solid rgba(228,236,240,1);
-		color:#FF455B;
-		font-size: 16px;
-		text-align: center;
-		line-height: 40px;
-		margin: 47px auto 0;
-
-	}
+.login-out {
+  width: 331px;
+  height: 40px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 6px;
+  border: 1px solid rgba(228, 236, 240, 1);
+  color: #ff455b;
+  font-size: 16px;
+  text-align: center;
+  line-height: 40px;
+  margin: 47px auto 0;
+}
 </style>
+<style>
+.setting-wrapper .vux-header .vux-header-title {
+  color: #313233;
+}
+.setting-wrapper .weui-cell__ft {
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(142, 175, 215, 1);
+}
+</style>
+
