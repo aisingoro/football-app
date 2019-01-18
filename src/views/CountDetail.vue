@@ -1,24 +1,24 @@
-<!--我的购买 -->
+<!--账户设置 -->
 <template>
   <div class="myPurchase-wrapper">
     <x-header :left-options="{backText: ''}"
-              title="账户详情"></x-header>
+              title="账户设置"></x-header>
     <div class="Purchase-content">
       <div class="Purchase-p">
         <div class="Purchase-list">
           <div class="Purchase-item"
                v-for="(item, index) in PurchaseData"
                :key="index">
-            <div class="Purchase-date">{{item.createtime}}</div>
+            <div class="Purchase-date">{{item.date}}</div>
             <div class="Purchase-item-list"
                  v-for="(items, _index) in item.purchaseList"
                  :key="_index">
               <div class="Purchase-item-list-l">
                 <img src="../../public/images/Purchase-icon.png"
                      class="Purchase-icon">
-                <div class="Purchase-text">{{items.rechargetype}}</div>
+                <div class="Purchase-text">{{items.sourcetype}}</div>
               </div>
-              <div class="Purchase-money">{{items.rechargeamount}}</div>
+              <div class="Purchase-money">{{Number(items.balance)/100}}元</div>
             </div>
           </div>
         </div>
@@ -75,9 +75,51 @@ export default {
 		}
 	},
 	mounted(){
-		https.fetchPost('/user/rechargelist.jsp',{} ).then((data) => {
+		https.fetchPost('/user/blance.jsp',{} ).then((data) => {
 			console.log(data.data)
 			this.PurchaseData = data.data.list
+			
+			for(var i = 0;i<this.PurchaseData.length;i++){
+				console.log(this.PurchaseData[i].purchaseList)
+				for(var j=0;j<this.PurchaseData[i].purchaseList.length;j++){
+					console.log(this.PurchaseData[i].purchaseList[j])
+					 switch(this.PurchaseData[i].purchaseList[j].paysource){
+						case '0001':
+							this.PurchaseData[i].purchaseList[j].sourcetype='内参'
+						break;
+						case '0002':
+							this.PurchaseData[i].purchaseList[j].sourcetype='预测'
+						break;
+						case '0003':
+							this.PurchaseData[i].purchaseList[j].sourcetype='充值'
+						break;
+						case '0004':
+							this.PurchaseData[i].purchaseList[j].sourcetype='内参包月'
+						break;
+						case '0005':
+							this.PurchaseData[i].purchaseList[j].sourcetype='预测包月'
+						break;
+						case '0090':
+							this.PurchaseData[i].purchaseList[j].sourcetype='签到'
+						break;
+						case '0097':
+							this.PurchaseData[i].purchaseList[j].sourcetype='卖出预测提现预先扣除'
+						break;
+						case '0099':
+							this.PurchaseData[i].purchaseList[j].sourcetype='不中退款'
+						break;
+						case '0098':
+							this.PurchaseData[i].purchaseList[j].sourcetype='提现'
+						break;
+						case '0006':
+							this.PurchaseData[i].purchaseList[j].sourcetype='购买比分'
+						break;
+						case '0007':
+							this.PurchaseData[i].purchaseList[j].sourcetype='购买半全场'
+						break;
+					}
+				}
+			}
 
 		}).catch(err=>{
 					console.log(err)
