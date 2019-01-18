@@ -95,6 +95,15 @@ Vue.use(ToastPlugin)
                   this.$store.state.userid=data.data.user.userid
                   this.$store.state.vcode=data.data.user.vcode
                   this.$store.state.expertid=data.data.user.expertid//是否为专家
+                  this.$store.state.fans=data.data.user.fans //粉丝数
+                  this.$store.state.nickname= data.data.user.nickname //用户昵称
+                  this.$store.state.account= data.data.user.account //手机号
+                  this.$store.state.userpic= data.data.user.userpic //用户头像
+                  this.$store.state.fcount= data.data.user.fcount //发单
+                  this.$store.state.follow= data.data.user.follow //关注
+                  this.$store.state.signin= data.data.user.signin //签到
+                  this.$store.state.balance= data.data.user.balance //仙灵币
+                  this.$store.state.usersex= data.data.user.usersex //性别
                   this.$vux.toast.show({
                     text: '登录成功！',
                   })

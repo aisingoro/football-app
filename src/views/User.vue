@@ -3,28 +3,36 @@
     <h1>我的</h1>
     <div class="user-card"
          @click="goUserDetail">
-      <img src="../../public/images/index-team-01.png" />
+      <img :src="$store.state.userpic" />
       <div>
-        <p>tianve12</p>
-        <p>手机号：18678766767</p>
+        <p>{{$store.state.nickname}}</p>
+        <p>手机号：{{$store.state.account}}</p>
       </div>
       <img src="../../public/images/user-header-arrow.png" />
     </div>
     <div class="user-grid">
       <div>
-        <p>28</p>
+        <p>{{$store.state.fcount}}</p>
         <p>我的发单</p>
       </div>
       <div>
-        <p>920</p>
+        <p>{{$store.state.fans}}</p>
         <p>我的粉丝</p>
       </div>
       <div>
-        <p>64</p>
+        <p>{{$store.state.follow}}</p>
         <p>我的关注</p>
       </div>
+      <div>
+        <p>{{$store.state.signin=='false'?'未签到':'已签到'}}</p>
+        <p>我的签到</p>
+      </div>
     </div>
-    <div class="user-bg">我的仙灵币：2333枚</div>
+    <div class="user-bg">
+      <p>{{$store.state.balance}}</p>
+      <p>我的仙灵币(枚)</p>
+      <div>我要提现></div>
+    </div>
     <panel :list="list"
            type="3"></panel>
     <panel :list="list2"
@@ -100,6 +108,7 @@ export default {
       height: 60px;
       margin: 18px;
       float: left;
+      border-radius: 50%;
     }
     & > div {
       float: left;
@@ -144,7 +153,7 @@ export default {
   }
   .user-bg {
     width: 91.5%;
-    height: 44px;
+    height: 89px;
     margin: 0 auto;
     margin-top: 21px;
     background: url('../../public/images/user-bg.png') no-repeat 100% 100%/100%
@@ -155,6 +164,31 @@ export default {
     padding-left: 12px;
     font-weight: 400;
     line-height: 44px;
+    position: relative;
+    p:first-child {
+      font-size: 36px;
+      font-family: BebasNeue;
+      color: rgba(255, 255, 255, 1);
+    }
+    p:nth-child(2) {
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+    }
+    div {
+      width: 92px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #ffffff;
+      font-size: 14px;
+      text-align: center;
+      line-height: 30px;
+    }
   }
 }
 </style>
