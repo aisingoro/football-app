@@ -104,6 +104,10 @@ Vue.use(ToastPlugin)
                   this.$store.state.signin= data.data.user.signin //签到
                   this.$store.state.balance= data.data.user.balance //仙灵币
                   this.$store.state.usersex= data.data.user.usersex //性别
+                  this.$store.state.tx_balance= data.data.user.tx_balance //可提现金额
+                  this.$store.state.cardnum= data.data.user.cardnum //银行卡号
+                  this.$store.state.openingbank= data.data.user.openingbank//开户银行
+
                   this.$vux.toast.show({
                     text: '登录成功！',
                   })

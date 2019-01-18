@@ -41,6 +41,8 @@ import setting from './views/setting.vue'
 import CountDetail from './views/CountDetail.vue'
 //个人用户修改
 import UserDetail from './views/UserDetail.vue'
+//修改提现账号
+import ModifyAccount from './views/ModifyAccount.vue'
 
 Vue.use(Router)
 
@@ -132,6 +134,10 @@ export default new Router({
       path: "/withdrawResult",
       name: 'withdrawResult',
       component: withdrawResult,
+    }, {
+      path: "/modify-account",
+      name: 'modify-account',
+      component: ModifyAccount,
     }, {
       path: "/myPurchase",
       name: 'myPurchase',

@@ -19,6 +19,9 @@ export default new Vuex.Store({
     signin: '0', //签到
     balance: '0', //仙灵币
     usersex: '0', //性别
+    tx_balance: '', //可提现金额
+    cardnum: '', //银行卡号
+    openingbank: '' //开户银行
   },
   mutations: {
     setInternalInfoItem(state, data) {

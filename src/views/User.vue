@@ -31,7 +31,7 @@
     <div class="user-bg">
       <p>{{$store.state.balance}}</p>
       <p>我的仙灵币(枚)</p>
-      <div>我要提现></div>
+      <div @click="goWithdraw">我要提现></div>
     </div>
     <panel :list="list"
            type="3"></panel>
@@ -75,6 +75,10 @@ export default {
   methods:{
     goUserDetail(){
       this.$router.push('/user-detail')
+    },
+    goWithdraw(){
+      this.$router.push('/withdraw')
+      
     }
   }
 
