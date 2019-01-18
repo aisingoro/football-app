@@ -39,7 +39,8 @@ import feedBack from './views/feedBack.vue'
 import setting from './views/setting.vue'
 //账户详情
 import CountDetail from './views/CountDetail.vue'
-
+//个人用户修改
+import UserDetail from './views/UserDetail.vue'
 
 Vue.use(Router)
 
@@ -139,6 +140,10 @@ export default new Router({
       path: "/count-detail",
       name: 'count-detail',
       component: CountDetail,
+    }, {
+      path: "/user-detail",
+      name: 'user-detail',
+      component: UserDetail,
     }, {
       path: "/feedBack",
       name: 'feedBack',

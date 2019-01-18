@@ -1,7 +1,8 @@
 <template>
   <div class="user">
     <h1>我的</h1>
-    <div class="user-card">
+    <div class="user-card"
+         @click="goUserDetail">
       <img src="../../public/images/index-team-01.png" />
       <div>
         <p>tianve12</p>
@@ -61,6 +62,11 @@ export default {
         title: '意见反馈',
         url: '/feedBack'
       }],
+    }
+  },
+  methods:{
+    goUserDetail(){
+      this.$router.push('/user-detail')
     }
   }
 
