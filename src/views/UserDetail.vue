@@ -8,21 +8,21 @@
         <cell title="我的头像"
               is-link>
           <img slot
-               src="../../public/images/index-team-01.png"
-               width=60/>
+               :src="$store.state.userpic"
+               width=60 />
         </cell>
       </group>
       <group>
         <cell title="名称"
-              value="tianve12"
+              :value="$store.state.nickname"
               is-link>
         </cell>
         <cell title="性别"
-              value="男"
+              :value="$store.state.usersex==0?'男':'女'"
               is-link>
         </cell>
         <cell title="手机号"
-              value="18518040722"
+              :value="$store.state.account"
               is-link>
         </cell>
         <cell title="登录密码"
@@ -30,7 +30,7 @@
               is-link>
         </cell>
         <cell title="实名信息"
-              value=""
+              :value="$store.state.expertid=='0'?'未认证':'已认证'"
               is-link>
         </cell>
       </group>
@@ -91,6 +91,9 @@ export default {
   text-align: center;
   line-height: 40px;
   margin: 47px auto 0;
+}
+.user-pic img {
+  border-radius: 50%;
 }
 </style>
 <style>
