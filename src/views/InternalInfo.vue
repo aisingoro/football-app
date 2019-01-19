@@ -103,11 +103,12 @@
               <p>小球仙大数据即时爆冷指数分析， 本场比赛爆冷概率为{{coldindex}}%</p>
             </div>
             <p>独家内参：</p>
-            <div class="btn">
-              <span>5元</span>内参>></div>
+            <div class="btn"
+                 @click="showPayMethod('0001')">
+              <span>{{price}}元</span>内参>></div>
           </div>
         </div>
-        <div v-if="needbuy==0"
+        <div v-if="needbuy!=='0'"
              class="internal-wrapper">
           <p class="contain-title">【星级评分】</p>
           <div class="team-cli">
@@ -561,6 +562,7 @@ export default {
   },
   data(){
     return{
+      price:'',
       paidInfo:'',
       showPay:false,
       bigTitle:[{title:'胜',color:'#FF4359'},{title:'平',color:'#3665AC'},{title:'负',color:'#6DC21D'}],
@@ -617,9 +619,7 @@ export default {
     https.fetchPost('/match/matchinfo.jsp',{id:this.$store.state.internalInfoItem} ).then((data) => {
         this.openInfo = data.data.open //传递公共信息
         console.log('openInfo',data.data.open)
-         this.buyDetailInfo = data.data.inside.buydetails;
-        this.awayInfo=data.data.inside.buydetails.awayteam ;
-        this.homeInfo =data.data.inside.buydetails.hometeam;
+         
         this.machineforecastdxq=data.data.machineforecastdxq//大小球
         this.machineforecasthf=data.data.machineforecasthf//半全场
         this.machineforecastscore=data.data.machineforecastscore//比分内参
@@ -627,11 +627,20 @@ export default {
         console.log("awayInfo",this.awayInfo)
         this.matchlist = data.data.matchinfo;//基本信息
         this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
-        // this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
-        
+        this.needbuy = data.data.inside.needbuy;
+        this.price = Number(data.data.inside.price)/100
+        if(data.data.inside.buydetails){
+          this.buyDetailInfo = data.data.inside.buydetails;
+          this.awayInfo=data.data.inside.buydetails.awayteam ;
+          this.homeInfo =data.data.inside.buydetails.hometeam;
+        }
         this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents.open.split(',')//大概率
         this.coldindex = data.data.inside.details.coldindex.split("%")[0];
-        this.needbuy = data.data.inside.needbuy;
+        
+        // this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
+        
+        
+        
        
 		}).catch(err=>{
 						console.log(err)
