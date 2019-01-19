@@ -80,15 +80,15 @@
               </div>
 
             </div>
-            <p>比分指数：</p>
+            <!-- <p>比分指数：</p> -->
             <div>
-              <div v-for="(item,index) in scoreList"
+              <!-- <div v-for="(item,index) in scoreList"
                    :key="index">
                 <span>{{item.split('(')[0]}}</span>
                 <span>{{item.split('(')[1].split('%')[0]}}%</span>
                 <x-progress :percent="Number(item.split('(')[1].split('%')[0])"
                             :show-cancel="false"></x-progress>
-              </div>
+              </div> -->
             </div>
 
             <p>爆冷指数：</p>
@@ -104,10 +104,11 @@
             </div>
             <p>独家内参：</p>
             <div class="btn">
-              <span>5元</span>解锁</div>
+              <span>5元</span>内参>></div>
           </div>
         </div>
-        <div v-if="needbuy==0">
+        <div v-if="needbuy==0"
+             class="internal-wrapper">
           <p class="contain-title">【星级评分】</p>
           <div class="team-cli">
             <div class="home-cli">
@@ -127,15 +128,15 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body traffic-text">
-                <p>距球场：{{buyDetailInfo.hometeam.distance}}km</p>
-                <p>交通方式：{{buyDetailInfo.hometeam.trip}}{{buyDetailInfo.hometeam.triptime}}</p>
+                <p>距球场：{{homeInfo.distance}}km</p>
+                <p>交通方式：{{homeInfo.trip}}{{homeInfo.triptime}}</p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body traffic-text">
-                <p>距球场：{{buyDetailInfo.awayteam.distance}}km</p>
-                <p>交通方式：{{buyDetailInfo.awayteam.trip}}{{buyDetailInfo.awayteam.triptime}}</p>
+                <p>距球场：{{awayInfo.distance}}km</p>
+                <p>交通方式：{{awayInfo.trip}}{{awayInfo.triptime}}</p>
               </div>
             </div>
           </div>
@@ -146,7 +147,7 @@
             <div class="home-cli">
               <div class="home-cli-header">主队禁赛</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playerssuspended"
+                <p v-for="(item,index) in homeInfo.playerssuspended"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -158,7 +159,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队禁赛</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playerssuspended"
+                <p v-for="(item,index) in awayInfo.playerssuspended"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -172,7 +173,7 @@
             <div class="home-cli">
               <div class="home-cli-header">主队上阵成疑</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playersdoubtful"
+                <p v-for="(item,index) in homeInfo.playersdoubtful"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -184,7 +185,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队上阵成疑</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playersdoubtful"
+                <p v-for="(item,index) in awayInfo.playersdoubtful"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -198,7 +199,7 @@
             <div class="home-cli">
               <div class="home-cli-header">主队不可上场</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playerunavailable"
+                <p v-for="(item,index) in homeInfo.playerunavailable"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -210,7 +211,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队不可上场</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playerunavailable"
+                <p v-for="(item,index) in awayInfo.playerunavailable"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -224,7 +225,7 @@
             <div class="home-cli">
               <div class="home-cli-header">主队休息</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playersrested"
+                <p v-for="(item,index) in homeInfo.playersrested"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -236,7 +237,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队休息</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playersrested"
+                <p v-for="(item,index) in awayInfo.playersrested"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -266,14 +267,14 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.strength"
+                <p v-for="(item,index) in homeInfo.strength"
                    :key="index">{{item}}</p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.strength"
+                <p v-for="(item,index) in awayInfo.strength"
                    :key="index">{{item}}</p>
               </div>
             </div>
@@ -283,14 +284,14 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.brief"
+                <p v-for="(item,index) in homeInfo.brief"
                    :key="index">{{item}}</p>
               </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.brief"
+                <p v-for="(item,index) in awayInfo.brief"
                    :key="index">{{item}}</p>
               </div>
             </div>
@@ -301,7 +302,7 @@
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
                 <p class="red-contain"
-                   v-for="(item,index) in buyDetailInfo.hometeam.back"
+                   v-for="(item,index) in homeInfo.back"
                    :key="index">
                   <span>{{item}}</span>
                   <span>·</span>
@@ -312,7 +313,7 @@
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
                 <p class="red-contain"
-                   v-for="(item,index) in buyDetailInfo.awayteam.back"
+                   v-for="(item,index) in awayInfo.back"
                    :key="index">
                   <span>{{item}}</span>
                   <span>·</span>
@@ -326,7 +327,7 @@
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
                 <p class="red-contain"
-                   v-for="(item,index) in buyDetailInfo.hometeam.ahead"
+                   v-for="(item,index) in homeInfo.ahead"
                    :key="index">
                   <span>{{item}}</span>
                   <span>·</span>
@@ -337,7 +338,7 @@
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
                 <p class="red-contain"
-                   v-for="(item,index) in buyDetailInfo.awayteam.ahead"
+                   v-for="(item,index) in awayInfo.ahead"
                    :key="index">
                   <span>{{item}}</span>
                   <span>·</span>
@@ -354,7 +355,7 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playerslineup"
+                <p v-for="(item,index) in homeInfo.playerslineup"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -366,7 +367,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playerslineup"
+                <p v-for="(item,index) in awayInfo.playerslineup"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -381,7 +382,7 @@
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.hometeam.playersbenched"
+                <p v-for="(item,index) in homeInfo.playersbenched"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -393,7 +394,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in buyDetailInfo.awayteam.playersbenched"
+                <p v-for="(item,index) in awayInfo.playersbenched"
                    :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
                   <span class="cli-badge"
                         v-if="item.indexOf('/')!==-1"
@@ -403,6 +404,99 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="btn-show-wrapper">
+          <p>大数据智能荐单：</p>
+          <div v-if="machineforecastdxq!=={}">
+            <div @click="showPayMethod('0008')">
+              <span>大小球</span>内参</div>
+            <div class="paid-show">
+              <p>大小球</p>
+              <div class="paid-show-info">
+                <div :class="machineforecastdxq.labcheck==index?'sel-box':''"
+                     v-for="(item,index) in machineforecastdxq.labshow"
+                     :key="index">
+
+                  <p>{{item}}
+                    <x-icon type="ios-checkmark-empty"
+                            size="30"
+                            class="check-icon"
+                            v-if="machineforecastdxq.labhit==index"></x-icon>
+                  </p>
+                  <p>{{machineforecastdxq.labvalue[index]}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div v-if="machineforecastyp!=={}">
+            <div @click="showPayMethod('0009')">
+              <span>亚盘</span>内参</div>
+            <div class="paid-show">
+              <p>亚盘</p>
+              <div class="paid-show-info">
+                <div :class="machineforecastyp.labcheck==index?'sel-box':''"
+                     v-for="(item,index) in machineforecastyp.labshow"
+                     :key="index">
+
+                  <p>{{item}}
+                    <x-icon type="ios-checkmark-empty"
+                            size="30"
+                            class="check-icon"
+                            v-if="machineforecastyp.labhit==index"></x-icon>
+                  </p>
+                  <p>{{machineforecastyp.labvalue[index]}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div v-if="machineforecastscore!=={}">
+            <div @click="showPayMethod('0006')">
+              <span>比分</span>内参</div>
+            <div class="paid-show">
+              <p>比分</p>
+              <div class="paid-show-info">
+                <div :class="machineforecastscore.labcheck==index?'sel-box':''"
+                     v-for="(item,index) in machineforecastscore.labshow"
+                     :key="index">
+
+                  <p>{{item}}
+                    <x-icon type="ios-checkmark-empty"
+                            size="30"
+                            class="check-icon"
+                            v-if="machineforecastscore.labhit==index"></x-icon>
+                  </p>
+                  <p>{{machineforecastscore.labvalue[index]}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div v-if="machineforecasthf!=={}">
+            <div @click="showPayMethod('0007')">
+              <span>半全场</span>内参</div>
+            <div class="paid-show">
+              <p>半全场</p>
+              <div class="paid-show-info">
+                <div :class="machineforecasthf.labcheck==index?'sel-box':''"
+                     v-for="(item,index) in machineforecasthf.labshow"
+                     :key="index">
+
+                  <p>{{item}}
+                    <x-icon type="ios-checkmark-empty"
+                            size="30"
+                            class="check-icon"
+                            v-if="machineforecasthf.labhit==index"></x-icon>
+                  </p>
+                  <p>{{machineforecasthf.labvalue[index]}}</p>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
         </div>
         <div class="recommender">
           <h1><img src="../../public/images/internal-info-badge.png" />推荐专家</h1>
@@ -420,12 +514,30 @@
 
       </div>
     </div>
+    <div>
+      <popup v-model="showPay"
+             height="220px"
+             is-transparent>
+        <div style="width: 95%;background-color:#fff;height:192px;margin:0 auto;border-radius:5px;padding-top:10px;">
+          <div style="padding:20px 15px;">
+            <p class="paidType">请选择支付方式：</p>
+            <img src="../../public/images/zhifubao.png"
+                 class="zhifubao"
+                 @click="userPay(paidInfo)" />
+            <span class="zhifubao-text">支付宝</span>
+            <img @click="showPay = false"
+                 src="../../public/images/zhifubao-close.png"
+                 class="zhifubao-close" />
+          </div>
+        </div>
+      </popup>
+    </div>
     <div style="clear:both;"></div>
   </div>
 </template>
 
 <script>
-import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress,Sticky } from 'vux'
+import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress,Sticky ,Popup,XButton} from 'vux'
 import PublicInfo from '../components/PublicInfo.vue'
 import https from '../https.js'
 
@@ -439,10 +551,14 @@ export default {
     XCircle,
     XProgress,
     Sticky,
-    PublicInfo
+    PublicInfo,
+    Popup,
+    XButton
   },
   data(){
     return{
+      paidInfo:'',
+      showPay:false,
       bigTitle:[{title:'胜',color:'#FF4359'},{title:'平',color:'#3665AC'},{title:'负',color:'#6DC21D'}],
       openInfo:{},
       recommenderList:[],
@@ -458,20 +574,61 @@ export default {
       percent1:15,
       percent2:25,
       percent3:36,
-      matchlist:{}
+      matchlist:{},
+      awayInfo:[],
+      homeInfo:[],
+      machineforecastdxq:{},//大小球
+      machineforecasthf:{},//半全场
+      machineforecastscore:{},//比分内参
+      machineforecastyp:{}//亚盘
+    }
+  },
+  methods:{
+    userPay(e){
+      if(this.$store.state.userid==''){
+        this.$router.push("/login")
+        return false
+      }
+      let args={
+        buyid:this.$store.state.internalInfoItem,
+        // buytype:e,
+        buytype:'0006',
+        paytype:'0006',
+        payback:'/internal-info'
+      }
+      https.fetchPost('/user/userpay.jsp',args).then((data) => {
+        console.log(data.data)
+      }).catch(err=>{
+              console.log(err)
+          }
+      )
+
+    },
+    showPayMethod(e){
+      this.showPay=true;
+      this.paidInfo = e
     }
   },
   mounted () {
     https.fetchPost('/match/matchinfo.jsp',{id:this.$store.state.internalInfoItem} ).then((data) => {
         this.openInfo = data.data.open //传递公共信息
         console.log('openInfo',data.data.open)
+         this.buyDetailInfo = data.data.inside.buydetails;
+        this.awayInfo=data.data.inside.buydetails.awayteam ;
+        this.homeInfo =data.data.inside.buydetails.hometeam;
+        this.machineforecastdxq=data.data.machineforecastdxq//大小球
+        this.machineforecasthf=data.data.machineforecasthf//半全场
+        this.machineforecastscore=data.data.machineforecastscore//比分内参
+        this.machineforecastyp=data.data.machineforecastyp//亚盘
+        console.log("awayInfo",this.awayInfo)
         this.matchlist = data.data.matchinfo;//基本信息
         this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
-        this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
+        // this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
+        
         this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents.open.split(',')//大概率
         this.coldindex = data.data.inside.details.coldindex.split("%")[0];
         this.needbuy = data.data.inside.needbuy;
-        this.buyDetailInfo = data.data.inside.buydetails;
+       
 		}).catch(err=>{
 						console.log(err)
 				}
@@ -779,7 +936,94 @@ export default {
         }
       }
     }
-
+    .btn-show-wrapper {
+      width: 100%;
+      background: #ffffff;
+      overflow: hidden;
+      p {
+        width: 91.5%;
+        margin: 0 auto;
+        font-size: 16px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+      }
+      & > div > div {
+        width: 343px;
+        height: 40px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 6px;
+        border: 1px solid rgba(228, 236, 240, 1);
+        margin: 0 auto;
+        margin-bottom: 10px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        span {
+          color: #ff3145;
+        }
+      }
+      .paid-show {
+        width: 100%;
+        height: 152px;
+        overflow: hidden;
+        background: #f2f5f8;
+        border-radius: 0;
+        border: none;
+        & > p {
+          margin: 0 auto;
+          margin-top: 20px;
+          margin-bottom: 9px;
+        }
+        .paid-show-info {
+          width: 70%;
+          height: 72px;
+          margin: 0 auto;
+          display: flex;
+          & > div {
+            flex: 1;
+            margin-left: 1px;
+            & > p:first-child {
+              width: 100%;
+              background: #3665ac;
+              color: #ffffff;
+              text-align: center;
+              height: 28px;
+              line-height: 28px;
+              margin-top: 0;
+              margin-bottom: 0;
+              font-size: 12px;
+              position: relative;
+              .check-icon {
+                position: absolute;
+                right: -5px;
+                top: -5px;
+                color: #fff;
+              }
+            }
+            & > p:nth-child(2) {
+              width: 100%;
+              height: 44px;
+              background: #fff;
+              color: #313233;
+              text-align: center;
+              line-height: 44px;
+              font-size: 12px;
+              margin-top: 0;
+              margin-bottom: 0;
+            }
+          }
+          .sel-box {
+            & > p:first-child {
+              background: #0393f8;
+            }
+            & > p:nth-child(2) {
+              box-sizing: border-box;
+              border: 2px solid #0393f8;
+            }
+          }
+        }
+      }
+    }
     .recommender {
       width: 100%;
       height: 550px;
@@ -910,7 +1154,7 @@ export default {
       & > div:nth-of-type(3) {
         margin-top: 10px;
         width: 100%;
-        height: 164px;
+        // height: 164px;
         background: rgba(255, 255, 255, 1);
         border-radius: 6px;
         overflow: hidden;
@@ -989,20 +1233,42 @@ export default {
       .btn {
         width: 100%;
         height: 40px;
-        background: #ffffff;
+        background: #0393f8;
+        color: #fff;
         border-radius: 6px;
-        border: 1px solid rgba(228, 236, 240, 1);
         font-size: 16px;
         line-height: 40px;
         text-align: center;
         margin-top: 10px;
         margin-bottom: 22px;
-        span {
-          color: #ff3145;
-        }
       }
     }
   }
+}
+.paidType {
+  position: relative;
+  font-size: 18px;
+  color: #3a3b3b;
+}
+.zhifubao {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+.zhifubao-text {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.zhifubao-close {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 18px;
+  top: 18px;
 }
 </style>
 <style lang="scss">

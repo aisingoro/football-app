@@ -1,6 +1,8 @@
 <!-- 提现页面 -->
 <template>
 	<div class="withdra-result-wrapper">
+		<x-header :left-options="{backText: ''}"
+		          title="提现账户"></x-header>
 		<div class="center-content">
 			<!--根据提现结果 展示不同的状态-->
 			<!-- 成功失败icon自己写一个 -->
@@ -10,10 +12,11 @@
 	</div>
 </template>
 <script>
-import { Icon } from 'vux'
+import { Icon ,XHeader} from 'vux'
 export default {
 	components: {
-		Icon
+		Icon,
+		XHeader
   },
 	data () {
 		return {
@@ -26,24 +29,33 @@ export default {
 }
 </script>
 <style lang="scss" scope>
-	.withdra-result-wrapper {
-		width: 100%;
-		height: 100%;
-	}
-	.center-content {
-		text-align: center;
-		padding-top: 218px;
-	}
+.withdra-result-wrapper {
+  width: 100%;
+  height: 100%;
+  .vux-header {
+    background: #ffffff;
+  }
+}
+.center-content {
+  text-align: center;
+  padding-top: 218px;
+}
 
-	.status-title {
-		color:#313233;
-		font-size:20px;
-		padding:10px 0;
-	}
-	.status-text {
-		color:#8EAFD7;
-		font-size:14px;
-	}
+.status-title {
+  color: #313233;
+  font-size: 20px;
+  padding: 10px 0;
+}
+.status-text {
+  color: #8eafd7;
+  font-size: 14px;
+}
 </style>
+<style>
+.withdra-result-wrapper .vux-header .vux-header-title {
+  color: #313233;
+}
+</style>
+
 
 

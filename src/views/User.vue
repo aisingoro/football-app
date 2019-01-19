@@ -61,10 +61,6 @@ export default {
         src: require('../../public/images/user-pannel-04.png'),
         title: '我的购买',
         url: '/myPurchase'
-      },{
-        src: require('../../public/images/user-pannel-02.png'),
-        title: '分享好友',
-        url: '/component/cell'
       }, {
         src: require('../../public/images/user-pannel-03.png'),
         title: '意见反馈',

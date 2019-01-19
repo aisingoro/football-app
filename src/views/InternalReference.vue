@@ -91,9 +91,8 @@
               {{item.details.resultindex.split(',')[3].split(':')[0]}}
             </div>
           </div>
-          <p>比分指数：</p>
           <div>
-            <div>{{item.details.scoreindex.split(',')[0].split('(')[0]}}
+            <!-- <div>{{item.details.scoreindex.split(',')[0].split('(')[0]}}
               <span>{{item.details.scoreindex.split(',')[0].split('(')[1].slice(0,item.details.scoreindex.split(',')[0].split('(')[1].length-1)}}</span>
             </div>
             <div>{{item.details.scoreindex.split(',')[1].split('(')[0]}}
@@ -101,7 +100,7 @@
             </div>
             <div>{{item.details.scoreindex.split(',')[2].split('(')[0]}}
               <span>{{item.details.scoreindex.split(',')[2].split('(')[1].slice(0,item.details.scoreindex.split(',')[2].split('(')[1].length-1)}}</span>
-            </div>
+            </div> -->
           </div>
           <p>爆冷指数：</p>
           <div class="range">
@@ -322,7 +321,7 @@ export default {
     .show-info {
       clear: both;
       width: 100%;
-      height: 397px;
+      height: 328px;
       background: #eaedf2;
       & > div {
         width: 91.5%;
@@ -387,7 +386,6 @@ export default {
           display: flex;
           margin-top: 10px;
           border-radius: 6px;
-          border: 1px solid rgba(220, 226, 234, 1);
           overflow: hidden;
           & > div {
             flex: 1;
