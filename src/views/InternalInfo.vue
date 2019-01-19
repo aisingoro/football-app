@@ -410,7 +410,8 @@
           <div v-if="machineforecastdxq!=={}">
             <div @click="showPayMethod('0008')">
               <span>大小球</span>内参</div>
-            <div class="paid-show">
+            <div class="paid-show"
+                 v-if="machineforecastdxq.needbuy!=='0'">
               <p>大小球</p>
               <div class="paid-show-info">
                 <div :class="machineforecastdxq.labcheck==index?'sel-box':''"
@@ -432,7 +433,8 @@
           <div v-if="machineforecastyp!=={}">
             <div @click="showPayMethod('0009')">
               <span>亚盘</span>内参</div>
-            <div class="paid-show">
+            <div class="paid-show"
+                 v-if="machineforecastyp.needbuy!=='0'">
               <p>亚盘</p>
               <div class="paid-show-info">
                 <div :class="machineforecastyp.labcheck==index?'sel-box':''"
@@ -454,7 +456,8 @@
           <div v-if="machineforecastscore!=={}">
             <div @click="showPayMethod('0006')">
               <span>比分</span>内参</div>
-            <div class="paid-show">
+            <div class="paid-show"
+                 v-if="machineforecastscore.needbuy!=='0'">
               <p>比分</p>
               <div class="paid-show-info">
                 <div :class="machineforecastscore.labcheck==index?'sel-box':''"
@@ -476,7 +479,8 @@
           <div v-if="machineforecasthf!=={}">
             <div @click="showPayMethod('0007')">
               <span>半全场</span>内参</div>
-            <div class="paid-show">
+            <div class="paid-show"
+                 v-if="machineforecasthf.needbuy!=='0'">
               <p>半全场</p>
               <div class="paid-show-info">
                 <div :class="machineforecasthf.labcheck==index?'sel-box':''"
