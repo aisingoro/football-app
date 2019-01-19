@@ -145,16 +145,21 @@ export default {
         forceval2,
         fconent:this.fconent,
         fmoney:this.fmoney,
-        isback
+        isback,
+        // expertid:this.$store.state.expertid
       }
       https.fetchPost('/forecast/recommendedsub.jsp',args ).then((data) => {
         if(data.data.statuscode==-1000){
           this.$router.push('/login')
           return false
         }
+        this.$store.state.fcount =this.$store.state.fcount +1 
+
         this.$vux.toast.show({
           text: '保存荐单成功！',
         })
+        this.$router.push({path:'/ugc-info',query:{ugcId:this.$store.state.expertid}})
+        
       }).catch(err=>{
             console.log(err)
         }
@@ -366,6 +371,9 @@ export default {
 .set-order .vux-check-icon > .weui-icon-success:before,
 .vux-check-icon > .weui-icon-success-circle:before {
   color: #0393f8 !important;
+}
+.set-order textarea {
+  background: #fff !important;
 }
 </style>
 

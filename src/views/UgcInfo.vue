@@ -9,7 +9,7 @@
         <div>{{expertinfo.expertlevel}}</div>
       </div>
       <div class="ugc-desc">
-        <p>近期{{expertinfo.fcount}}中8 盈利192%</p>
+        <p>近期{{expertinfo.fcount}}中{{expertinfo.fright}} 盈利{{expertinfo.finfomation}}</p>
         <p>盈利率{{expertinfo.finfomation}}</p>
       </div>
       <div class="desc-more">
@@ -22,7 +22,8 @@
           <p>粉丝</p>
         </div>
         <div :class="isFollow=='1'?'unfollowUgc':'followUgc'"
-             @click="followUgc">{{isFollow=='1' ?'已关注': '关注'}}
+             @click="followUgc"
+             v-if="$route.query.ugcId!==$store.state.expertid">{{isFollow=='1' ?'已关注': '关注'}}
         </div>
       </div>
     </div>
@@ -43,7 +44,7 @@
       </x-table>
       <div class="table-result"
            @click="listDetail(item.fid)">
-        <div>{{item.fresult==0?'立即查看':(item.fresult==-1?'未中':'荐中')}}</div>
+        <div>{{item.fresult==-99?'立即查看':(item.fresult==-1?'未中':'荐中')}}</div>
       </div>
     </div>
   </div>
