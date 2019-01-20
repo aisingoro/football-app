@@ -13,7 +13,7 @@
       <img src="../../public/images/user-header-arrow.png" />
     </div>
     <div class="user-grid">
-      <div>
+      <div @click="goUgcInfo">
         <p>{{$store.state.fcount}}</p>
         <p>我的发单</p>
       </div>
@@ -71,6 +71,10 @@ export default {
     }
   },
   methods:{
+    goUgcInfo(){
+        this.$router.push({path:'/ugc-info',query:{ugcId:this.$store.state.expertid}})
+      
+    },
     goUserDetail(){
       if(this.$store.state.account==''){
         this.$router.push('/login')

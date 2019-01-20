@@ -1,10 +1,8 @@
 <template>
   <div class="login">
     <x-header :left-options="{backText: ''}">
-      <a slot="right"
-         @click="signIn">注册</a>
     </x-header>
-    <div class="title">{{pswTap?'密码登录':'验证码登录'}}</div>
+    <div class="title">找回密码</div>
     <x-input placeholder="请输入登录账号"
              v-model="username">
       <img slot="label"
@@ -12,11 +10,9 @@
            src="../../public/images/login-phone.png"
            width="18"
            height="26"></x-input>
-    <x-input placeholder="请输入密码"
+    <x-input placeholder="请设置密码"
              :type="inputType"
-             :show-clear="false"
-             v-model="userpsw"
-             v-if="pswTap">
+             v-model="userpsw">
       <img slot="label"
            style="padding-right:10px;display:block;"
            src="../../public/images/login-psw.png"
@@ -26,23 +22,19 @@
     <x-input placeholder="请输入验证码"
              :type="inputType"
              :show-clear="false"
-             v-model="userNum"
-             v-if="!pswTap">
+             v-model="userNum">
       <div slot="right"
            class="get-num"
-           @click="getNum">获取验证码</div>
+           @click="sendauthsms">获取验证码</div>
     </x-input>
-    <div class="sign-in"
-         @click="forgetPsw"
-         v-if="pswTap">找回密码</div>
+
     <x-button type="primary"
-              @click.native="getLogin"
+              @click.native="getRegister"
               :loading="loadbtn"
               :disabled="username!==''&&userpsw!==''?false:true"
               :text="loginText"></x-button>
-    <span class="change-btn"
-          @click="pswTap=!pswTap">切换/验证码登录</span>
-    <p>版权所有 ©️ 小球仙 2019</p>
+
+    <!-- <p>版权所有 ©️ 小球仙 2019</p> -->
   </div>
 </template>
 
@@ -59,57 +51,48 @@ Vue.use(ToastPlugin)
       },
         data() {
             return {
-              userNum:'',
-                pswTap:true,
                 isPsw: true,
                 loadbtn: false,
-                loginText: '登录',
+                loginText: '找回密码',
                 inputType: "password",
                 username: '18518040722',
                 userpsw: '123456',
-                a:{}
+                userNum:''
             }
         },
         methods: {
           //发送短信验证码
-          getNum(){
-            https.fetchPost('/system/sendauthsms.jsp',{account:this.username,m:''} ).then((data) => {
+          sendauthsms(){
+            https.fetchPost('/system/sendauthsms.jsp',{account:this.username,m:'modpass'} ).then((data) => {
                   console.log("ugcinfo",data.data)
                 }).catch(err=>{
                       console.log(err)
                   }
                 )
-          },
-            getLogin(){
-              var args={
-                    account:this.username,
-                    vcode:this.userNum
-                  }
-                if(this.pswTap){
-                  args={
-                    account:this.username,
-                    pass:this.userpsw,
-                  }
-                }
-                https.fetchPost('/user/login.jsp',args ).then((data) => {
-                  this.$store.state.userid=data.data.user.userid
-                  this.$store.state.vcode=data.data.user.vcode
-                  this.$store.state.expertid=data.data.user.expertid//是否为专家
-                  this.$store.state.fans=data.data.user.fans //粉丝数
-                  this.$store.state.nickname= data.data.user.nickname //用户昵称
-                  this.$store.state.account= data.data.user.account //手机号
-                  this.$store.state.userpic= data.data.user.userpic //用户头像
-                  this.$store.state.fcount= data.data.user.fcount //发单
-                  this.$store.state.follow= data.data.user.follow //关注
-                  this.$store.state.signin= data.data.user.signin //签到
-                  this.$store.state.balance= data.data.user.balance //仙灵币
-                  this.$store.state.usersex= data.data.user.usersex //性别
-                  this.$store.state.tx_balance= data.data.user.tx_balance //可提现金额
-                  this.$store.state.cardnum= data.data.user.cardnum //银行卡号
-                  this.$store.state.openingbank= data.data.user.openingbank//开户银行
 
+          },
+          
+          //注册用户
+            getRegister(){
+              console.log(1111)
+                https.fetchPost('/system/checkauthcode.jsp',{account:this.username,autcode:this.userNum} ).then((data) => {
+                  console.log("ugcinfo",data.data)
+                }).catch(err=>{
                   this.$vux.toast.show({
-                    text: '登录成功！',
+                    text: '验证码有误！',
+                  })
+                  }
+                )
+                https.fetchPost('/user/modpass.jsp',{account:this.username,newpass:this.userpsw,autcode:this.userNum} ).then((data) => {
+                  console.log("ugcinfo",data.data)
+                  if(data.data.statuscode<0){
+                    this.$vux.toast.show({
+                      type:'warn',
+                    text: data.data.statusmsg
+                  })
+                  }
+                  this.$vux.toast.show({
+                    text: '修改密码成功！',
                   })
                   this.$router.go(-1)
                 }).catch(err=>{
@@ -117,13 +100,7 @@ Vue.use(ToastPlugin)
                   }
                 )
             },
-            signIn(){
-              this.$router.push("/register")
-            },
-            forgetPsw(){
-              this.$router.push('/edit-psw')
-            }
-
+            
         }
     };
 </script>

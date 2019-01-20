@@ -43,6 +43,8 @@ import CountDetail from './views/CountDetail.vue'
 import UserDetail from './views/UserDetail.vue'
 //修改提现账号
 import ModifyAccount from './views/ModifyAccount.vue'
+//找回密码
+import EditPsw from './views/EditPsw.vue'
 
 Vue.use(Router)
 
@@ -158,6 +160,10 @@ export default new Router({
       path: "/setting",
       name: 'setting',
       component: setting,
+    }, {
+      path: "/edit-psw",
+      name: 'edit-psw',
+      component: EditPsw,
     }, {
       path: '/about',
       name: 'about',

@@ -1,7 +1,7 @@
 <template>
   <div class="ugc-info">
     <x-header :left-options="{backText: ''}"
-              title="他的战绩"></x-header>
+              :title="$route.query.ugcId==$store.state.expertid?'我的战绩':'他的战绩'"></x-header>
     <div class="ugc-header">
       <img :src="expertinfo.expertpic" />
       <div class="ugc-name">

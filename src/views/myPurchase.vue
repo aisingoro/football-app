@@ -12,7 +12,8 @@
 						<div class="Purchase-date">{{item.date}}</div>
 						<div class="Purchase-item-list"
 						     v-for="(items, _index) in item.purchaseList"
-						     :key="_index">
+						     :key="_index"
+						     @click="goInfo(items.buyid)">
 							<div class="Purchase-item-list-l">
 								<img src="../../public/images/Purchase-icon.png"
 								     class="Purchase-icon">
@@ -72,6 +73,14 @@ export default {
 					]
 				}
 			]
+		}
+	},
+	methods:{
+		goInfo(e){
+			console.log('changci',e)
+      this.$store.commit('setInternalInfoItem',e)
+			this.$router.push('/internal-info')
+			
 		}
 	},
 	mounted(){
