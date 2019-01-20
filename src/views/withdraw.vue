@@ -7,7 +7,7 @@
 		<section class="header">
 			<h1>可提现金额：</h1>
 			<div class="header-center">
-				<div class="withdra-number">{{$store.state.tx_balance}}</div>
+				<div class="withdra-number">{{$store.state.tx_balance/100}}</div>
 				<div class="withdra-text">我的仙灵币（枚）</div>
 			</div>
 		</section>
@@ -27,11 +27,15 @@
 				修改账户>>
 			</div>
 		</section>
-		<div class="confim-btn">确认提现</div>
+		<div class="confim-btn"
+		     @click="sureDraw">确认提现</div>
 	</div>
 </template>
 <script>
-import { XInput,XHeader,Group } from 'vux'
+import https from '../https.js'
+import { XInput,XHeader,Group ,ToastPlugin} from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
 	components: {
 		XInput,
@@ -45,6 +49,30 @@ export default {
 		}
 	},
 	methods:{
+		sureDraw(){
+			if(this.withdraNumber==''){
+ 				this.$vux.toast.show({
+					 type:'warn',
+					text: '请填写提现金额',
+				})
+			}
+			https.fetchPost('/user/tx_blance.jsp',{amount:this.withdraNumber*100} ).then((data) => {
+				console.log("ugc",data.data)
+				if(data.data.statuscode<0){
+					this.$vux.toast.show({
+					 type:'warn',
+					text: data.data.statusmsg
+				})
+				}else{
+					this.$vux.toast.show({
+					text: '提现成功！'
+				})
+				}
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+		},
 		modifyAccount(){
 			this.$router.push('/modify-account')
 		}

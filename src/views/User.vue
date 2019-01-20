@@ -5,8 +5,10 @@
          @click="goUserDetail">
       <img :src="$store.state.userpic" />
       <div>
-        <p>{{$store.state.nickname}}</p>
-        <p>手机号：{{$store.state.account}}</p>
+        <p v-if="$store.state.account==''"
+           class="go-login">立即登录</p>
+        <p v-if="$store.state.account!==''">{{$store.state.nickname}}</p>
+        <p v-if="$store.state.account!==''">手机号：{{$store.state.account}}</p>
       </div>
       <img src="../../public/images/user-header-arrow.png" />
     </div>
@@ -29,7 +31,7 @@
       </div>
     </div>
     <div class="user-bg">
-      <p>{{$store.state.balance}}</p>
+      <p>{{$store.state.balance/100}}</p>
       <p>我的仙灵币(枚)</p>
       <div @click="goWithdraw">我要提现></div>
     </div>
@@ -51,28 +53,36 @@ export default {
       list2:[{
         src: require('../../public/images/user-pannel-01.png'),
         title: '设置',
-        url: '/setting'
+        url: this.$store.state.account==''?'':'/setting'
       }],
       list: [{
         src: require('../../public/images/user-pannel-01.png'),
         title: '账户详情',
-        url: '/count-detail'
+        url: this.$store.state.account==''?'':'/count-detail'
       },  {
         src: require('../../public/images/user-pannel-04.png'),
         title: '我的购买',
-        url: '/myPurchase'
+        url: this.$store.state.account==''?'':'/myPurchase'
       }, {
         src: require('../../public/images/user-pannel-03.png'),
         title: '意见反馈',
-        url: '/feedBack'
+        url: this.$store.state.account==''?'':'/feedBack'
       }],
     }
   },
   methods:{
     goUserDetail(){
+      if(this.$store.state.account==''){
+        this.$router.push('/login')
+        return false
+      }
       this.$router.push('/user-detail')
     },
     goWithdraw(){
+      if(this.$store.state.account==''){
+        this.$router.push('/login')
+        return false
+      }
       this.$router.push('/withdraw')
       
     }
@@ -223,6 +233,10 @@ export default {
   &:after {
     border-bottom: none;
   }
+}
+.go-login {
+  margin-top: 34px;
+  font-size: 15px;
 }
 </style>
 
