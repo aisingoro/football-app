@@ -529,7 +529,7 @@
             <img src="../../public/images/zhifubao.png"
                  class="zhifubao"
                  @click="userPay(paidInfo)" />
-            <span class="zhifubao-text">支付宝</span>
+            <span class="zhifubao-text">金币支付</span>
             <img @click="showPay = false"
                  src="../../public/images/zhifubao-close.png"
                  class="zhifubao-close" />
@@ -597,13 +597,14 @@ export default {
       }
       let args={
         buyid:this.$store.state.internalInfoItem,
-        // buytype:e,
-        buytype:'0006',
-        paytype:'0006',
-        payback:'/internal-info'
+        buytype:e,
+        // buytype:'0006',
+        paytype:'0004',
+        payback:'http://localhost:8080/index.html#/internal-info'
       }
       https.fetchPost('/user/userpay.jsp',args).then((data) => {
-        console.log(data.data)
+        console.log(data.data.tourl)
+        // window.location.href=data.data.tourl
       }).catch(err=>{
               console.log(err)
           }

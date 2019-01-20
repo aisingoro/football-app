@@ -4,7 +4,13 @@
     <x-header :left-options="{backText: ''}"
               title="个人中心"></x-header>
     <div class="setting-list">
+
       <group class="user-pic">
+        <input class="aui-uploader__input"
+               type="file"
+               accept="image/*"
+               @change="uploadFile"
+               :class="{inputHide: inputHide}" />
         <cell title="我的头像"
               is-link>
           <img slot
@@ -82,6 +88,18 @@ export default {
   },
 	data () {
 		return {
+      inputHide: false,
+      obj: {
+        "aui-uploader__input-box": true,
+        "aui-uploader__input-box_after": false
+      },
+      imgItem:'',
+      formData:new FormData(),
+      imgs: {},
+      imgLen:0,
+      imgData: {
+            accept: 'image/gif, image/jpeg, image/png, image/jpg',
+        },
       userpic:this.$store.state.userpic,
       nickname:this.$store.state.nickname,
       sex:[],
@@ -98,6 +116,31 @@ export default {
     this.sex = (this.$store.state.usersex==0?['男']:['女'])
   },
 	methods: {
+    //上传头像
+    uploadFile(event) {
+
+      let _this = this;
+      let file = event.target.files[0];
+
+      let fileReader = new FileReader();
+      fileReader.onload = function(e) {
+        _this.inputHide = true;
+        _this.obj["aui-uploader__input-box"] = false;
+        _this.obj["aui-uploader__input-box_after"] = true;
+        _this.$emit("change",e.target.result)
+        var args={imgfile:e.target.result}
+            https.fetchPost('/system/uploadimg.jsp',args).then((data) => {
+              console.log(data.data.imgurl)
+              _this.userpic = data.data.imgurl
+              _this.changePic()
+            }).catch(err=>{
+                  console.log(err)
+              }
+            )
+      };
+      if (file) fileReader.readAsDataURL(file);
+      
+    },
     changeUserInfo(e){
       let args=e
       https.fetchPost('/user/moduser.jsp',args).then((data) => {
@@ -116,6 +159,7 @@ export default {
           sex:e.toString()
         }
         this.changeUserInfo(args)
+        this.$store.state.sex= this.sex.toString()
     },
     changeName(){
         let args={
@@ -124,7 +168,18 @@ export default {
           sex:this.sex.toString()
         }
         this.changeUserInfo(args)
+        this.$store.state.nickname= this.nickname
         this.showPay=false
+    },
+    changePic(){
+      let args={
+          userpic:this.userpic,
+          nickname:this.nickname,
+          sex:this.sex.toString()
+        }
+        this.changeUserInfo(args)
+        this.$store.state.userpic= this.userpic
+        
     }
 	},
 }
@@ -157,6 +212,18 @@ export default {
 }
 .user-pic img {
   border-radius: 50%;
+}
+.user-pic {
+  position: relative;
+}
+.aui-uploader__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 62px;
+  z-index: 9999;
 }
 </style>
 <style>
