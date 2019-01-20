@@ -8,18 +8,20 @@
         <cell title="我的头像"
               is-link>
           <img slot
-               :src="$store.state.userpic"
+               :src="userpic"
                width=60 />
         </cell>
       </group>
       <group>
         <cell title="名称"
-              :value="$store.state.nickname"
-              is-link>
+              :value="nickname"
+              is-link
+              @click.native="showPay=true">
         </cell>
         <cell title="性别"
-              :value="$store.state.usersex==0?'男':'女'"
-              is-link>
+              :value="sex.toString()"
+              is-link
+              @click.native="showPopupPicker=true">
         </cell>
         <cell title="手机号"
               :value="$store.state.account"
@@ -42,27 +44,88 @@
         </cell>
       </group>
     </div>
+    <group>
+      <popup-picker :show.sync="showPopupPicker"
+                    :show-cell="false"
+                    title="TEST"
+                    :data="[['男', '女']]"
+                    v-model="sex"
+                    @on-change="changeSex"></popup-picker>
+    </group>
+    <popup v-model="showPay"
+           height="220px"
+           is-transparent>
+      <div style="width: 95%;background-color:#fff;height:192px;margin:0 auto;border-radius:5px;padding-top:10px;">
+        <div style="padding:20px 15px;">
+          <p class="paidType">请填写新昵称</p>
+          <input type="text"
+                 class="nickname"
+                 v-model="nickname">
+          <x-button @click.native="changeName">确定</x-button>
+        </div>
+      </div>
+    </popup>
+
   </div>
 </template>
 <script>
-import { Group, Cell,XHeader } from 'vux'
+import https from '../https.js'
+import { Group, Cell,XHeader,PopupPicker,Popup ,XButton} from 'vux'
 export default {
 	components: {
 		Group,
 		Cell,
-		XHeader
+    XHeader,
+    PopupPicker,
+    Popup,
+    XButton
   },
 	data () {
 		return {
+      userpic:this.$store.state.userpic,
+      nickname:this.$store.state.nickname,
+      sex:[],
+      showPopupPicker:false,
+      showPay:false,
 		 list:[{
         title: '关于我们',
 				url: '/About',
 				desc: 'sss'
       }]
 		}
-	},
+  },
+  mounted(){
+    this.sex = (this.$store.state.usersex==0?['男']:['女'])
+  },
 	methods: {
-
+    changeUserInfo(e){
+      let args=e
+      https.fetchPost('/user/moduser.jsp',args).then((data) => {
+        console.log(data.data)
+        this.$store.state.usersex=this.sex.toString()
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+    },
+    changeSex(e){
+      console.log(e)
+        let args={
+          userpic:this.userpic,
+          nickname:this.nickname,
+          sex:e.toString()
+        }
+        this.changeUserInfo(args)
+    },
+    changeName(){
+        let args={
+          userpic:this.userpic,
+          nickname:this.nickname,
+          sex:this.sex.toString()
+        }
+        this.changeUserInfo(args)
+        this.showPay=false
+    }
 	},
 }
 </script>
@@ -105,6 +168,15 @@ export default {
   font-family: PingFangSC-Regular;
   font-weight: 400;
   color: rgba(142, 175, 215, 1);
+}
+.nickname {
+  height: 40px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid #f5f5f5;
 }
 </style>
 
