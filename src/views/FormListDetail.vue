@@ -3,31 +3,129 @@
     <x-header :left-options="{backText: ''}"
               title="他的荐单"></x-header>
     <div class="form-list-info">
-      <h3>推荐理由</h3>
-      <div class="form-list-desc">
-        <p>国内功能很强大且图标内容很丰富的矢量 图标库</p>
+      <h3 v-if="statuscode>=0">推荐理由</h3>
+      <div class="form-list-desc"
+           v-if="statuscode>=0">
+        <p>{{fdetails}}</p>
       </div>
       <h3>推荐结果</h3>
-      <p>此荐单收费：
-        <span>8</span>元</p>
-      <div class="btn">解锁查看</div>
-      <span class="attention">请点击解锁查看，支付费用后可查看</span>
+      <p v-if="statuscode<0">此荐单收费：
+        <span>{{price}}</span>元</p>
+      <div class="btn"
+           @click="showPay=true">{{ statuscode>=0?'已解锁':'解锁查看'}}</div>
+      <span class="attention"
+            v-if="statuscode<0">请点击解锁查看，支付费用后可查看</span>
+      <div v-if="statuscode>=0"
+           class="total-result"><img src="../../public/images/result-correct.png" />荐中</div>
+
+      <x-table :cell-bordered="false"
+               style="background-color:#fff;">
+        <tbody>
+          <tr v-for="(items,indexs) in list"
+              :key="indexs">
+            <td>{{items.match_num}}</td>
+            <td>天狼星 VS 卡尔玛</td>
+
+            <!-- <td>{{items.hometeam}} VS {{items.awayteam}}</td> -->
+            <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'平')}}</td>
+          </tr>
+        </tbody>
+      </x-table>
     </div>
+    <popup v-model="showPay"
+           height="220px"
+           is-transparent>
+      <div style="width: 95%;background-color:#fff;height:192px;margin:0 auto;border-radius:5px;padding-top:10px;">
+        <div style="padding:20px 15px;">
+          <p class="paidType">请选择支付方式：</p>
+          <img src="../../public/images/zhifubao.png"
+               class="zhifubao"
+               @click="userPay('0002')" />
+          <span class="zhifubao-text">支付宝</span>
+          <img @click="showPay = false"
+               src="../../public/images/zhifubao-close.png"
+               class="zhifubao-close" />
+        </div>
+      </div>
+    </popup>
   </div>
 </template>
 
 <script>
-import { XHeader } from 'vux'
+import https from '../https.js'
+import { XHeader,Popup ,XTable} from 'vux'
 
 export default {
   components: {
-    XHeader
+    XHeader,
+    Popup,
+    XTable
   },
+  data(){
+    return{
+      showPay:false,
+      price:'',
+      statuscode:'',
+      fdetails:'',
+      list:[]
+    }
+  },
+  methods:{
+    userPay(e){
+      if(this.$store.state.userid==''){
+        this.$router.push("/login")
+        return false
+      }
+      let args={
+        buyid:this.$store.state.internalInfoItem,
+        // buytype:e,
+        buytype:'0006',
+        paytype:'0006',
+        payback:'/internal-info'
+      }
+      https.fetchPost('/user/userpay.jsp',args).then((data) => {
+        console.log(data.data)
+      }).catch(err=>{
+              console.log(err)
+          }
+      )
+
+    },
+  },
+  mounted(){
+    https.fetchPost('/forecast/forecastdetails.jsp',{forceid:this.$route.query.forceid} ).then((data) => {
+      console.log("forecastdetails",data.data.price)
+      this.price = data.data.price
+      this.statuscode = data.data.statuscode
+      this.fdetails = data.data.fdetails
+      this.list = data.data.list
+
+    }).catch(err=>{
+          console.log(err)
+      }
+    )
+
+  }
 
 }
 </script>
 <style lang="scss" scoped>
 .form-list-detail {
+  .vux-table {
+    font-size: 12px;
+    margin-top: 26px;
+    tr {
+      border-left: 1px solid #f1f4f6;
+      border-right: 1px solid #f1f4f6;
+      font-family: PingFangSC-Regular;
+    }
+    td:first-child {
+      color: #b4cae5;
+    }
+    td:last-child {
+      padding-right: 10px;
+    }
+  }
   .vux-header {
     background: #ffffff;
   }
@@ -80,6 +178,49 @@ export default {
       text-align: center;
       margin-top: 100px;
     }
+  }
+}
+.paidType {
+  position: relative;
+  font-size: 18px;
+  color: #3a3b3b;
+}
+.zhifubao {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+.zhifubao-text {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.zhifubao-close {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 18px;
+  top: 18px;
+}
+.total-result {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #f1f4f6;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 14px;
+  img {
+    width: 20px;
+    height: 18px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 13px;
+    margin-bottom: 2px;
   }
 }
 </style>

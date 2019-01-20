@@ -56,15 +56,11 @@
       <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
-          <tr>
-            <td>周一008</td>
-            <td>天狼星 VS 卡尔玛</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>周一008</td>
-            <td>天狼星 VS 卡尔玛</td>
-            <td>...</td>
+          <tr v-for="(items,indexs) in item.title"
+              :key="indexs">
+            <td>{{items.match_num}}</td>
+            <td>{{items.hometeam}} VS {{items.awayteam}}</td>
+            <td>{{items.match_result==0?'平':(items.match_result==1?'胜':'负')}}</td>
           </tr>
         </tbody>
       </x-table>
@@ -278,6 +274,9 @@ export default {
 }
 .ugc .vux-table:after {
   border-top: 1px solid #f1f4f6;
+}
+.ugc .weui-grid__icon img {
+  border-radius: 50%;
 }
 </style>
 

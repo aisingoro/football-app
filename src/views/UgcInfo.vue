@@ -69,7 +69,7 @@ export default {
   methods:{
     //跳转荐单详情
     listDetail(index){
-      this.$router.push('/form-list-detail')
+      this.$router.push({path:'/form-list-detail', query: {forceid:index}})
     },
     followUgc(){
       var args={expertid:this.$route.query.ugcId}
@@ -123,6 +123,7 @@ export default {
       margin-top: 24px;
       margin-left: 24px;
       margin-right: 12px;
+      border-radius: 50%;
     }
     .ugc-name {
       float: left;
