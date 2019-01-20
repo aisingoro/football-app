@@ -16,21 +16,43 @@
       <span class="attention"
             v-if="statuscode<0">请点击解锁查看，支付费用后可查看</span>
       <div v-if="statuscode>=0"
-           class="total-result"><img src="../../public/images/result-correct.png" />荐中</div>
+           class="total-result"><img :src="fresult=='1'?require('../../public/images/result-correct.png'):''" />{{fresult=='1'?'荐中':'未荐中'}}</div>
+      <div v-if="statuscode>=0"
+           v-for="(item,index) in list"
+           :key="index">
+        <h3>{{item.hometeam}} vs {{item.awayteam}}</h3>
+        <div class="paid-show"
+             v-for="(items,indexs) in item.forecastlist"
+             :key="indexs">
+          <p>{{items.labname}}</p>
+          <div class="paid-show-info">
+            <div :class="items.labcheck[0]==_index?'sel-box':''"
+                 v-for="(_item,_index) in items.labshow"
+                 :key="_index">
 
-      <x-table :cell-bordered="false"
+              <p>{{_item}}
+                <x-icon type="ios-checkmark-empty"
+                        size="30"
+                        class="check-icon"
+                        v-if="items.labhit[0]==_index"></x-icon>
+              </p>
+              <p>{{items.labvalue[_index]}}</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
           <tr v-for="(items,indexs) in list"
               :key="indexs">
             <td>{{items.match_num}}</td>
             <td>天狼星 VS 卡尔玛</td>
-
-            <!-- <td>{{items.hometeam}} VS {{items.awayteam}}</td> -->
             <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'平')}}</td>
           </tr>
         </tbody>
-      </x-table>
+      </x-table> -->
     </div>
     <popup v-model="showPay"
            height="220px"
@@ -67,7 +89,8 @@ export default {
       price:'',
       statuscode:'',
       fdetails:'',
-      list:[]
+      list:[],
+      fresult:''
     }
   },
   methods:{
@@ -99,6 +122,8 @@ export default {
       this.statuscode = data.data.statuscode
       this.fdetails = data.data.fdetails
       this.list = data.data.list
+      this.fresult = data.data.fresult
+
 
     }).catch(err=>{
           console.log(err)
@@ -221,6 +246,67 @@ export default {
     margin: 0 auto;
     margin-top: 13px;
     margin-bottom: 2px;
+  }
+}
+.paid-show {
+  width: 100%;
+  height: 152px;
+  overflow: hidden;
+  background: #f2f5f8;
+  border-radius: 0;
+  border: none;
+  & > p {
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 9px;
+  }
+  .paid-show-info {
+    width: 70%;
+    height: 72px;
+    margin: 0 auto;
+    display: flex;
+    & > div {
+      flex: 1;
+      margin-left: 1px;
+      & > p:first-child {
+        width: 100%;
+        background: #3665ac;
+        color: #ffffff;
+        text-align: center;
+        height: 28px;
+        line-height: 28px;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        position: relative;
+        .check-icon {
+          position: absolute;
+          right: -5px;
+          top: -5px;
+          color: #fff;
+        }
+      }
+      & > p:nth-child(2) {
+        width: 100%;
+        height: 44px;
+        background: #fff;
+        color: #313233;
+        text-align: center;
+        line-height: 44px;
+        font-size: 12px;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+    .sel-box {
+      & > p:first-child {
+        background: #0393f8;
+      }
+      & > p:nth-child(2) {
+        box-sizing: border-box;
+        border: 2px solid #0393f8;
+      }
+    }
   }
 }
 </style>
