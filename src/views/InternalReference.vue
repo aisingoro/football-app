@@ -1,5 +1,10 @@
 <template>
-  <div class="internal-reference">
+  <div
+		class="internal-reference"
+		v-infinite-scroll="loadMore"
+		infinite-scroll-disabled="isDisableScroll"
+		infinite-scroll-immediate-check="true"
+		infinite-scroll-distance="10">
     <h1>独家内参</h1>
     <tab>
       <tab-item @on-item-click="onItemClick">{{yesterdayWeek}}<br>{{yesterday}}</tab-item>
@@ -113,17 +118,20 @@
         </div>
       </div>
     </div>
+			<load-more tip="正在加载" :show-loading="true" v-show="loading"></load-more>
+			<load-more v-show="noData" :show-loading="false" tip="暂无更多数据" background-color="#fbf9fe"></load-more>
   </div>
 </template>
 
 <script>
-import {XCircle,Tab,TabItem} from 'vux'
+import {XCircle,Tab,TabItem,LoadMore} from 'vux'
 import https from '../https.js'
 export default {
   components: {
     XCircle,
     Tab,
-    TabItem
+		TabItem,
+		LoadMore
   },
   data(){
     return{
@@ -135,32 +143,55 @@ export default {
       tomorrowWeek:'',
       tomorrow:'',
       percent:55,
-      internalList:[1,2,3,4,5,6]
+			internalList:[1,2,3,4,5,6],
+			page: 1, // 分页页数
+			matchtime: '', // 入参日期
+			isDisableScroll: false, // 是否禁用滚动分页
+			isCompleted: false, // 是否继续加载
+			loading: false,
+			noData: false
     }
   },
   methods:{
     //请求切换日期渲染对应比赛列表
-    changeMatch(date){
-      https.fetchPost('/match/neican.jsp',date ).then((data) => {
-        console.log("结果啊啊啊啊",data.data)
-        for (var i =0;i<data.data.list.length;i++){
+    changeMatch(page, matchtime, type){
+      https.fetchPost('/match/neican.jsp',{
+				page,
+				matchtime
+			} ).then((data) => {
+				this.isDisableScroll = false
+				if (type === 'init') {
+					this.internalList = data.data.list || []
+				} else {
+					this.loading = true
+					this.internalList = this.internalList.concat(data.data.list) || []
+				}
+				for (var i =0;i<data.data.list.length;i++){
           data.data.list[i].showInfoItem=false
-        }
-        this.internalList = data.data.list
+				}
+				if (!data.data.list.length) {
+					this.isCompleted = true
+					this.loading = false
+					this.noData = true
+				}
       }).catch(err=>{
-              console.log(err)
-          }
+				console.log(err)
+				this.isDisableScroll = false
+			}
       )
     },
     onItemClick(index){
-      this.GetDateStr(index-1);
-      this.changeMatch({matchtime:this.dayVal})
+			this.GetDateStr(index-1);
+			this.page = 1; // 切换tab的时候 重置page页数为第一页
+			this.isCompleted = false
+			this.noData = false
+      this.changeMatch(this.page, this.dayVal, 'init')
     },
     getInternalInfo(index,matchnum){
       console.log(index)
       this.$store.commit('setInternalInfoItem',index)
       this.$store.commit('setMatchnum',matchnum)
-      
+
       console.log("store",this.$store.state.internalInfoItem)
       this.$router.push('/internal-info')
     },
@@ -170,7 +201,14 @@ export default {
         this.internalList[i].showInfoItem=false;
       }
       this.internalList[index].showInfoItem=!showItem
-    },
+		},
+		// 加载更多
+		loadMore () {
+			if (this.isCompleted) return
+			this.isDisableScroll = true
+			let page = ++this.page
+			this.changeMatch(page, this.dayVal, 'loadMore')
+		},
   //获取日期方法
     GetDateStr(AddDayCount) {
         var dd = new Date();
@@ -200,20 +238,20 @@ export default {
     this.today=this.GetDateStr(0).split('/')[1];
     this.tomorrowWeek=this.GetDateStr(1).split('/')[0];
     this.tomorrow=this.GetDateStr(1).split('/')[1];
-    this.changeMatch({})
+    this.changeMatch(this.page, '', 'init')
     // https.fetchPost('/match/neican.jsp',{} ).then((data) => {
     //     console.log("结果啊啊啊啊",data.data)
     //     for (var i =0;i<data.data.list.length;i++){
     //       data.data.list[i].showInfoItem=false
     //     }
     //     this.internalList = data.data.list
-        
-        
+
+
 		// }).catch(err=>{
 		// 				console.log(err)
 		// 		}
 		// )
-    
+
   }
 
 }
@@ -221,10 +259,13 @@ export default {
 
 <style lang="scss" scoped>
 .internal-reference {
-  width: 100%;
-  height: calc(100% - 53px);
-  overflow: hidden;
-  overflow-y: scroll;
+  position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 50px;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
   background: #f8f9fa;
   padding-bottom: 22px;
   & > h1 {
@@ -438,6 +479,10 @@ export default {
 <style lang="scss">
 .internal-reference .vux-tab-ink-bar {
   background-color: #fff !important;
+}
+
+.internal-reference .weui-loadmore {
+	margin: 10px auto;
 }
 .internal-reference .vux-tab .vux-tab-item {
   background: none;
