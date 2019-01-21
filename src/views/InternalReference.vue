@@ -9,8 +9,7 @@
     </tab>
     <div class="internalList"
          v-for="(item,index) in internalList"
-         :key="index"
-         @click="getInternalInfo(item.id,item.matchnum)">
+         :key="index">
       <div class="list-info">
         <div>
           <p>{{item.matchnumshow}}</p>
@@ -18,7 +17,7 @@
           <p>{{item.matchtime.substring(5,item.matchtime.length)}}</p>
           <p @click="showInfo(index)">分析</p>
         </div>
-        <div>
+        <div @click="getInternalInfo(item.id,item.matchnum)">
           <div>
             <img :src="item.hometeampic" />
             <p>{{item.hometeam}}</p>
