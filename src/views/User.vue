@@ -26,7 +26,7 @@
         <p>我的关注</p>
       </div>
       <div @click="signIn">
-        <p>{{$store.state.signin=='false'?'未签到':'已签到'}}</p>
+        <p style="font-size:12px;font-weight:bolder">{{$store.state.signin!=='0'?'已签到':'未签到'}}</p>
         <p>我的签到</p>
       </div>
     </div>
@@ -39,6 +39,15 @@
            type="3"></panel>
     <panel :list="list2"
            type="3"></panel>
+    <!-- <x-dialog v-model="show"
+              class="dialog-demo">
+      <div class="img-box">
+        今日签到成功，你已连续签到33天
+      </div>
+      <div @click="show=false">
+        <span class="vux-close">x</span>
+      </div>
+    </x-dialog> -->
   </div>
 </template>
 
@@ -51,6 +60,7 @@ export default {
   },
   data(){
     return{
+      show:true,
       list2:[{
         src: require('../../public/images/user-pannel-01.png'),
         title: '设置',
@@ -73,6 +83,10 @@ export default {
   },
   methods:{
     signIn(){
+      if(this.$store.state.account==''){
+        this.$router.push('/login')
+        return false
+      }
       https.fetchPost('/user/signin.jsp',{} ).then((data) => {
 				console.log("ugc",data.data)
 				if(data.data.statuscode<0){
@@ -81,9 +95,11 @@ export default {
 					text: data.data.statusmsg
 				})
 				}else{
-					this.$vux.toast.show({
+          // this.show=true
+          this.$vux.toast.show({
 					text: '签到成功！'
 				})
+          this.$store.state.signin='1'
 				}
       }).catch(err=>{
             console.log(err)
