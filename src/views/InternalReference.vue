@@ -9,7 +9,8 @@
     </tab>
     <div class="internalList"
          v-for="(item,index) in internalList"
-         :key="index">
+         :key="index"
+         @click="getInternalInfo(item.id,item.matchnum)">
       <div class="list-info">
         <div>
           <p>{{item.matchnumshow}}</p>
