@@ -15,9 +15,9 @@
         <img src="../../public/images/index-badge.png"
              class="badge"
              v-if="item.paytype==0" />
-        <h3>{{item.matchnum}}
+        <h3>{{item.matchnumshow}}
           <span></span>
-          <span>{{item.showntitle}} {{item.matchtime}}</span>
+          <span>{{item.showntitle.split('(')[0]}} {{item.matchtime.substring(5,item.matchtime.length)}}</span>
         </h3>
         <div>
           <div>
@@ -46,43 +46,27 @@
       </div>
       <h3 class="index-title">竞彩7日赛果分布<img src="../../public/images/index-question.png" /></h3>
       <div class="seven-result">
-        <div>
+        <div v-for="(item,index) in resultdistributionlist"
+             :key="index">
           <div>
-            <x-circle :percent="percent"
+            <x-circle :percent="Number(item.showvaule1)"
                       :stroke-width="5"
-                      stroke-color="#FF4359">
-              <span class="circle-bg circle-win">胜</span>
+                      :stroke-color="item.showtitle1.indexOf('胜')!==-1?'#FF4359':'#6DC21D'">
+              <span class="circle-bg circle-win"
+                    :class="item.showtitle1.indexOf('胜')!==-1?'circle-win':'circle-lose'">{{item.showtitle1}}</span>
             </x-circle>
-            {{ percent }}%
+            {{ item.showvaule1 }}%
           </div>
           <div>
-            <x-circle :percent="percent"
+            <x-circle :percent="Number(item.showvaule2)"
                       :stroke-width="5"
-                      stroke-color="#6DC21D">
-              <span class="circle-bg circle-lose">让负</span>
+                      :stroke-color="item.showtitle2.indexOf('胜')!==-1?'#FF4359':'#6DC21D'">
+              <span class="circle-bg circle-win"
+                    :class="item.showtitle2.indexOf('胜')!==-1?'circle-win':'circle-lose'">{{item.showtitle2}}</span>
             </x-circle>
-            {{ percent }}%
+            {{ item.showvaule2 }}%
           </div>
-          <p class="result-badge">-1</p>
-        </div>
-        <div>
-          <div>
-            <x-circle :percent="percent"
-                      :stroke-width="5"
-                      stroke-color="#6DC21D">
-              <span class="circle-bg circle-lose">负</span>
-            </x-circle>
-            {{ percent }}%
-          </div>
-          <div>
-            <x-circle :percent="percent"
-                      :stroke-width="5"
-                      stroke-color="#FF4359">
-              <span class="circle-bg circle-win">让胜</span>
-            </x-circle>
-            {{ percent }}%
-          </div>
-          <p class="result-badge">+1</p>
+          <p class="result-badge">{{item.showtitle}}</p>
         </div>
       </div>
       <h3 class="index-title">真实赔率与竞彩赔率对比<img src="../../public/images/index-question.png" /></h3>
@@ -175,6 +159,7 @@ export default {
   },
   data(){
     return {
+      resultdistributionlist:[],
       allMatchList:[],
       oddsratiocomparisonlist:[],
       showScrollBox:false,
@@ -219,7 +204,7 @@ export default {
         };
         this.matchlist=data.data.matchlist;//独家内参比赛列表
         this.oddsratiocomparisonlist = data.data.oddsratiocomparisonlist//真实赔率无数据
-        // this. = data.data.resultdistributionlist;//七日（未调格式不对）
+        this.resultdistributionlist = data.data.resultdistributionlist[0].showlist;//七日
 
 		}).catch(err=>{
 						console.log(err)
