@@ -12,9 +12,9 @@
          :key="index">
       <div class="list-info">
         <div>
-          <p>{{item.matchnum}}</p>
-          <p>{{item.showntitle}}</p>
-          <p>{{item.matchtime}}</p>
+          <p>{{item.matchnumshow}}</p>
+          <p>{{item.showntitle.split('(')[0]}}</p>
+          <p>{{item.matchtime.substring(5,item.matchtime.length)}}</p>
           <p @click="showInfo(index)">分析</p>
         </div>
         <div>

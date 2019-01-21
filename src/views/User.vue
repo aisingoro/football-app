@@ -25,7 +25,7 @@
         <p>{{$store.state.follow}}</p>
         <p>我的关注</p>
       </div>
-      <div>
+      <div @click="signIn">
         <p>{{$store.state.signin=='false'?'未签到':'已签到'}}</p>
         <p>我的签到</p>
       </div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import https from '../https.js'
 import { Panel } from 'vux'
 export default {
   components: {
@@ -71,6 +72,24 @@ export default {
     }
   },
   methods:{
+    signIn(){
+      https.fetchPost('/user/signin.jsp',{} ).then((data) => {
+				console.log("ugc",data.data)
+				if(data.data.statuscode<0){
+					this.$vux.toast.show({
+					 type:'warn',
+					text: data.data.statusmsg
+				})
+				}else{
+					this.$vux.toast.show({
+					text: '签到成功！'
+				})
+				}
+      }).catch(err=>{
+            console.log(err)
+        }
+      )
+    },
     goUgcInfo(){
         this.$router.push({path:'/ugc-info',query:{ugcId:this.$store.state.expertid}})
       
