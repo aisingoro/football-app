@@ -513,6 +513,16 @@ export default {
   color: #fff;
   line-height: 26px;
 }
+.dialog-title {
+  height: 40px;
+  line-height: 40px;
+}
+.img-box .vux-table {
+  width: 91.5%;
+  margin: 0 auto;
+  border-radius: 6px;
+  overflow: hidden;
+}
 </style>
 <style>
 </style>

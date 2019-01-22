@@ -3,8 +3,7 @@ import qs from 'qs'
 import md5 from 'js-md5';
 // import Vuex from 'vuex'
 import store from './store'
-let t = String(Date.parse(new Date()));
-let newT = t.substring(0, t.length - 3);
+
 
 //sign加密对象格式排序方法
 // function objKeySort(obj) { //排序的函数
@@ -29,6 +28,8 @@ axios.interceptors.request.use((config) => {
   if (config.method === 'post') {
     config.data = qs.stringify(config.data);
   }
+  let t = String(Date.parse(new Date()));
+  let newT = t.substring(0, t.length - 3);
   config.headers.common['channel'] = '';
   config.headers.common['platform'] = '';
   config.headers.common['package'] = '';
@@ -41,6 +42,10 @@ axios.interceptors.request.use((config) => {
   console.log('config:' + config.data)
   if (config.data !== "") {
     config.headers.common['sign'] = md5(config.data.split("&").sort().join('|') + '|' + newT + 'y73jkfks98ky9dgdfgv');
+    console.log('加密前！！！！！！', config.data.split("&").sort().join('|') + '|' + newT + 'y73jkfks98ky9dgdfgv')
+    console.log('加密后！！！！！！', config.headers.common['sign'])
+    console.log('测试加密：', md5('cardnum=sss|expertdesc=%E6%94%B6%E6%8B%BE%E6%94%B6%E6%8B%BE%E6%94%B6%E6%8B%BE|expertname=%E5%BE%97%E5%88%B0%E7%9A%84|idcard=1111|openingbank=2222|truename=ss|1547720442y73jkfks98ky9dgdfgv'))
+
   }
   return config;
 }, (error) => {
