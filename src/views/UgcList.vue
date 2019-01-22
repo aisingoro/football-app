@@ -1,5 +1,9 @@
 <template>
-  <div class="ugc-list">
+  <div class="ugc-list"
+       v-infinite-scroll="loadMore"
+       infinite-scroll-disabled="isDisableScroll"
+       infinite-scroll-immediate-check="true"
+       infinite-scroll-distance="10">
     <x-header :left-options="{backText: ''}"
               title="成为专家"></x-header>
     <div class="ugc-list-item"
@@ -13,35 +17,81 @@
       </div>
       <span class="more">></span>
     </div>
+    <load-more tip="正在加载"
+               :show-loading="true"
+               v-show="loading"></load-more>
+    <load-more v-show="noData"
+               :show-loading="false"
+               tip="暂无更多数据"
+               background-color="#fbf9fe"></load-more>
   </div>
 </template>
 
 <script>
-import { XHeader } from 'vux'
+import { XHeader,LoadMore } from 'vux'
 import https from '../https.js'
 
 export default {
   components: {
-    XHeader
+    XHeader,
+    LoadMore
   },
   data(){
     return{
-      ugcList:[]
+      ugcList:[],
+      page: 1, // 分页页数
+			matchtime: '', // 入参日期
+			isDisableScroll: false, // 是否禁用滚动分页
+			isCompleted: false, // 是否继续加载
+			loading: false,
+			noData: false
     }
   },
   methods:{
     getUgcInfo(index){
       this.$router.push({path:'/ugc-info', query: {ugcId:index}})
     },
-  },
-  mounted(){
-    https.fetchPost('/expert/expertlist.jsp',{type:this.$route.query.ugcId} ).then((data) => {
+    // 加载更多
+		loadMore () {
+			if (this.isCompleted) return
+			this.isDisableScroll = true
+			let page = ++this.page
+			this.getList(page,'loadMore')
+		},
+    //请求专家列表（分页）
+    getList(page,type){
+      https.fetchPost('/expert/expertlist.jsp',{page,type:this.$route.query.ugcId} ).then((data) => {
         console.log("ugc",data.data)
-        this.ugcList = data.data.list;
+        //分页拼接
+        this.isDisableScroll = false
+				if (type === 'init') {
+          this.ugcList = data.data.list || []
+          console.log('ugcList1',this.ugcList)
+          
+				} else {
+          this.loading = true
+          console.log('ugcList2',type,this.ugcList)
+          
+          this.ugcList = this.ugcList.concat(data.data.list) || []
+          console.log('ugcList3',type,this.ugcList)
+				}
+				for (var i =0;i<data.data.list.length;i++){
+          data.data.list[i].showInfoItem=false
+				}
+				if (!data.data.list.length) {
+					this.isCompleted = true
+					this.loading = false
+					this.noData = true
+				}
       }).catch(err=>{
+				this.isDisableScroll = false
             console.log(err)
         }
       )
+    }
+  },
+  mounted(){
+    this.getList(this.page,  'init')
     
   }
 }
@@ -50,7 +100,7 @@ export default {
 <style lang="scss" scoped>
 .ugc-list {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   background: #f2f5f8;
   .vux-header {
     background: #ffffff;
