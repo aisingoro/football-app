@@ -7,7 +7,7 @@
         <div>
           <div>
             <img :src="matchlist.hometeampic" />
-            <p>{{matchlist.awayteamname}}</p>
+            <p>{{matchlist.hometeamname}}</p>
           </div>
           <div>
             <img src="../../public/images/internal-info-vs.png" />
@@ -102,10 +102,11 @@
               </x-circle>
               <p>小球仙大数据即时爆冷指数分析， 本场比赛爆冷概率为{{coldindex}}%</p>
             </div>
-            <p>独家内参：</p>
-            <div class="btn"
+            <p v-if="price!==undefined">独家内参：</p>
+            <div v-if="price!==undefined"
+                 class="btn"
                  @click="showPayMethod('0001')">
-              <span>{{price}}元</span>内参>></div>
+              <span>{{Number(price)/100}}元</span>内参>></div>
           </div>
         </div>
         <div v-if="needbuy!=='0'"
@@ -114,14 +115,37 @@
           <div class="team-cli">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
-              <div class="home-cli-body">11</div>
-              <div class="home-cli-body">11</div>
-              <div class="home-cli-body">11</div>
+              <div class="home-cli-body">
+                <!-- <span v-for="(item,index) in homeInfo.rating.length"
+                      :key="index">
+                  <x-icon type="ios-star"
+                          size="20"></x-icon>
+                </span> -->
+                <span v-for="(item,index) in 3"
+                      :key="Number(index)">
+                  <x-icon type="ios-star"
+                          size="20"></x-icon>
+                </span>
+                <span v-for="(item,index) in 2"
+                      :key="Number(index)">
+                  <x-icon type="ios-star-outline"
+                          size="20"></x-icon>
+                </span>
 
+              </div>
             </div>
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
-
+              <div class="home-cli-body">
+                <!-- <x-icon v-for="(item,index) in awayInfo.rating.length"
+                        :key="index"
+                        type="ios-star"
+                        size="20"></x-icon>
+                <x-icon v-for="i in (5-awayInfo.rating.length)"
+                        :key="i"
+                        type="ios-star-outline"
+                        size="20"></x-icon> -->
+              </div>
             </div>
           </div>
           <p class="contain-title">【距离交通】</p>
@@ -562,6 +586,7 @@ export default {
   },
   data(){
     return{
+      star:0,
       price:'',
       paidInfo:'',
       showPay:false,
@@ -604,7 +629,7 @@ export default {
       }
       https.fetchPost('/user/userpay.jsp',args).then((data) => {
         console.log(data.data.tourl)
-        // window.location.href=data.data.tourl
+        window.location.href=data.data.tourl
       }).catch(err=>{
               console.log(err)
           }
@@ -629,7 +654,8 @@ export default {
         this.matchlist = data.data.matchinfo;//基本信息
         this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
         this.needbuy = data.data.inside.needbuy;
-        this.price = Number(data.data.inside.price)/100
+        this.price = data.data.inside.price
+        console.log('price',this.price)
         if(data.data.inside.buydetails){
           this.buyDetailInfo = data.data.inside.buydetails;
           this.awayInfo=data.data.inside.buydetails.awayteam ;
@@ -1294,6 +1320,9 @@ export default {
 .internal-info .weui-progress__inner-bar {
   background-color: #ffb726 !important;
   border-radius: 3px;
+}
+.internal-info .vux-x-icon {
+  fill: rgba(255, 165, 36, 1);
 }
 </style>
 
