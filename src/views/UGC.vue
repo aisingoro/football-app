@@ -1,5 +1,5 @@
 <template>
-  <div class="ugc">
+  <div class="ugc" ref="ugc">
     <h1>UGC</h1>
     <tab :line-width=2
          custom-bar-width='16'
@@ -66,6 +66,8 @@
       </x-table>
     </div>
     <img src="../../public/images/ugc-top.png"
+				 @click="goTop"
+				 ref="btn"
          class="ugc-top" />
     <div class="ugc-set"
          @click="IssueOrder">发单</div>
@@ -76,7 +78,7 @@
 <script>
 import { Tab, TabItem,Swiper,SwiperItem,Grid,GridItem,XTable } from 'vux'
 import https from '../https.js'
-
+let timer = null
 export default {
  components: {
     Tab,
@@ -89,6 +91,7 @@ export default {
   },
   data(){
     return{
+			isTop: true,
       demo2: '牛人',
       index: 0,
       list2 : ['牛人', '命中', '盈利', '战绩', '关注'],
@@ -128,11 +131,42 @@ export default {
             console.log(err)
         }
       )
+		},
+		handleScroll (e) {
+			let obtn = this.$refs.btn
+			let clientHeight = document.documentElement.clientHeight
+			let osTop = e.target.scrollTop
+			if (osTop >= clientHeight) {
+				obtn.style.display = 'block'
+			} else {
+				obtn.style.display = 'none'
+			}
+			if (!this.isTop) {
+				clearInterval(this.timer)
+			}
+			this.isTop = false
+		},
+		// 返回顶部
+    goTop () {
+			let ugc = this.$refs.ugc
+      this.timer = setInterval(() => {
+        let osTop = ugc.scrollTop
+        let ispeed = Math.floor(-osTop / 5)
+       ugc.scrollTop = osTop + ispeed
+        this.isTop = true
+        if (osTop === 0) {
+          clearInterval(this.timer)
+				}
+      }, 30)
     }
-  },
-  mounted(){
-    this.changeTab(1)
-  }
+	},
+  mounted () {
+		this.changeTab(1)
+		this.$refs.ugc.addEventListener('scroll', this.handleScroll, true);
+	},
+	created() {
+
+	}
 }
 </script>
 
@@ -237,6 +271,7 @@ export default {
     position: fixed;
     bottom: 122px;
     right: 16px;
+		display: none;
   }
 }
 </style>

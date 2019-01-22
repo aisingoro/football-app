@@ -20,6 +20,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-overflow-scrolling: touch;
+	box-sizing: border-box;
 }
 #app {
   width: 100%;
