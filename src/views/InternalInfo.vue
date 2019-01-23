@@ -109,25 +109,20 @@
               <span>{{Number(price)/100}}元</span>内参>></div>
           </div>
         </div>
-        <div v-if="needbuy!=='0'"
+        <div v-if="needbuy=='1'"
              class="internal-wrapper">
           <p class="contain-title">【星级评分】</p>
           <div class="team-cli">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <!-- <span v-for="(item,index) in homeInfo.rating.length"
+                <span v-for="(item,index) in homeInfo.rating.split('')"
                       :key="index">
                   <x-icon type="ios-star"
                           size="20"></x-icon>
-                </span> -->
-                <span v-for="(item,index) in 3"
-                      :key="Number(index)">
-                  <x-icon type="ios-star"
-                          size="20"></x-icon>
                 </span>
-                <span v-for="(item,index) in 2"
-                      :key="Number(index)">
+                <span v-for="i in (5-homeInfo.rating.length)"
+                      :key="i">
                   <x-icon type="ios-star-outline"
                           size="20"></x-icon>
                 </span>
@@ -137,14 +132,14 @@
             <div class="away-cli">
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
-                <!-- <x-icon v-for="(item,index) in awayInfo.rating.length"
+                <x-icon v-for="(item,index) in awayInfo.rating.split('')"
                         :key="index"
                         type="ios-star"
                         size="20"></x-icon>
                 <x-icon v-for="i in (5-awayInfo.rating.length)"
                         :key="i"
                         type="ios-star-outline"
-                        size="20"></x-icon> -->
+                        size="20"></x-icon>
               </div>
             </div>
           </div>
@@ -432,11 +427,11 @@
         </div>
         <div class="btn-show-wrapper">
           <p>大数据智能荐单：</p>
-          <div v-if="machineforecastdxq!=={}">
+          <div v-if="machineforecastdxq.needbuy!==''">
             <div @click="showPayMethod('0008')">
               <span>大小球</span>内参</div>
             <div class="paid-show"
-                 v-if="machineforecastdxq.needbuy!=='0'">
+                 v-if="machineforecastdxq.needbuy=='1'">
               <p>大小球</p>
               <div class="paid-show-info">
                 <div :class="machineforecastdxq.labcheck==index?'sel-box':''"
@@ -455,11 +450,11 @@
 
             </div>
           </div>
-          <div v-if="machineforecastyp!=={}">
+          <div v-if="machineforecastyp.needbuy!==''">
             <div @click="showPayMethod('0009')">
               <span>亚盘</span>内参</div>
             <div class="paid-show"
-                 v-if="machineforecastyp.needbuy!=='0'">
+                 v-if="machineforecastyp.needbuy=='1'">
               <p>亚盘</p>
               <div class="paid-show-info">
                 <div :class="machineforecastyp.labcheck==index?'sel-box':''"
@@ -478,11 +473,11 @@
 
             </div>
           </div>
-          <div v-if="machineforecastscore!=={}">
+          <div v-if="machineforecastscore.needbuy!==''">
             <div @click="showPayMethod('0006')">
               <span>比分</span>内参</div>
             <div class="paid-show"
-                 v-if="machineforecastscore.needbuy!=='0'">
+                 v-if="machineforecastscore.needbuy=='1' ">
               <p>比分</p>
               <div class="paid-show-info">
                 <div :class="machineforecastscore.labcheck==index?'sel-box':''"
@@ -501,11 +496,11 @@
 
             </div>
           </div>
-          <div v-if="machineforecasthf!=={}">
+          <div v-if="machineforecasthf.needbuy!==''">
             <div @click="showPayMethod('0007')">
               <span>半全场</span>内参</div>
             <div class="paid-show"
-                 v-if="machineforecasthf.needbuy!=='0'">
+                 v-if="machineforecasthf.needbuy=='1'">
               <p>半全场</p>
               <div class="paid-show-info">
                 <div :class="machineforecasthf.labcheck==index?'sel-box':''"

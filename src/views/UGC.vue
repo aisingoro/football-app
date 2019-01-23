@@ -1,5 +1,6 @@
 <template>
-  <div class="ugc" ref="ugc">
+  <div class="ugc"
+       ref="ugc">
     <h1>UGC</h1>
     <tab :line-width=2
          custom-bar-width='16'
@@ -22,7 +23,7 @@
       <swiper-item v-for="(item, index) in list2"
                    :key="index">
         <div class="tab-swiper vux-center">
-          <h2 class="title">选拔牛人
+          <h2 class="title">{{item}}
             <span @click="getUgcList">更多></span>
           </h2>
           <grid :cols="4"
@@ -39,7 +40,22 @@
         </div>
       </swiper-item>
       <swiper-item>
-        <div class="tab-swiper vux-center">榜单 Container</div>
+        <div class="tab-swiper vux-center">
+          <h2 class="title">榜单
+            <span @click="getUgcList">更多></span>
+          </h2>
+          <grid :cols="4"
+                :show-lr-borders="false"
+                :show-vertical-dividers="false">
+            <grid-item v-for="(item,index) in ugcList"
+                       :key="index"
+                       :label="item.expertname"
+                       @on-item-click="onItemClick(item.expertid)">
+              <img slot="icon"
+                   :src="item.expertpic">
+            </grid-item>
+          </grid>
+        </div>
       </swiper-item>
     </swiper>
     <h2 class="title">牛人战绩
@@ -66,8 +82,8 @@
       </x-table>
     </div>
     <img src="../../public/images/ugc-top.png"
-				 @click="goTop"
-				 ref="btn"
+         @click="goTop"
+         ref="btn"
          class="ugc-top" />
     <div class="ugc-set"
          @click="IssueOrder">发单</div>
@@ -271,7 +287,7 @@ export default {
     position: fixed;
     bottom: 122px;
     right: 16px;
-		display: none;
+    display: none;
   }
 }
 </style>
@@ -312,6 +328,9 @@ export default {
 }
 .ugc .weui-grid__icon img {
   border-radius: 50%;
+}
+.ugc .weui-grids {
+  height: 180px;
 }
 </style>
 

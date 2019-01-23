@@ -1,137 +1,184 @@
 <!--账户设置 -->
 <template>
-  <div class="myPurchase-wrapper">
+  <div class="myPurchase-wrapper"
+       v-infinite-scroll="loadMore"
+       infinite-scroll-disabled="isDisableScroll"
+       infinite-scroll-immediate-check="true"
+       infinite-scroll-distance="10">
     <x-header :left-options="{backText: ''}"
               title="账户设置"></x-header>
     <div class="Purchase-content">
       <div class="Purchase-p">
         <div class="Purchase-list">
-          <div class="Purchase-item"
-               v-for="(item, index) in PurchaseData"
-               :key="index">
-            <div class="Purchase-date">{{item.date}}</div>
-            <div class="Purchase-item-list"
-                 v-for="(items, _index) in item.purchaseList"
-                 :key="_index">
-              <div class="Purchase-item-list-l">
-                <img src="../../public/images/Purchase-icon.png"
-                     class="Purchase-icon">
-                <div class="Purchase-text">{{items.sourcetype}}</div>
-              </div>
-              <div class="Purchase-money">{{Number(items.balance)/100}}元</div>
+          <div class="Purchase-item-list"
+               v-for="(items, _index) in PurchaseData"
+               :key="_index">
+            <div class="Purchase-item-list-l">
+              <img src="../../public/images/Purchase-icon.png"
+                   class="Purchase-icon">
+              <div class="Purchase-text">{{items.sourcetype}}</div>
+            </div>
+            <div class="Purchase-money">{{Number(items.balance)/100}}元<br>
+              <span class="Purchase-date">{{items.date}}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <load-more tip="正在加载"
+               :show-loading="true"
+               v-show="loading"></load-more>
+    <load-more v-show="noData"
+               :show-loading="false"
+               tip="暂无更多数据"
+               background-color="#fbf9fe"></load-more>
   </div>
 </template>
 <script>
 import https from '../https.js'
-import {XHeader } from 'vux'
+import {XHeader,LoadMore } from 'vux'
 export default {
 	components:{
-		XHeader
+    XHeader,
+    LoadMore
 	},
 	data () {
 		return {
-			PurchaseData: [
-				{
-					date: '2018-01-08',
-					purchaseList: [
-						{
-							purchaseText: '购买内参',
-							purchaseMoney: '5元'
-						}
-					]
-				},
-				{
-					date: '2018-01-08',
-					purchaseList: [
-						{
-							purchaseText: '购买内参',
-							purchaseMoney: '5元'
-						},
-						{
-							purchaseText: '购买内参',
-							purchaseMoney: '5元'
-						}
-					]
-				},
-				{
-					date: '2018-01-08',
-					purchaseList: [
-						{
-							purchaseText: '购买内参',
-							purchaseMoney: '5元'
-						},
-						{
-							purchaseText: '购买内参',
-							purchaseMoney: '5元'
-						}
-					]
-				}
-			]
+      page: 1, // 分页页数
+			matchtime: '', // 入参日期
+			isDisableScroll: false, // 是否禁用滚动分页
+			isCompleted: false, // 是否继续加载
+			loading: false,
+			noData: false,
+			PurchaseData: []
 		}
-	},
-	mounted(){
-		https.fetchPost('/user/blance.jsp',{} ).then((data) => {
-			console.log(data.data)
-			this.PurchaseData = data.data.list
-			
-			for(var i = 0;i<this.PurchaseData.length;i++){
-				console.log(this.PurchaseData[i].purchaseList)
-				for(var j=0;j<this.PurchaseData[i].purchaseList.length;j++){
-					console.log(this.PurchaseData[i].purchaseList[j])
-					 switch(this.PurchaseData[i].purchaseList[j].paysource){
+  },
+  methods:{
+    // 加载更多
+		loadMore () {
+			if (this.isCompleted) return
+			this.isDisableScroll = true
+			let page = ++this.page
+			this.getList(page,'loadMore')
+    },
+    //请求账户详情列表（分页）
+    getList(page,type){
+      https.fetchPost('/user/blance.jsp',{page} ).then((data) => {
+        console.log("ugc",data.data)
+        //分页拼接
+        this.isDisableScroll = false
+				if (type === 'init') {
+          this.PurchaseData = data.data.list || []
+          
+				} else {
+          this.loading = true
+          this.PurchaseData = this.PurchaseData.concat(data.data.list) || []
+				}
+				for (var j =0;j<data.data.list.length;j++){
+          data.data.list[j].showInfoItem=false
+					 switch(data.data.list[j].paysource){
 						case '0001':
-							this.PurchaseData[i].purchaseList[j].sourcetype='内参'
+							data.data.list[j].sourcetype='内参'
 						break;
 						case '0002':
-							this.PurchaseData[i].purchaseList[j].sourcetype='预测'
+							data.data.list[j].sourcetype='预测'
 						break;
 						case '0003':
-							this.PurchaseData[i].purchaseList[j].sourcetype='充值'
+							data.data.list[j].sourcetype='充值'
 						break;
 						case '0004':
-							this.PurchaseData[i].purchaseList[j].sourcetype='内参包月'
+							data.data.list[j].sourcetype='内参包月'
 						break;
 						case '0005':
-							this.PurchaseData[i].purchaseList[j].sourcetype='预测包月'
+							data.data.list[j].sourcetype='预测包月'
 						break;
 						case '0090':
-							this.PurchaseData[i].purchaseList[j].sourcetype='签到'
+							data.data.list[j].sourcetype='签到'
 						break;
 						case '0097':
-							this.PurchaseData[i].purchaseList[j].sourcetype='卖出预测提现预先扣除'
+							data.data.list[j].sourcetype='卖出预测提现预先扣除'
 						break;
 						case '0099':
-							this.PurchaseData[i].purchaseList[j].sourcetype='不中退款'
+							data.data.list[j].sourcetype='不中退款'
 						break;
 						case '0098':
-							this.PurchaseData[i].purchaseList[j].sourcetype='提现'
+							data.data.list[j].sourcetype='提现'
 						break;
 						case '0006':
-							this.PurchaseData[i].purchaseList[j].sourcetype='购买比分'
+							data.data.list[j].sourcetype='购买比分'
 						break;
 						case '0007':
-							this.PurchaseData[i].purchaseList[j].sourcetype='购买半全场'
+							data.data.list[j].sourcetype='购买半全场'
 						break;
-					}
+          }
 				}
-			}
-
-		}).catch(err=>{
-					console.log(err)
-			}
-		)
+				if (!data.data.list.length) {
+					this.isCompleted = true
+					this.loading = false
+					this.noData = true
+				}
+      }).catch(err=>{
+				this.isDisableScroll = false
+            console.log(err)
+        }
+      )
+    }
+  },
+	mounted(){
+    this.getList(this.page,  'init')
+    
+		// https.fetchPost('/user/blance.jsp',{} ).then((data) => {
+		// 	console.log(data.data)
+		// 	this.PurchaseData = data.data.list
+		// 		for(var j=0;j<this.PurchaseData.length;j++){
+		// 			 switch(this.PurchaseData[j].paysource){
+		// 				case '0001':
+		// 					this.PurchaseData[j].sourcetype='内参'
+		// 				break;
+		// 				case '0002':
+		// 					this.PurchaseData[j].sourcetype='预测'
+		// 				break;
+		// 				case '0003':
+		// 					this.PurchaseData[j].sourcetype='充值'
+		// 				break;
+		// 				case '0004':
+		// 					this.PurchaseData[j].sourcetype='内参包月'
+		// 				break;
+		// 				case '0005':
+		// 					this.PurchaseData[j].sourcetype='预测包月'
+		// 				break;
+		// 				case '0090':
+		// 					this.PurchaseData[j].sourcetype='签到'
+		// 				break;
+		// 				case '0097':
+		// 					this.PurchaseData[j].sourcetype='卖出预测提现预先扣除'
+		// 				break;
+		// 				case '0099':
+		// 					this.PurchaseData[j].sourcetype='不中退款'
+		// 				break;
+		// 				case '0098':
+		// 					this.PurchaseData[j].sourcetype='提现'
+		// 				break;
+		// 				case '0006':
+		// 					this.PurchaseData[j].sourcetype='购买比分'
+		// 				break;
+		// 				case '0007':
+		// 					this.PurchaseData[j].sourcetype='购买半全场'
+		// 				break;
+    //       }
+    //     }
+			
+		// }).catch(err=>{
+		// 			console.log(err)
+		// 	}
+		// )
 	}
 }
 </script>
 <style lang="scss" scope>
 .myPurchase-wrapper {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   background: #f2f5f8;
   .vux-header {
     background: #ffffff;
@@ -140,7 +187,7 @@ export default {
 
 .Purchase-content {
   width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 
 .Purchase-p {
@@ -184,6 +231,7 @@ export default {
 .Purchase-money {
   color: #ff455b;
   font-size: 18px;
+  text-align: right;
 }
 </style>
 <style>
