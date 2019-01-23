@@ -1,5 +1,9 @@
 <template>
-  <div class="issue-order">
+  <div class="issue-order"
+       v-infinite-scroll="loadMore"
+       infinite-scroll-disabled="isDisableScroll"
+       infinite-scroll-immediate-check="true"
+       infinite-scroll-distance="10">
     <x-header :left-options="{backText: ''}"
               title="发单"></x-header>
     <div class="order-info">
@@ -35,22 +39,36 @@
       <div class="btn"
            @click="setOrder">确定</div>
     </div>
+    <load-more tip="正在加载"
+               :show-loading="true"
+               v-show="loading"></load-more>
+    <load-more v-show="noData"
+               :show-loading="false"
+               tip="暂无更多数据"
+               background-color="#fbf9fe"></load-more>
   </div>
 </template>
 
 <script>
 import https from '../https.js'
-import { XHeader,Checker, CheckerItem,ToastPlugin } from 'vux'
+import { XHeader,Checker, CheckerItem,ToastPlugin,LoadMore } from 'vux'
 import Vue from 'vue'
 Vue.use(ToastPlugin)
 export default {
   components: {
     XHeader,
     Checker,
-    CheckerItem
+    CheckerItem,
+    LoadMore
   },
   data(){
     return{
+      page: 1, // 分页页数
+			matchtime: '', // 入参日期
+			isDisableScroll: false, // 是否禁用滚动分页
+			isCompleted: false, // 是否继续加载
+			loading: false,
+			noData: false,
       demo1:null,
       itemsTitle:['胜','平','负','让胜','让平','让负'],
       items:[1.45,3.40,6.85,2.72,3.10,2.28],
@@ -94,6 +112,40 @@ export default {
 
   },
   methods:{
+    // 加载更多
+		loadMore () {
+			if (this.isCompleted) return
+			this.isDisableScroll = true
+			let page = ++this.page
+			this.getList(page,'loadMore')
+    },
+    //请求荐单列表（分页）
+    getList(page,type){
+      https.fetchPost('/match/forecastmatchlist.jsp',{page,pagesize:5} ).then((data) => {
+        console.log("ugc",data.data)
+        //分页拼接
+        this.isDisableScroll = false
+				if (type === 'init') {
+          this.orderList = data.data.list || []
+				} else {
+          this.loading = true
+          this.orderList = this.orderList.concat(data.data.list) || []
+				}
+				for (var i =0;i<data.data.list.length;i++){
+          data.data.list[i].showInfoItem=false
+        data.data.list[i].bgColor=[false,false,false,false,false,false]
+				}
+				if (!data.data.list.length) {
+					this.isCompleted = true
+					this.loading = false
+					this.noData = true
+				}
+      }).catch(err=>{
+				this.isDisableScroll = false
+            console.log(err)
+        }
+      )
+    },
     onChange(val){
       console.log(this.orderList)
       console.log('val',val)
@@ -185,75 +237,19 @@ export default {
     }
   },
   mounted(){
-//     this.orderList=[
-//       {
-//         awayteam: "菲律宾",
-//         awayteampic: "菲律宾",
-//         hometeam: "吉尔吉斯",
-//         hometeampic: "吉尔吉斯",
-//         league: "亚洲杯",
-//         matchnum: "20190116029",
-//         matchtime: "2019-01-16 21:30:00",
-//         odds: ",3.90,3.52,1.70",
-//         weather: "",
-//         bgColor:['false','false','false','false','false','false']
-//       },
-//       {
-//         awayteam: "菲律宾",
-//         awayteampic: "菲律宾",
-//         hometeam: "吉尔吉斯",
-//         hometeampic: "吉尔吉斯",
-//         league: "亚洲杯",
-//         matchnum: "20190116030",
-//         matchtime: "2019-01-16 21:30:00",
-//         odds: ",3.90,3.52,1.70",
-//         weather: "",
-//         bgColor:['false','false','false','false','false','false']
-        
-//       },
-//       {
-//         awayteam: "菲律宾",
-//         awayteampic: "菲律宾",
-//         hometeam: "吉尔吉斯",
-//         hometeampic: "吉尔吉斯",
-//         league: "亚洲杯",
-//         matchnum: "20190116031",
-//         matchtime: "2019-01-16 21:30:00",
-//         odds: ",3.90,3.52,1.70",
-//         weather: "",
-//         bgColor:['false','false','false','false','false','false']
-        
-//       },
-//       {
-//         awayteam: "菲律宾",
-//         awayteampic: "菲律宾",
-//         hometeam: "吉尔吉斯",
-//         hometeampic: "吉尔吉斯",
-//         league: "亚洲杯",
-//         matchnum: "20190116032",
-//         matchtime: "2019-01-16 21:30:00",
-//         odds: ",3.90,3.52,1.70",
-//         weather: "",
-//         bgColor:['false','false','false','false','false','false']
-//       }
-//     ]
-// for(var i=0;i<this.orderList.length;i++){
-//         this.orderList[i].bgColor=[false,false,false,false,false,false]
-//       }
-
-    https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
-      for(var i=0;i<data.data.list.length;i++){
-        data.data.list[i].bgColor=[false,false,false,false,false,false]
-      }
-      this.orderList=data.data.list
-      // for(var i=0;i<this.orderList.length;i++){
-      //   this.orderList[i].selNum=''
-      // }
-      console.log(data.data)
-    }).catch(err=>{
-          console.log(err)
-      }
-    )
+    this.getList(this.page,  'init')
+    
+    // https.fetchPost('/match/forecastmatchlist.jsp',{} ).then((data) => {
+    //   for(var i=0;i<data.data.list.length;i++){
+    //     data.data.list[i].bgColor=[false,false,false,false,false,false]
+    //   }
+    //   this.orderList=data.data.list
+      
+    //   console.log(data.data)
+    // }).catch(err=>{
+    //       console.log(err)
+    //   }
+    // )
   }
 }
 </script>

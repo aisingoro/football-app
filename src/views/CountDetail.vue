@@ -126,52 +126,6 @@ export default {
   },
 	mounted(){
     this.getList(this.page,  'init')
-    
-		// https.fetchPost('/user/blance.jsp',{} ).then((data) => {
-		// 	console.log(data.data)
-		// 	this.PurchaseData = data.data.list
-		// 		for(var j=0;j<this.PurchaseData.length;j++){
-		// 			 switch(this.PurchaseData[j].paysource){
-		// 				case '0001':
-		// 					this.PurchaseData[j].sourcetype='内参'
-		// 				break;
-		// 				case '0002':
-		// 					this.PurchaseData[j].sourcetype='预测'
-		// 				break;
-		// 				case '0003':
-		// 					this.PurchaseData[j].sourcetype='充值'
-		// 				break;
-		// 				case '0004':
-		// 					this.PurchaseData[j].sourcetype='内参包月'
-		// 				break;
-		// 				case '0005':
-		// 					this.PurchaseData[j].sourcetype='预测包月'
-		// 				break;
-		// 				case '0090':
-		// 					this.PurchaseData[j].sourcetype='签到'
-		// 				break;
-		// 				case '0097':
-		// 					this.PurchaseData[j].sourcetype='卖出预测提现预先扣除'
-		// 				break;
-		// 				case '0099':
-		// 					this.PurchaseData[j].sourcetype='不中退款'
-		// 				break;
-		// 				case '0098':
-		// 					this.PurchaseData[j].sourcetype='提现'
-		// 				break;
-		// 				case '0006':
-		// 					this.PurchaseData[j].sourcetype='购买比分'
-		// 				break;
-		// 				case '0007':
-		// 					this.PurchaseData[j].sourcetype='购买半全场'
-		// 				break;
-    //       }
-    //     }
-			
-		// }).catch(err=>{
-		// 			console.log(err)
-		// 	}
-		// )
 	}
 }
 </script>
