@@ -5,6 +5,19 @@
             style="width:100%;margin:0 auto;"
             :aspect-ratio="150/343"
             dots-position="center"></swiper>
+    <group class="maqueen">
+      <cell>
+        <img slot="icon"
+             src="../../public/images/maqueen.png"
+             width=18
+             height=16/>
+        <marquee>
+          <marquee-item v-for="i in 5"
+                        :key="i"
+                        @click.native="onClick(i)">小球仙iOS版与Android版即将上线，敬请期待！ {{i}}</marquee-item>
+        </marquee>
+      </cell>
+    </group>
     <div class="index-info">
       <h2 class="title-internal">独家内参
         <span>更多></span>
@@ -139,7 +152,7 @@
 
 <script>
 import https from '../https.js'
-import {Swiper,XCircle,XTable,XDialog,TransferDomDirective as TransferDom } from 'vux'
+import {Group, Cell, Marquee, MarqueeItem,Swiper,XCircle,XTable,XDialog,TransferDomDirective as TransferDom } from 'vux'
 const baseList = [{
         url: 'javascript:',
         img: require('../../public/images/index-swiper-01.png'),
@@ -155,7 +168,7 @@ export default {
     TransferDom
   },
   components: {
-    Swiper,XCircle,XTable,XDialog
+    Swiper,XCircle,XTable,XDialog,Group, Cell, Marquee, MarqueeItem,
   },
   data(){
     return {
@@ -523,6 +536,23 @@ export default {
   width: 91.5%;
   margin: 0 auto;
   border-radius: 6px;
+  overflow: hidden;
+}
+.vux-marquee-box li {
+  font-size: 12px;
+}
+.vux-marquee {
+  height: 18px !important;
+}
+.maqueen {
+  width: 90%;
+  margin: 0 auto;
+}
+.maqueen .weui-cells:before {
+  border-top: none;
+}
+.maqueen .weui-cells {
+  border-radius: 6px 6px 0px 0px;
   overflow: hidden;
 }
 </style>
