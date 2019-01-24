@@ -41,8 +41,14 @@ export default {
 <style lang="scss" scoped>
 .expert-rule {
   height: 100%;
+  margin-top: 46px;
   .vux-header {
     background: #ffffff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
   }
   .rule-box {
     width: 90%;

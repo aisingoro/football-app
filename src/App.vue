@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-overflow-scrolling: touch;
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 #app {
   width: 100%;
@@ -42,5 +42,13 @@ h2,
 h3 {
   margin-block-start: 0;
   margin-block-end: 0;
+}
+.vux-header {
+  // position: fixed !important;
+  // left: 0;
+  // top: 0;
+  // margin-bottom: 50px;
+  // width: 100%;
+  // overflow: hidden;
 }
 </style>

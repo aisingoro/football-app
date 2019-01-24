@@ -295,6 +295,7 @@ export default {
   -webkit-overflow-scrolling: touch;
   background: #f8f9fa;
   padding-bottom: 22px;
+  // margin-top: 46px;
   & > h1 {
     padding-left: 16px;
     padding-top: 7px;
@@ -303,6 +304,10 @@ export default {
     font-weight: 500;
     color: #313233;
     background: #fff;
+    // position: fixed;
+    // left: 0;
+    // top: 0;
+    // z-index: 9999;
   }
   .vux-tab-wrap {
     margin-bottom: 26px;

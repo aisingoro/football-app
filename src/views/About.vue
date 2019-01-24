@@ -29,9 +29,15 @@ export default {
   height: 100%;
   overflow: hidden;
   position: relative;
+  margin-top: 46px;
   .vux-header {
-    background: #ffffff;
     border-bottom: 1px solid #f5f5f5;
+    width: 100%;
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
   }
 }
 .about-box {

@@ -86,8 +86,14 @@ export default {
 
 <style lang="scss" scoped>
 .fill-info {
+  margin-top: 46px;
   .vux-header {
     background: #ffffff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
   }
   .fill {
     width: 91.5%;

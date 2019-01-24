@@ -111,6 +111,7 @@ export default {
   width: 100%;
   height: 100%;
   background: #f8f9fa;
+  margin-top: 46px;
   .ugc-header {
     width: 100%;
     height: 156px;
@@ -248,6 +249,11 @@ export default {
 <style lang="scss">
 .ugc-info .vux-header {
   background: #ffffff;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 }
 .ugc-info .vux-header .vux-header-title {
   color: #313233;

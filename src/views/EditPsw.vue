@@ -109,6 +109,7 @@ Vue.use(ToastPlugin)
   width: 100%;
   height: 100%;
   overflow: hidden;
+  margin-top: 46px;
   .title {
     font-size: 26px;
     font-family: PingFangSC-Semibold;
@@ -137,6 +138,11 @@ Vue.use(ToastPlugin)
 }
 .vux-header {
   background: #ffffff;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 }
 .login > img {
   display: block;

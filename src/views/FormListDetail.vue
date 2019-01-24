@@ -146,6 +146,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form-list-detail {
+  margin-top: 46px;
   .vux-table {
     font-size: 12px;
     margin-top: 26px;
@@ -163,6 +164,11 @@ export default {
   }
   .vux-header {
     background: #ffffff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
   }
   .form-list-info {
     width: 91.5%;

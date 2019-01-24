@@ -102,8 +102,14 @@ export default {
   width: 100%;
   // height: 100%;
   background: #f2f5f8;
+  margin-top: 46px;
   .vux-header {
+    width: 100%;
     background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
   }
   .ugc-list-item {
     width: 91.5%;
@@ -145,6 +151,10 @@ export default {
 <style>
 .ugc-list .vux-header .vux-header-title {
   color: #313233;
+}
+.ugc-list .weui-loadmore {
+  margin: 0 auto;
+  margin-top: 1.5rem;
 }
 </style>
 

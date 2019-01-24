@@ -267,6 +267,7 @@ export default {
         line-height: 32px;
         font-family: 'PingFangSC-Regular';
         font-weight: 400;
+
         span:first-child {
           display: inline-block;
           width: 3px;

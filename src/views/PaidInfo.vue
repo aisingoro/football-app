@@ -284,8 +284,14 @@ export default {
 
 <style lang="scss" scoped>
 .paid-info {
+  margin-top: 46px;
   .vux-header {
     background: #ffffff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
     box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
   }
   .header-title {
