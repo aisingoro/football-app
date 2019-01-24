@@ -24,7 +24,8 @@
       </h2>
       <div class="internalList"
            v-for="(item,index) in matchlist"
-           :key="index">
+           :key="index"
+           @click="goInfo(item.id)">
         <img src="../../public/images/index-badge.png"
              class="badge"
              v-if="item.paytype==0" />
@@ -225,6 +226,10 @@ export default {
 		)
   },
   methods:{
+    goInfo(e){
+      this.$store.commit('setInternalInfoItem',e)
+      this.$router.push('/internal-info')
+    },
     showAllMatch(){
       this.showScrollBox=true;
       https.fetchPost('/index/oddsratiolist.jsp',{} ).then((data) => {
