@@ -150,7 +150,7 @@ export default {
 		},
 		handleScroll (e) {
 			let obtn = this.$refs.btn
-			let clientHeight = document.documentElement.clientHeight
+			let clientHeight = document.documentElement.clientHeight/3
 			let osTop = e.target.scrollTop
 			if (osTop >= clientHeight) {
 				obtn.style.display = 'block'

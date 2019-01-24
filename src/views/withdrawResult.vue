@@ -2,12 +2,12 @@
 <template>
 	<div class="withdra-result-wrapper">
 		<x-header :left-options="{backText: ''}"
-		          title="提现账户"></x-header>
+		          title="购买成功"></x-header>
 		<div class="center-content">
 			<!--根据提现结果 展示不同的状态-->
 			<!-- 成功失败icon自己写一个 -->
-			<h2 class="status-title">提现成功</h2>
-			<div class="status-text">具体到账时间以银行为准</div>
+			<h2 class="status-title">购买成功</h2>
+			<!-- <div class="status-text">具体到账时间以银行为准</div> -->
 		</div>
 	</div>
 </template>

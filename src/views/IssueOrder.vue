@@ -34,11 +34,6 @@
         </div>
       </div>
     </div>
-    <div class="fixed-bottom">
-      <p>重选</p>
-      <div class="btn"
-           @click="setOrder">确定</div>
-    </div>
     <load-more tip="正在加载"
                :show-loading="true"
                v-show="loading"></load-more>
@@ -46,6 +41,12 @@
                :show-loading="false"
                tip="暂无更多数据"
                background-color="#fbf9fe"></load-more>
+    <div class="fixed-bottom">
+      <p>重选</p>
+      <div class="btn"
+           @click="setOrder">确定</div>
+    </div>
+
   </div>
 </template>
 
@@ -257,7 +258,7 @@ export default {
 <style lang="scss" scoped>
 .issue-order {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   background: #f8f9fa;
   .vux-header {
     background: #ffffff;

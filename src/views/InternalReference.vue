@@ -1,10 +1,9 @@
 <template>
-  <div
-		class="internal-reference"
-		v-infinite-scroll="loadMore"
-		infinite-scroll-disabled="isDisableScroll"
-		infinite-scroll-immediate-check="true"
-		infinite-scroll-distance="10">
+  <div class="internal-reference"
+       v-infinite-scroll="loadMore"
+       infinite-scroll-disabled="isDisableScroll"
+       infinite-scroll-immediate-check="true"
+       infinite-scroll-distance="10">
     <h1>独家内参</h1>
     <tab>
       <tab-item @on-item-click="onItemClick">{{yesterdayWeek}}<br>{{yesterday}}</tab-item>
@@ -20,7 +19,18 @@
           <p>{{item.matchnumshow}}</p>
           <p>{{item.showntitle.split('(')[0]}}</p>
           <p>{{item.matchtime.substring(5,item.matchtime.length)}}</p>
-          <p @click="showInfo(index)">分析</p>
+          <!-- <p @click="showInfo(index)">分析
+            <x-icon type="ios-arrow-down"
+                    size="10"></x-icon>
+          </p> -->
+          <p @click="showInfo(index)">分析
+            <x-icon v-if="!item.showInfoItem"
+                    type="ios-arrow-down"
+                    size="10"></x-icon>
+            <x-icon v-if="item.showInfoItem"
+                    type="ios-arrow-up"
+                    size="10"></x-icon>
+          </p>
         </div>
         <div @click="getInternalInfo(item.id,item.matchnum)">
           <div>
@@ -40,6 +50,9 @@
       </div>
       <div class="show-info"
            v-if="item.showInfoItem">
+
+        <img class="show-list-up"
+             src="../../public/images/inter-list-up.png" />
         <div>
           <p>大概率事件结果对比：</p>
           <div>
@@ -118,8 +131,13 @@
         </div>
       </div>
     </div>
-			<load-more tip="正在加载" :show-loading="true" v-show="loading"></load-more>
-			<load-more v-show="noData" :show-loading="false" tip="暂无更多数据" background-color="#fbf9fe"></load-more>
+    <load-more tip="正在加载"
+               :show-loading="true"
+               v-show="loading"></load-more>
+    <load-more v-show="noData"
+               :show-loading="false"
+               tip="暂无更多数据"
+               background-color="#fbf9fe"></load-more>
   </div>
 </template>
 
@@ -166,8 +184,8 @@ export default {
 					this.loading = true
 					this.internalList = this.internalList.concat(data.data.list) || []
 				}
-				for (var i =0;i<data.data.list.length;i++){
-          data.data.list[i].showInfoItem=false
+				for (var i =0;i<this.internalList.length;i++){
+          this.internalList[i].showInfoItem=false
 				}
 				if (!data.data.list.length) {
 					this.isCompleted = true
@@ -196,11 +214,20 @@ export default {
       this.$router.push('/internal-info')
     },
     showInfo(index){
-      var showItem=this.internalList[index].showInfoItem;
+    var obj = this.internalList[index];
+    var showItem=this.internalList[index].showInfoItem;
+    
+    console.log("赋值前",obj.showInfoItem)
       for(var i=0;i<this.internalList.length;i++){
         this.internalList[i].showInfoItem=false;
       }
-      this.internalList[index].showInfoItem=!showItem
+      console.log("赋值中",obj.showInfoItem)
+      obj.showInfoItem = !showItem;
+    console.log("赋值后",obj.showInfoItem)
+
+    this.$set(this.internalList, index, obj);
+    
+      
 		},
 		// 加载更多
 		loadMore () {
@@ -260,12 +287,12 @@ export default {
 <style lang="scss" scoped>
 .internal-reference {
   position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 50px;
-	overflow: scroll;
-	-webkit-overflow-scrolling: touch;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   background: #f8f9fa;
   padding-bottom: 22px;
   & > h1 {
@@ -299,7 +326,7 @@ export default {
         width: 60px;
         height: 20px;
         right: 0;
-        top: -5px;
+        top: -7px;
       }
       & > div:first-child {
         float: left;
@@ -318,7 +345,7 @@ export default {
           font-family: 'PingFangSC-Medium';
         }
         & > p:last-child {
-          margin-top: 15px;
+          margin-top: 10px;
           font-family: 'PingFangSC-Regular';
         }
       }
@@ -363,7 +390,7 @@ export default {
       clear: both;
       width: 100%;
       height: 328px;
-      background: #eaedf2;
+      background: #e1e7ef;
       & > div {
         width: 91.5%;
         margin: 0 auto;
@@ -482,7 +509,7 @@ export default {
 }
 
 .internal-reference .weui-loadmore {
-	margin: 10px auto;
+  margin: 10px auto;
 }
 .internal-reference .vux-tab .vux-tab-item {
   background: none;
@@ -502,5 +529,16 @@ export default {
       float: right;
     }
   }
+}
+.show-info {
+  position: relative;
+  margin-top: 20px;
+}
+.show-list-up {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 20px;
+  height: 10px;
 }
 </style>

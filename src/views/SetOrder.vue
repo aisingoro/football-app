@@ -44,7 +44,8 @@
                  :max="1"
                  class="bor-none">
       </checklist>
-      <div class="pay-input">
+      <div class="pay-input"
+           v-if='radioValue=="收费"'>
         <input type="text"
                v-model="fmoney" />
         <span>¥</span>

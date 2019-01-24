@@ -92,8 +92,8 @@ export default {
 .header {
   width: 100%;
   height: 181px;
-  background: rgba(3, 147, 248, 1);
-  opacity: 0.8;
+  background: url('../../public/images/bg-count.png') 100% 100%/100% 100%;
+  // opacity: 0.8;
   & > h1 {
     font-size: 14px;
     color: rgba(255, 255, 255, 1);

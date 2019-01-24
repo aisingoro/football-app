@@ -12,7 +12,8 @@
 				<div class="Purchase-list">
 					<div class="Purchase-item-list"
 					     v-for="(items, _index) in PurchaseData"
-					     :key="_index">
+					     :key="_index"
+					     @click="goInfo(items.buyid)">
 						<div class="Purchase-item-list-l">
 							<img src="../../public/images/Purchase-icon.png"
 							     class="Purchase-icon">
@@ -54,6 +55,10 @@ export default {
 		}
   },
   methods:{
+		goInfo(e){
+      this.$store.commit('setInternalInfoItem',e)
+      this.$router.push('/internal-info')
+		},
     // 加载更多
 		loadMore () {
 			if (this.isCompleted) return
@@ -237,6 +242,10 @@ export default {
 <style>
 .myPurchase-wrapper .vux-header .vux-header-title {
   color: #313233;
+}
+.myPurchase-wrapper .weui-loadmore {
+  margin: 0 auto;
+  margin-top: 1.5rem;
 }
 </style>
 

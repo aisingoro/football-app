@@ -12,7 +12,7 @@
       <p v-if="statuscode<0">此荐单收费：
         <span>{{price}}</span>元</p>
       <div class="btn"
-           @click="showPay=true">{{ statuscode>=0?'已解锁':'解锁查看'}}</div>
+           @click="statuscode<0?(showPay=true):''">{{ statuscode>=0?'已解锁':'解锁查看'}}</div>
       <span class="attention"
             v-if="statuscode<0">请点击解锁查看，支付费用后可查看</span>
       <div v-if="statuscode>=0"
@@ -75,8 +75,9 @@
 
 <script>
 import https from '../https.js'
-import { XHeader,Popup ,XTable} from 'vux'
-
+import { XHeader,Popup ,XTable,ToastPlugin} from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
   components: {
     XHeader,
@@ -108,6 +109,15 @@ export default {
       }
       https.fetchPost('/user/userpay.jsp',args).then((data) => {
         console.log(data.data)
+        if(data.data.statuscode>0){
+          window.location.href = 'http://localhost:8080/#/withdrawResult'
+
+        }else{
+          this.$vux.toast.show({
+            type:'warn',
+                    text: data.data.statusmsg,
+                  })
+        }
       }).catch(err=>{
               console.log(err)
           }
@@ -314,5 +324,8 @@ export default {
 <style>
 .form-list-detail .vux-header .vux-header-title {
   color: #313233;
+}
+.form-list-detail .vux-x-icon {
+  fill: rgba(255, 165, 36, 1);
 }
 </style>

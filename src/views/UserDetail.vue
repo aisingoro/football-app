@@ -46,7 +46,7 @@
         <cell title="提现账户"
               value=""
               is-link
-              link="">
+              link="/withdraw">
         </cell>
       </group>
     </div>

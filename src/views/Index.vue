@@ -34,11 +34,11 @@
             <p>{{item.awayteam}}</p>
           </div>
           <div class="weather-info">
-            <div><img src="../../public/images/index-team-01.png"
+            <div><img src="../../public/images/weather-01.png"
                    class="weather-icon" />{{item.weather.split(',')[0]}}</div>
-            <div><img src="../../public/images/index-team-01.png"
+            <div><img src="../../public/images/weather-02.png"
                    class="weather-icon" />{{item.weather.split(',')[1]}}</div>
-            <div><img src="../../public/images/index-team-01.png"
+            <div><img src="../../public/images/weather-03.png"
                    class="weather-icon" />{{item.weather.split(',')[2]}}</div>
           </div>
         </div>
@@ -286,6 +286,7 @@ export default {
         width: 96%;
         height: 36px;
         margin: 0 auto;
+        overflow: hidden;
         display: flex;
         margin-top: 9px;
         border-top: 1px solid #f2f5f8;

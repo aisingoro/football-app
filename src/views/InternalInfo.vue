@@ -20,11 +20,11 @@
           </div>
         </div>
         <div class="weather-info">
-          <div><img src="../../public/images/index-team-01.png"
-                 class="weather-icon" />晴20c</div>
-          <div><img src="../../public/images/index-team-01.png"
+          <div><img src="../../public/images/weather-01.png"
+                 class="weather-icon" />{{matchlist.weather}}</div>
+          <div><img src="../../public/images/weather-02.png"
                  class="weather-icon" />风速4.4mph</div>
-          <div><img src="../../public/images/index-team-01.png"
+          <div><img src="../../public/images/weather-03.png"
                  class="weather-icon" />降水2%</div>
 
         </div>
@@ -111,21 +111,22 @@
         </div>
         <div v-if="needbuy=='1'"
              class="internal-wrapper">
+          <!-- <div class="internal-wrapper"> -->
           <p class="contain-title">【星级评分】</p>
           <div class="team-cli">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
-                <span v-for="(item,index) in homeInfo.rating.split('')"
+                <span v-for="(item,index) in homeInfo.rating && homeInfo.rating.split('')"
                       :key="index">
                   <x-icon type="ios-star"
                           size="20"></x-icon>
                 </span>
-                <span v-for="i in (5-homeInfo.rating.length)"
+                <!-- <span v-for="i in (5-homeInfo.rating.length)"
                       :key="i">
                   <x-icon type="ios-star-outline"
                           size="20"></x-icon>
-                </span>
+                </span> -->
 
               </div>
             </div>
@@ -136,10 +137,10 @@
                         :key="index"
                         type="ios-star"
                         size="20"></x-icon>
-                <x-icon v-for="i in (5-awayInfo.rating.length)"
+                <!-- <x-icon v-for="i in (5-awayInfo.rating.length)"
                         :key="i"
                         type="ios-star-outline"
-                        size="20"></x-icon>
+                        size="20"></x-icon> -->
               </div>
             </div>
           </div>
@@ -366,7 +367,7 @@
               </div>
             </div>
           </div>
-          <div class="contain-info">
+          <div class="contain-info tips">
             <p v-for="(item,index) in buyDetailInfo.tips"
                :key="index">{{item}}</p>
           </div>
@@ -428,7 +429,7 @@
         <div class="btn-show-wrapper">
           <p>大数据智能荐单：</p>
           <div v-if="machineforecastdxq.needbuy!==''">
-            <div @click="showPayMethod('0008')">
+            <div @click="machineforecastdxq.needbuy=='0'?showPayMethod('0008'):''">
               <span>大小球</span>内参</div>
             <div class="paid-show"
                  v-if="machineforecastdxq.needbuy=='1'">
@@ -451,7 +452,7 @@
             </div>
           </div>
           <div v-if="machineforecastyp.needbuy!==''">
-            <div @click="showPayMethod('0009')">
+            <div @click="machineforecastyp.needbuy=='0'?showPayMethod('0009'):''">
               <span>亚盘</span>内参</div>
             <div class="paid-show"
                  v-if="machineforecastyp.needbuy=='1'">
@@ -474,7 +475,7 @@
             </div>
           </div>
           <div v-if="machineforecastscore.needbuy!==''">
-            <div @click="showPayMethod('0006')">
+            <div @click="machineforecastscore.needbuy=='0'?showPayMethod('0006'):''">
               <span>比分</span>内参</div>
             <div class="paid-show"
                  v-if="machineforecastscore.needbuy=='1' ">
@@ -497,7 +498,7 @@
             </div>
           </div>
           <div v-if="machineforecasthf.needbuy!==''">
-            <div @click="showPayMethod('0007')">
+            <div @click="machineforecasthf.needbuy=='0'?showPayMethod('0007'):''">
               <span>半全场</span>内参</div>
             <div class="paid-show"
                  v-if="machineforecasthf.needbuy=='1'">
@@ -561,9 +562,11 @@
 </template>
 
 <script>
-import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress,Sticky ,Popup,XButton} from 'vux'
+import { XHeader,ButtonTab, ButtonTabItem,Swiper,SwiperItem,XCircle,XProgress,Sticky ,Popup,XButton,ToastPlugin} from 'vux'
 import PublicInfo from '../components/PublicInfo.vue'
 import https from '../https.js'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 
 export default {
   components: {
@@ -620,11 +623,25 @@ export default {
         buytype:e,
         // buytype:'0006',
         paytype:'0004',
-        payback:'http://localhost:8080/index.html#/internal-info'
+        // payback:'http://localhost:8080/index.html#/internal-info'
+        payback: window.location.href
+        
       }
+      console.log(window.location.href)
       https.fetchPost('/user/userpay.jsp',args).then((data) => {
         console.log(data.data.tourl)
-        window.location.href=data.data.tourl
+        // window.location.href = data.data.tourl
+        if(data.data.statuscode>0){
+          window.location.href = 'http://localhost:8080/#/withdrawResult'
+
+        }else{
+          this.$vux.toast.show({
+            type:'warn',
+                    text: data.data.statusmsg,
+                  })
+        }
+        
+       
       }).catch(err=>{
               console.log(err)
           }
@@ -647,7 +664,7 @@ export default {
         this.machineforecastyp=data.data.machineforecastyp//亚盘
         console.log("awayInfo",this.awayInfo)
         this.matchlist = data.data.matchinfo;//基本信息
-        this.resultList = data.data.inside.details.resultindex.split(",")//结果指数
+        this.resultList = data.data.inside.details.resultindex.split(",") || []//结果指数
         this.needbuy = data.data.inside.needbuy;
         this.price = data.data.inside.price
         console.log('price',this.price)
@@ -1318,6 +1335,12 @@ export default {
 }
 .internal-info .vux-x-icon {
   fill: rgba(255, 165, 36, 1);
+}
+.tips {
+  margin-top: 6px;
+  background: url('../../public/images/tips.png') 100% 100%/100% 100%;
+  padding: 8px;
+  padding-top: 45px;
 }
 </style>
 
