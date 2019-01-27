@@ -364,12 +364,12 @@ export default {
       float: right;
       margin-right: 15px;
       margin-top: 15px;
-      width: 187px;
-      height: 44px;
+      width: 146px;
+      height: 38px;
       background: #0393f8;
       border-radius: 24px;
-      font-size: 20px;
-      line-height: 44px;
+      font-size: 18px;
+      line-height: 38px;
       text-align: center;
       color: #ffffff;
     }
