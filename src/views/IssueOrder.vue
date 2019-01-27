@@ -29,7 +29,7 @@
                           :class="item.bgColor[index1]?'demo1-item-unsel':''"
                           :value="orderList[index].matchnum+'/'+index1"
                           v-for="(item1, index1) in item.odds.split(',')"
-                          :key="index1">{{itemsTitle[index1]}}<br>{{item1}}{{item.bgColor[index1]}}</checker-item>
+                          :key="index1">{{itemsTitle[index1]}}<br>{{item1}}</checker-item>
           </checker>
         </div>
       </div>
