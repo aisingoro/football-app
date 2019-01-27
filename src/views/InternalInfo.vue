@@ -112,8 +112,10 @@
         <div v-if="needbuy=='1'"
              class="internal-wrapper">
           <!-- <div class="internal-wrapper"> -->
-          <p class="contain-title">【星级评分】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.rating!=='' || awayInfo.rating!==''">【星级评分】</p>
+          <div class="team-cli"
+               v-if="homeInfo.rating!=='' || awayInfo.rating!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -164,7 +166,8 @@
           <p class="contain-title">【主帅&主裁】</p>
           <p class="contain-info">{{buyDetailInfo.referee}}</p>
           <p class="contain-title">【伤停及复出】</p>
-          <div class="team-cli">
+          <div class="team-cli"
+               v-if="homeInfo.playerssuspended!=='' || awayInfo.playerssuspended!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队禁赛</div>
               <div class="home-cli-body">
@@ -190,7 +193,8 @@
               </div>
             </div>
           </div>
-          <div class="team-cli">
+          <div class="team-cli"
+               v-if="homeInfo.playersdoubtful!=='' || awayInfo.playersdoubtful!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队上阵成疑</div>
               <div class="home-cli-body">
@@ -216,7 +220,8 @@
               </div>
             </div>
           </div>
-          <div class="team-cli">
+          <div class="team-cli"
+               v-if="homeInfo.playerunavailable!=='' || awayInfo.playerunavailable!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队不可上场</div>
               <div class="home-cli-body">
@@ -242,7 +247,8 @@
               </div>
             </div>
           </div>
-          <div class="team-cli">
+          <div class="team-cli"
+               v-if="homeInfo.playersrested!=='' || awayInfo.playersrested!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队休息</div>
               <div class="home-cli-body">
@@ -268,8 +274,8 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【未来赛事】</p>
-          <div class="team-cli">
+          <!-- <p class="contain-title">【未来赛事】</p>
+          <div class="team-cli" v-if="homeInfo.rating!=='' || awayInfo.rating!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -282,9 +288,11 @@
                 7天后即19年1月5日将客场 出战澳超排名第1的梅斯
               </div>
             </div>
-          </div>
-          <p class="contain-title">【实力及战意】</p>
-          <div class="team-cli">
+          </div> -->
+          <p class="contain-title"
+             v-if="homeInfo.strength!=='' || awayInfo.strength!==''">【实力及战意】</p>
+          <div class="team-cli"
+               v-if="homeInfo.strength!=='' || awayInfo.strength!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -300,8 +308,10 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【Brief】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.brief!=='' || awayInfo.brief!==''">【Brief】</p>
+          <div class="team-cli"
+               v-if="homeInfo.brief!=='' || awayInfo.brief!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -317,8 +327,10 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【回顾】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.back!=='' || awayInfo.back!==''">【回顾】</p>
+          <div class="team-cli"
+               v-if="homeInfo.back!=='' || awayInfo.back!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -342,8 +354,10 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【前瞻】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.ahead!=='' || awayInfo.ahead!==''">【前瞻】</p>
+          <div class="team-cli"
+               v-if="homeInfo.ahead!=='' || awayInfo.ahead!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -367,12 +381,15 @@
               </div>
             </div>
           </div>
-          <div class="contain-info tips">
+          <div class="contain-info tips"
+               v-if="buyDetailInfo.tips!==''">
             <p v-for="(item,index) in buyDetailInfo.tips"
                :key="index">{{item}}</p>
           </div>
-          <p class="contain-title">【预计首发】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.playerslineup!=='' || awayInfo.playerslineup!==''">【预计首发】</p>
+          <div class="team-cli"
+               v-if="homeInfo.playerslineup!=='' || awayInfo.playerslineup!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
@@ -398,8 +415,10 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【替补】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.playersbenched!=='' || awayInfo.playersbenched!==''">【替补】</p>
+          <div class="team-cli"
+               v-if="homeInfo.playersbenched!=='' || awayInfo.playersbenched!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
