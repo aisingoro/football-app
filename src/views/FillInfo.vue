@@ -8,14 +8,17 @@
                placeholder="请输入您的真实姓名"></x-input>
       <x-input title="身份证号"
                v-model="idcard"
-               placeholder="请输入您的身份证号"></x-input>
+               placeholder="请输入您的身份证号"
+               :max="18"></x-input>
       <x-input title="昵称"
                v-model="expertname"
                placeholder="请输入您的昵称"></x-input>
       <p>昵称是您的专家宣传标识，提交申请后，昵称将不可更改</p>
       <x-input title="银行卡号"
                v-model="cardnum"
-               placeholder="请输入您的银行卡号"></x-input>
+               placeholder="请输入您的银行卡号"
+               :max="16"
+               keyboard="number"></x-input>
       <x-input title="开户行"
                v-model="openingbank"
                placeholder="请输入您的开户行"></x-input>
