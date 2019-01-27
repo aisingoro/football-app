@@ -20,7 +20,7 @@
     </group>
     <div class="index-info">
       <h2 class="title-internal">独家内参
-        <span>更多></span>
+        <span @click="goInternal">更多></span>
       </h2>
       <div class="internalList"
            v-for="(item,index) in matchlist"
@@ -126,7 +126,8 @@
                    :content-bordered="false"
                    style="background-color:#fff;"
                    v-for="(item,index) in allMatchList"
-                   :key="index">
+                   :key="index"
+                   @click.native="goMatchDetail(item.id)">
             <thead>
               <tr class="tr-style">
                 <th>{{item.matchnumshow}}</th>
@@ -243,6 +244,14 @@ export default {
 		)
   },
   methods:{
+    goInternal(){
+      this.$router.push('/home/internal-reference')
+      
+    },
+    goMatchDetail(e){
+      this.$store.commit('setInternalInfoItem',e)
+      this.$router.push('/internal-info')
+    },
     goInfo(e){
       this.$store.commit('setInternalInfoItem',e)
       this.$router.push('/internal-info')
