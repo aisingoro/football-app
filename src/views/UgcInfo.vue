@@ -6,11 +6,12 @@
       <img :src="expertinfo.expertpic" />
       <div class="ugc-name">
         <p>{{expertinfo.expertname}}</p>
-        <div>{{expertinfo.expertlevel}}</div>
+        <!-- <div>{{expertinfo.expertlevel}}</div> -->
       </div>
       <div class="ugc-desc">
-        <p>近期{{expertinfo.fcount}}中{{expertinfo.fright}} 盈利{{expertinfo.finfomation}}</p>
-        <p>盈利率{{expertinfo.finfomation}}</p>
+        <p>
+          <span>近期{{expertinfo.fright[0]}}场{{expertinfo.fright[1]}}中{{expertinfo.fright[2]}}走{{expertinfo.fright[3]}}错</span> 盈利{{expertinfo.finfomation}}</p>
+        <!-- <p>盈利率{{expertinfo.finfomation}}</p> -->
       </div>
       <div class="desc-more">
         <div>
@@ -130,7 +131,7 @@ export default {
       float: left;
       p {
         font-size: 16px;
-        margin-top: 27px;
+        margin-top: 36px;
       }
       & > div {
         width: 19px;
@@ -154,6 +155,10 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: #ffca40;
+        margin-top: 10px;
+        span {
+          color: red;
+        }
       }
     }
     .desc-more {
