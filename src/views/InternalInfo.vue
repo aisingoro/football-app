@@ -651,7 +651,8 @@ export default {
         console.log(data.data.tourl)
         // window.location.href = data.data.tourl
         if(data.data.statuscode>0){
-          window.location.href = 'http://localhost:8080/#/withdrawResult'
+          this.$router.push('/withdrawResult')
+          // window.location.href = 'http://localhost:8080/#/withdrawResult'
 
         }else{
           this.$vux.toast.show({
