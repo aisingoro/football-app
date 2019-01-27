@@ -113,9 +113,14 @@
     <div v-transfer-dom>
       <x-dialog v-model="showScrollBox"
                 hide-on-blur
-                class="dialog-demo">
+                class="dialog-demo"
+                @on-hide="closeDialog">
         <p class="dialog-title">全部比赛竞彩赔率</p>
-        <div class="img-box"
+        <div v-infinite-scroll="loadMore"
+             infinite-scroll-disabled="isDisableScroll"
+             infinite-scroll-immediate-check="true"
+             infinite-scroll-distance="10"
+             class="img-box"
              style="height:400px;padding:15px 0;overflow:scroll;-webkit-overflow-scrolling:touch;background-color: #f8f9fa;">
           <x-table :cell-bordered="false"
                    :content-bordered="false"
@@ -124,27 +129,33 @@
                    :key="index">
             <thead>
               <tr class="tr-style">
-                <th>{{item.matchnum}}</th>
+                <th>{{item.matchnumshow}}</th>
                 <th v-for="(items,indexs) in item.showtitle.split(',')"
                     :key="indexs">{{items}}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>竞彩赔率</td>
                 <td v-for="(items,indexs) in item.showvalue1.split(',')"
                     :key="indexs">{{items}}</td>
               </tr>
               <tr>
-                <td>真实赔率</td>
                 <td v-for="(items,indexs) in item.showvalue2.split(',')"
                     :key="indexs">{{items}}</td>
               </tr>
             </tbody>
           </x-table>
+          <load-more tip="正在加载"
+                     :show-loading="true"
+                     v-show="loading"></load-more>
+          <load-more v-show="noData"
+                     :show-loading="false"
+                     tip="暂无更多数据"
+                     background-color="#fbf9fe"></load-more>
         </div>
-        <div @click="showScrollBox=false">
-          <span class="vux-close"></span>
+        <div @click="closeDialog">
+          <x-icon type="ios-close-outline"
+                  size="30"></x-icon>
         </div>
       </x-dialog>
     </div>
@@ -153,7 +164,7 @@
 
 <script>
 import https from '../https.js'
-import {Group, Cell, Marquee, MarqueeItem,Swiper,XCircle,XTable,XDialog,TransferDomDirective as TransferDom } from 'vux'
+import {LoadMore,Group, Cell, Marquee, MarqueeItem,Swiper,XCircle,XTable,XDialog,TransferDomDirective as TransferDom } from 'vux'
 const baseList = [{
         url: 'javascript:',
         img: require('../../public/images/index-swiper-01.png'),
@@ -169,10 +180,16 @@ export default {
     TransferDom
   },
   components: {
-    Swiper,XCircle,XTable,XDialog,Group, Cell, Marquee, MarqueeItem,
+    Swiper,XCircle,XTable,XDialog,Group, Cell, Marquee, MarqueeItem,LoadMore
   },
   data(){
     return {
+      page: 1, // 分页页数
+			matchtime: '', // 入参日期
+			isDisableScroll: false, // 是否禁用滚动分页
+			isCompleted: false, // 是否继续加载
+			loading: false,
+			noData: false,
       resultdistributionlist:[],
       allMatchList:[],
       oddsratiocomparisonlist:[],
@@ -230,16 +247,55 @@ export default {
       this.$store.commit('setInternalInfoItem',e)
       this.$router.push('/internal-info')
     },
-    showAllMatch(){
-      this.showScrollBox=true;
-      https.fetchPost('/index/oddsratiolist.jsp',{} ).then((data) => {
-        console.log("结果啊啊啊啊11",data.data)
-       this.allMatchList = data.data.oddsratiocomparisonlist;
-
-		}).catch(err=>{
-						console.log(err)
+    // 加载更多
+		loadMore () {
+			if (this.isCompleted) return
+			this.isDisableScroll = true
+			let page = ++this.page
+			this.getList(page,'loadMore')
+    },
+    //关闭弹窗 重置分页
+    closeDialog(){
+      this.showScrollBox=false
+      this.page = 1; // 切换tab的时候 重置page页数为第一页
+			this.isCompleted = false
+			this.noData = false
+    },
+    //请求全部比赛列表（分页）
+    getList(page,type){
+      https.fetchPost('/index/oddsratiolist.jsp',{page} ).then((data) => {
+        console.log("ugc",data.data)
+        //分页拼接
+        this.isDisableScroll = false
+				if (type === 'init') {
+          this.allMatchList = data.data.oddsratiocomparisonlist || []
+          console.log('ugcList1',this.allMatchList)
+          
+				} else {
+          this.loading = true
+          console.log('ugcList2',type,this.allMatchList)
+          
+          this.allMatchList = this.allMatchList.concat(data.data.oddsratiocomparisonlist) || []
+          console.log('ugcList3',type,this.allMatchList)
 				}
-		)
+				for (var i =0;i<data.data.oddsratiocomparisonlist.length;i++){
+          data.data.oddsratiocomparisonlist[i].showInfoItem=false
+				}
+				if (!data.data.oddsratiocomparisonlist.length) {
+					this.isCompleted = true
+					this.loading = false
+					this.noData = true
+				}
+      }).catch(err=>{
+				this.isDisableScroll = false
+            console.log(err)
+        }
+      )
+    },
+    showAllMatch(page,type){
+      this.showScrollBox = true
+      this.getList(this.page,  'init')
+      
     }
   }
 
@@ -462,7 +518,7 @@ export default {
       }
     }
     .vux-table.vux-table-no-content-bordered tr:last-child td:before {
-      border-bottom-width: 0;
+      border-bottom-width: 0 !important;
     }
     .all-match {
       margin: 0 auto;
@@ -542,7 +598,18 @@ export default {
   margin: 0 auto;
   border-radius: 6px;
   overflow: hidden;
+  margin-top: 12px;
+  th {
+    font-size: 13px;
+  }
+  tbody {
+    font-size: 12px;
+  }
 }
+.img-box .vux-table.vux-table-no-content-bordered tr:last-child td:before {
+  border-bottom-width: 0px;
+}
+
 .vux-marquee-box li {
   font-size: 12px;
 }
@@ -559,6 +626,9 @@ export default {
 .maqueen .weui-cells {
   border-radius: 6px 6px 0px 0px;
   overflow: hidden;
+}
+.index .vux-x-icon {
+  fill: #d5d5d5;
 }
 </style>
 <style>
