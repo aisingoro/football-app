@@ -565,10 +565,21 @@
         <div style="width: 95%;background-color:#fff;height:192px;margin:0 auto;border-radius:5px;padding-top:10px;">
           <div style="padding:20px 15px;">
             <p class="paidType">请选择支付方式：</p>
-            <img src="../../public/images/zhifubao.png"
-                 class="zhifubao"
-                 @click="userPay(paidInfo)" />
-            <span class="zhifubao-text">金币支付</span>
+            <div class="paid-desc">
+              <div>
+                <img src="../../public/images/zhifubao.png"
+                     class="zhifubao"
+                     @click="userPayAli(paidInfo)" />
+                <span class="zhifubao-text">支付宝支付</span>
+              </div>
+              <div>
+                <img src="../../public/images/jinbi.png"
+                     class="zhifubao"
+                     @click="userPay(paidInfo)" />
+                <span class="zhifubao-text">金币支付</span>
+              </div>
+            </div>
+
             <img @click="showPay = false"
                  src="../../public/images/zhifubao-close.png"
                  class="zhifubao-close" />
@@ -632,6 +643,25 @@ export default {
     }
   },
   methods:{
+    //支付宝支付
+    userPayAli(e){
+      if(this.$store.state.userid==''){
+        this.$router.push("/login")
+        return false
+      }
+      let args={
+        buyid:this.$store.state.internalInfoItem,
+        buytype:e,
+        buytype:'0006',
+        // paytype:'0004',
+        // payback:'http://localhost:8080/index.html#/internal-info'
+        payback: window.location.href
+        
+      }
+      console.log(window.location.href)
+      this.pay(args)
+    },
+    //金币支付
     userPay(e){
       if(this.$store.state.userid==''){
         this.$router.push("/login")
@@ -647,10 +677,15 @@ export default {
         
       }
       console.log(window.location.href)
+      this.pay(args)
+
+    },
+    pay(args){
       https.fetchPost('/user/userpay.jsp',args).then((data) => {
         console.log(data.data.tourl)
         // window.location.href = data.data.tourl
         if(data.data.statuscode>0){
+          //金币支付完成直接跳转支付成功页面
           this.$router.push('/withdrawResult')
           // window.location.href = 'http://localhost:8080/#/withdrawResult'
 
@@ -666,7 +701,6 @@ export default {
               console.log(err)
           }
       )
-
     },
     showPayMethod(e){
       this.showPay=true;
@@ -1165,6 +1199,7 @@ export default {
     .part-one > div:first-child {
       width: 91.5%;
       margin: 0 auto;
+      padding-bottom: 10px;
       & > p {
         font-size: 16px;
         color: #313233;
@@ -1361,6 +1396,12 @@ export default {
   background: url('../../public/images/tips.png') 100% 100%/100% 100%;
   padding: 8px;
   padding-top: 45px;
+}
+.paid-desc {
+  display: flex;
+  & > div {
+    flex: 1;
+  }
 }
 </style>
 

@@ -3,7 +3,7 @@
     <h1>我的</h1>
     <div class="user-card"
          @click="goUserDetail">
-      <img :src="$store.state.userpic" />
+      <img :src="$store.state.userpic==''?require('../../public/images/default-pic.png'):$store.state.userpic" />
       <div>
         <p v-if="$store.state.account==''"
            class="go-login">立即登录</p>
@@ -274,7 +274,7 @@ export default {
   }
 }
 .go-login {
-  margin-top: 34px;
+  margin-top: 32px !important;
   font-size: 15px;
 }
 </style>
