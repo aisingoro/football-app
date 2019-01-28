@@ -36,6 +36,10 @@ export default {
     }
    
   },
+mounted(){
+  this.cardnum = this.$store.state.cardnum;
+  this.openingbank = this.$store.state.openingbank
+},
   methods:{
     editModcard(){
       https.fetchPost('/user/modcard.jsp',{cardnum:this.cardnum,openingbank:this.openingbank} ).then((data) => {
