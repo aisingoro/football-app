@@ -107,7 +107,7 @@ Vue.use(ToastPlugin)
                   this.$store.state.tx_balance= data.data.user.tx_balance //可提现金额
                   this.$store.state.cardnum= data.data.user.cardnum //银行卡号
                   this.$store.state.openingbank= data.data.user.openingbank//开户银行
-
+                  this.$store.state.expertDesc= data.data.user.expertdesc //专家简介
                   this.$vux.toast.show({
                     text: '登录成功！',
                   })

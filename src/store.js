@@ -21,7 +21,8 @@ export default new Vuex.Store({
     usersex: '0', //性别
     tx_balance: '', //可提现金额
     cardnum: '', //银行卡号
-    openingbank: '' //开户银行
+    openingbank: '', //开户银行
+    expertDesc: '' //专家简介
   },
   mutations: {
     setInternalInfoItem(state, data) {

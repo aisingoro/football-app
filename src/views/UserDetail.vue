@@ -15,7 +15,8 @@
               is-link>
           <img slot
                :src="userpic"
-               width=60 />
+               width=60
+               height=60/>
         </cell>
       </group>
       <group>
@@ -36,6 +37,13 @@
         <cell title="登录密码"
               value="未设置"
               is-link>
+
+        </cell>
+        <cell title="修改专家简介"
+              value=""
+              is-link
+              @click.native="showDesc=true">
+
         </cell>
         <cell title="实名信息"
               :value="$store.state.expertid=='0'?'未认证':'已认证'"
@@ -71,12 +79,28 @@
         </div>
       </div>
     </popup>
+    <popup v-model="showDesc"
+           height="220px"
+           is-transparent>
+      <div style="width: 95%;background-color:#fff;height:192px;margin:0 auto;border-radius:5px;padding-top:10px;">
+        <div style="padding:20px 15px;">
+          <p class="paidType">请填写新简介</p>
+          <input type="text"
+                 class="nickname"
+                 v-model="expertDesc"
+                 style="width:100%">
+          <x-button @click.native="changeDesc">确定</x-button>
+        </div>
+      </div>
+    </popup>
 
   </div>
 </template>
 <script>
 import https from '../https.js'
-import { Group, Cell,XHeader,PopupPicker,Popup ,XButton} from 'vux'
+import { Group, Cell,XHeader,PopupPicker,Popup ,XButton,ToastPlugin} from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
 	components: {
 		Group,
@@ -88,6 +112,8 @@ export default {
   },
 	data () {
 		return {
+      expertDesc:this.$store.state.expertDesc,
+      showDesc:false,
       inputHide: false,
       obj: {
         "aui-uploader__input-box": true,
@@ -116,6 +142,22 @@ export default {
     this.sex = (this.$store.state.usersex==0?['男']:['女'])
   },
 	methods: {
+    //修改专家简介
+    changeDesc(){
+      https.fetchPost('/expert/moddesc.jsp',{expertdesc:this.expertDesc}).then((data) => {
+              this.showDesc=false
+              if(data.data.statuscode=='1'){
+                this.$vux.toast.show({
+                    text: '修改成功！',
+                  })
+              this.$store.state.expertDesc=this.expertDesc
+                  
+              }
+            }).catch(err=>{
+                  console.log(err)
+              }
+            )
+    },
     //上传头像
     uploadFile(event) {
 
