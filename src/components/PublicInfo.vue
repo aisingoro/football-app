@@ -28,7 +28,7 @@
         </p>
       </div>
       <div class="team-title">
-        <img src="../../public/images/index-team-01.png" />
+        <img src="../../public/images/internal-icon.png" />
         <p>排名</p>
         <p>轮数</p>
         <p>得分</p>

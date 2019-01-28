@@ -617,7 +617,7 @@ export default {
       scoreList:[],
       resultList:[],
       disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
-      btnTab:0,
+      btnTab:1,
       percent:55,
       percent1:15,
       percent2:25,
