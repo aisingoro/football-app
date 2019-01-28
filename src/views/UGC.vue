@@ -66,7 +66,7 @@
       <img :src="item.expertpic" />
       <div>
         <p>{{item.expertname}}</p>
-        <p>近期{{item.fcount}}中{{item.fright}} 盈利{{item.finfomation}}</p>
+        <p>近期{{item.fright[0]}}中{{item.fright[1]}} {{item.fright[2]}}走{{item.fright[3]}}错</p>
       </div>
       <div @click="onItemClick(item.fid)">立即查看</div>
       <x-table :cell-bordered="false"
@@ -76,7 +76,8 @@
               :key="indexs">
             <td>{{items.match_num}}</td>
             <td>{{items.hometeam}} VS {{items.awayteam}}</td>
-            <td>{{items.match_result==0?'平':(items.match_result==1?'胜':'负')}}</td>
+            <!-- <td>{{items.match_result==0?'平':(items.match_result==1?'胜':'负')}}</td> -->
+            <td>...</td>
           </tr>
         </tbody>
       </x-table>

@@ -14,7 +14,7 @@
 		<Toast v-model="isMsg"
 		       :text="toastText"
 		       width="10em"
-		       position="top"
+		       position="middle"
 		       type="text"></Toast>
 		<div class="confim-btn"
 		     @click="submit">提交</div>
@@ -23,6 +23,7 @@
 <script>
 import https from '../https.js'
 import { XTextarea, Toast,Group,XHeader } from 'vux'
+import { setTimeout } from 'timers';
 
 export default {
 	components: {
@@ -54,7 +55,10 @@ export default {
 					if(data.data.statuscode>0){
 						this.toastText='反馈成功！'
 						this.isMsg=true
-						this.$router.go(-1)
+						var _this = this
+						setTimeout(function(){
+							_this.$router.go(-1)
+						},1000)
 					}
 				}).catch(err=>{
 							console.log(err)
