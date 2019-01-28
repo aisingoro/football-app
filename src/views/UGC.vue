@@ -74,7 +74,7 @@
         <tbody>
           <tr v-for="(items,indexs) in item.title"
               :key="indexs">
-            <td>{{items.match_num}}</td>
+            <td>{{items.matchnumshow}}</td>
             <td>{{items.hometeam}} VS {{items.awayteam}}</td>
             <!-- <td>{{items.match_result==0?'平':(items.match_result==1?'胜':'负')}}</td> -->
             <td>...</td>
