@@ -12,7 +12,7 @@
            v-for="(item,index) in orderList"
            :key="index">
         <div class="side-left">
-          <p>{{item.matchnum}}</p>
+          <p>{{item.matchnumshow}}</p>
           <p>{{item.league}}</p>
           <p>{{item.matchtime}}</p>
         </div>
@@ -42,7 +42,7 @@
                tip="暂无更多数据"
                background-color="#fbf9fe"></load-more>
     <div class="fixed-bottom">
-      <p>重选</p>
+      <p @click="clearAll">重选</p>
       <div class="btn"
            @click="setOrder">确定</div>
     </div>
@@ -113,6 +113,17 @@ export default {
 
   },
   methods:{
+    //重选清空
+    clearAll(){
+      this.selList=[]
+      this.newArr = []
+      this.page = 1; // 切换tab的时候 重置page页数为第一页
+			this.isCompleted = false
+			this.noData = false
+    this.getList(this.page,  'init')
+      
+      console.log('清空！！！',this.selList,this.newArr)
+    },
     // 加载更多
 		loadMore () {
 			if (this.isCompleted) return
