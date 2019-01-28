@@ -454,7 +454,7 @@
                  v-if="machineforecastdxq.needbuy=='1'">
               <p>大小球</p>
               <div class="paid-show-info">
-                <div :class="machineforecastdxq.labcheck==index?'sel-box':''"
+                <div :class="machineforecastdxq.labcheck[0]!=='' && machineforecastdxq.labcheck==index?'sel-box':''"
                      v-for="(item,index) in machineforecastdxq.labshow"
                      :key="index">
 
@@ -462,7 +462,7 @@
                     <x-icon type="ios-checkmark-empty"
                             size="30"
                             class="check-icon"
-                            v-if="machineforecastdxq.labhit==index"></x-icon>
+                            v-if="machineforecastdxq.labhit[0]!=='' && machineforecastdxq.labhit==index"></x-icon>
                   </p>
                   <p>{{machineforecastdxq.labvalue[index]}}</p>
                 </div>
@@ -477,7 +477,7 @@
                  v-if="machineforecastyp.needbuy=='1'">
               <p>亚盘</p>
               <div class="paid-show-info">
-                <div :class="machineforecastyp.labcheck==index?'sel-box':''"
+                <div :class="machineforecastyp.labcheck[0]!=='' && machineforecastyp.labcheck==index?'sel-box':''"
                      v-for="(item,index) in machineforecastyp.labshow"
                      :key="index">
 
@@ -485,7 +485,7 @@
                     <x-icon type="ios-checkmark-empty"
                             size="30"
                             class="check-icon"
-                            v-if="machineforecastyp.labhit==index"></x-icon>
+                            v-if="machineforecastyp.labhit[0]!=='' && machineforecastyp.labhit==index"></x-icon>
                   </p>
                   <p>{{machineforecastyp.labvalue[index]}}</p>
                 </div>
@@ -500,7 +500,7 @@
                  v-if="machineforecastscore.needbuy=='1' ">
               <p>比分</p>
               <div class="paid-show-info">
-                <div :class="machineforecastscore.labcheck==index?'sel-box':''"
+                <div :class="machineforecastscore.labcheck[0]!=='' && machineforecastscore.labcheck==index?'sel-box':''"
                      v-for="(item,index) in machineforecastscore.labshow"
                      :key="index">
 
@@ -508,7 +508,7 @@
                     <x-icon type="ios-checkmark-empty"
                             size="30"
                             class="check-icon"
-                            v-if="machineforecastscore.labhit==index"></x-icon>
+                            v-if="machineforecastscore.labhit[0]!=='' && machineforecastscore.labhit==index"></x-icon>
                   </p>
                   <p>{{machineforecastscore.labvalue[index]}}</p>
                 </div>
@@ -523,7 +523,7 @@
                  v-if="machineforecasthf.needbuy=='1'">
               <p>半全场</p>
               <div class="paid-show-info">
-                <div :class="machineforecasthf.labcheck==index?'sel-box':''"
+                <div :class="machineforecasthf.labcheck[0]!=='' && machineforecasthf.labcheck==index?'sel-box':''"
                      v-for="(item,index) in machineforecasthf.labshow"
                      :key="index">
 
@@ -531,7 +531,7 @@
                     <x-icon type="ios-checkmark-empty"
                             size="30"
                             class="check-icon"
-                            v-if="machineforecasthf.labhit==index"></x-icon>
+                            v-if="machineforecasthf.labhit[0]!=='' && machineforecasthf.labhit==index"></x-icon>
                   </p>
                   <p>{{machineforecasthf.labvalue[index]}}</p>
                 </div>
