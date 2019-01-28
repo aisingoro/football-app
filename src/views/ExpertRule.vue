@@ -3,10 +3,19 @@
     <x-header :left-options="{backText: ''}"
               title="成为专家"></x-header>
     <div class="rule-box">
-      <h3>专家守则:</h3>
-      <p class="rule-info">
+      <!-- <h3>专家守则:</h3> -->
+
+      <iframe name="myiframe"
+              id="myrame"
+              src="http://api.xiaoqiuxian.com/about/expertagreement.html"
+              frameborder="0"
+              align="left"
+              class="rule-info">
+        <p>你的浏览器不支持iframe标签</p>
+      </iframe>
+      <!-- <p class="rule-info">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.
-      </p>
+      </p> -->
     </div>
     <check-icon :value.sync="isRule">同意此协议</check-icon>
     <button class="btn"
@@ -69,7 +78,7 @@ export default {
       margin-bottom: 12px;
     }
     .rule-info {
-      height: calc(100% - 56px);
+      height: 100%;
       overflow: hidden;
       overflow-y: scroll;
       margin: 0 17px;
