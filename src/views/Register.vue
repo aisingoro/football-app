@@ -27,6 +27,10 @@
            class="get-num"
            @click="sendauthsms">获取验证码</div>
     </x-input>
+    <div class="show-dialog">
+      <check-icon :value.sync="demo1"> </check-icon>
+      <span @click="showDialog=!showDialog">用户协议</span>
+    </div>
 
     <x-button type="primary"
               @click.native="getRegister"
@@ -34,30 +38,52 @@
               :disabled="username!==''&&userpsw!==''?false:true"
               :text="loginText"></x-button>
 
+    <x-dialog v-model="showDialog">
+      <iframe name="myiframe"
+              id="myrame"
+              src="http://api.xiaoqiuxian.com/about/registrationagreement.html"
+              frameborder="0"
+              align="left"
+              style="width:100%;height:90%;margin-bottom:5px;">
+        <p>你的浏览器不支持iframe标签</p>
+      </iframe>
+      <div @click="showDialog=false">
+        <x-icon type="ios-close-outline"
+                size="30"></x-icon>
+      </div>
+    </x-dialog>
+
     <!-- <p>版权所有 ©️ 小球仙 2019</p> -->
   </div>
 </template>
 
 <script>
 import https from '../https.js'
-import { XInput,XButton,XHeader,ToastPlugin } from 'vux'
+import { XInput,XButton,XHeader,ToastPlugin,CheckIcon,XDialog, TransferDomDirective as TransferDom } from 'vux'
 import Vue from 'vue'
 Vue.use(ToastPlugin)
     export default {
+      directives: {
+        TransferDom
+      },
       components: {
         XInput,
         XButton,
-        XHeader
+        XHeader,
+        CheckIcon,
+        XDialog
       },
         data() {
             return {
+              showDialog:false,
                 isPsw: true,
                 loadbtn: false,
                 loginText: '注册',
                 inputType: "password",
                 username: '18518040722',
                 userpsw: '123456',
-                userNum:''
+                userNum:'',
+                demo1:false
             }
         },
         methods: {
@@ -74,22 +100,37 @@ Vue.use(ToastPlugin)
           
           //注册用户
             getRegister(){
+              if(this.demo1==false){
+                this.$vux.toast.show({
+                    type:'warn',
+                    text: '请先勾选用户协议！',
+                  })
+                return false
+              }
               console.log(1111)
                 https.fetchPost('/system/checkauthcode.jsp',{account:this.username,autcode:this.userNum} ).then((data) => {
                   console.log("ugcinfo",data.data)
                 }).catch(err=>{
                   this.$vux.toast.show({
+                    type:'warn',
                     text: '验证码有误！',
                   })
                   }
                 )
                 https.fetchPost('/user/reguser.jsp',{account:this.username,pass:this.userpsw,autcode:this.userNum} ).then((data) => {
                   console.log("ugcinfo",data.data)
-
-                  this.$vux.toast.show({
-                    text: '注册成功！',
-                  })
-                  this.$router.go(-1)
+                  if(data.data.statuscode<0){
+                    this.$vux.toast.show({
+                      type:'warn',
+                      text: data.data.statusmsg,
+                    })
+                  }else{
+                    this.$vux.toast.show({
+                      text: '注册成功！',
+                    })
+                    this.$router.go(-1)
+                  }
+                  
                 }).catch(err=>{
                       console.log(err)
                   }
@@ -240,6 +281,19 @@ Vue.use(ToastPlugin)
 .login .vux-header .vux-header-left .left-arrow:before {
   border: 1px solid #293b51;
   border-width: 1px 0 0 1px;
+}
+.login .weui-dialog {
+  width: 90%;
+  height: 500px;
+}
+.show-dialog {
+  font-size: 14px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+.show-dialog .vux-check-icon > .weui-icon-success:before,
+.vux-check-icon > .weui-icon-success-circle:before {
+  color: #0393f8;
 }
 </style>
 
