@@ -5,25 +5,26 @@
       <div class="home-team">
         <h3>主队</h3>
         <div class="bg-empty"></div>
-        <p>{{openHomeInfo.position}}</p>
-        <p>{{openHomeInfo.matchesplayed}}</p>
-        <p>{{openHomeInfo.points}}</p>
-        <p>{{openHomeInfo.goalfor}}</p>
-        <p>{{openHomeInfo.goalagainst}}</p>
-        <p>{{openHomeInfo.goaldiff}}</p>
+        <!-- <p>{{openHomeInfo.position}}</p> -->
+        <p>{{openInfo.home.position==''?'--':openInfo.home.position}}</p>
+        <p>{{openInfo.home.matchesplayed==''?'--':openInfo.home.matchesplayed}}</p>
+        <p>{{openInfo.home.points==''?'--':openInfo.home.points}}</p>
+        <p>{{openInfo.home.goalfor==''?'--':openInfo.home.goalfor}}</p>
+        <p>{{openInfo.home.goalagainst==''?'--':openInfo.home.goalagainst}}</p>
+        <p>{{openInfo.home.goaldiff==''?'--':openInfo.home.goaldiff}}</p>
         <p>
           <span :class="item=='L'?'lose':(item=='D'?'draw':'')"
-                v-for="(item,index) in homelastmatches"
+                v-for="(item,index) in openInfo.home.lastmatches.split(',')"
                 :key="index">{{item}}</span>
         </p>
         <p>
           <span :class="item=='L'?'lose':(item=='D'?'draw':'')"
-                v-for="(item,index) in homelasthomematches"
+                v-for="(item,index) in openInfo.home.lasthomematches.split(',')"
                 :key="index">{{item}}</span>
         </p>
         <p>
           <span :class="item=='L'?'lose':(item=='D'?'draw':'')"
-                v-for="(item,index) in homelastawaymatches"
+                v-for="(item,index) in openInfo.home.lastawaymatches.split(',')"
                 :key="index">{{item}}</span>
         </p>
       </div>
@@ -42,25 +43,25 @@
       <div class="away-team">
         <h3>客队</h3>
         <div class="bg-empty"></div>
-        <p>{{openAwayInfo.position}}</p>
-        <p>{{openAwayInfo.matchesplayed}}</p>
-        <p>{{openAwayInfo.points}}</p>
-        <p>{{openAwayInfo.goalfor}}</p>
-        <p>{{openAwayInfo.goalagainst}}</p>
-        <p>{{openAwayInfo.goaldiff}}</p>
+        <p>{{openInfo.away.position==''?'--':openInfo.away.position}}</p>
+        <p>{{openInfo.away.matchesplayed==''?'--':openInfo.away.matchesplayed}}</p>
+        <p>{{openInfo.away.points==''?'--':openInfo.away.points}}</p>
+        <p>{{openInfo.away.goalfor==''?'--':openInfo.away.goalfor}}</p>
+        <p>{{openInfo.away.goalagainst==''?'--':openInfo.away.goalagainst}}</p>
+        <p>{{openInfo.away.goaldiff==''?'--':openInfo.away.goaldiff}}</p>
         <p>
           <span :class="item=='L'?'lose':(item=='D'?'draw':'')"
-                v-for="(item,index) in awaylastmatches"
+                v-for="(item,index) in openInfo.away.lastmatches.split(',')"
                 :key="index">{{item}}</span>
         </p>
         <p>
           <span :class="item=='L'?'lose':(item=='D'?'draw':'')"
-                v-for="(item,index) in awaylasthomematches"
+                v-for="(item,index) in openInfo.away.lasthomematches.split(',')"
                 :key="index">{{item}}</span>
         </p>
         <p>
           <span :class="item=='L'?'lose':(item=='D'?'draw':'')"
-                v-for="(item,index) in awaylastawaymatches"
+                v-for="(item,index) in openInfo.away.lastawaymatches.split(',')"
                 :key="index">{{item}}</span>
         </p>
       </div>
@@ -298,6 +299,7 @@ export default {
   },
   watch: {
     openInfo: function(newVal,oldVal){
+      console.log("9999",this.openHomeInfo)
         this.openHomeInfo = newVal.home; 
         this.openAwayInfo = newVal.away;
         this.homelastmatches = newVal.home.lastmatches.split(',');
@@ -312,6 +314,7 @@ export default {
     }
   },
   mounted(){
+    
   }
 }
 </script>
