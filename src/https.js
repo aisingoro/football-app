@@ -19,8 +19,8 @@ import store from './store'
 
 axios.defaults.timeout = 5000; //响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; //配置请求头
-axios.defaults.baseURL = '/api'; //配置接口地址
-// axios.defaults.baseURL = 'http://39.104.189.104'
+// axios.defaults.baseURL = '/api'; //配置接口地址
+axios.defaults.baseURL = 'http://api.xiaoqiuxian.com'
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use((config) => {
   console.log('userid', store.state.userid)
