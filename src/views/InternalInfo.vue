@@ -146,8 +146,10 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【距离交通】</p>
-          <div class="team-cli">
+          <p class="contain-title"
+             v-if="homeInfo.distance!=='' || homeInfo.trip!=='' || homeInfo.triptime!=='' || awayInfo.distance!=='' || awayInfo.trip!=='' || awayInfo.triptime!==''">【距离交通】</p>
+          <div class="team-cli"
+               v-if="homeInfo.distance!=='' || homeInfo.trip!=='' || homeInfo.triptime!=='' || awayInfo.distance!=='' || awayInfo.trip!=='' || awayInfo.triptime!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body traffic-text">
@@ -163,9 +165,11 @@
               </div>
             </div>
           </div>
-          <p class="contain-title">【主帅&主裁】</p>
+          <p class="contain-title"
+             v-if="buyDetailInfo.referee!==''">【主帅&主裁】</p>
           <p class="contain-info">{{buyDetailInfo.referee}}</p>
-          <p class="contain-title">【伤停及复出】</p>
+          <p class="contain-title"
+             v-if="homeInfo.playerssuspended!=='' || awayInfo.playerssuspended!==''">【伤停及复出】</p>
           <div class="team-cli"
                v-if="homeInfo.playerssuspended!=='' || awayInfo.playerssuspended!==''">
             <div class="home-cli">
