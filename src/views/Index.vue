@@ -245,6 +245,7 @@ export default {
   },
   methods:{
     goInternal(){
+      this.$store.state.selIndex = 1;
       this.$router.push('/home/internal-reference')
       
     },

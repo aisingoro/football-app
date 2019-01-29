@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <router-view></router-view>
-    <tabbar>
-      <tabbar-item selected
-                   link="/home/index">
+    <tabbar v-model="selIndex"
+            @on-index-change="changeSel">
+      <tabbar-item link="/home/index">
         <img slot="icon"
              src="../../public/images/tabbar-01.png">
         <img slot="icon-active"
@@ -47,6 +47,7 @@ export default {
   },
   data(){
     return{
+      // selIndex:this.$store.state.selIndex,
       data: [
         { time: '2016-08-08 00:00:00', tem: 10 },
         { time: '2016-08-08 00:10:00', tem: 22 },
@@ -58,6 +59,17 @@ export default {
         { time: '2016-08-10 02:00:00', tem: 20 },
         { time: '2016-08-10 02:20:00', tem: 18 }
       ]
+    }
+  },
+  methods:{
+    changeSel(e){
+      console.log('选中',e)
+      this.$store.state.selIndex = e
+    }
+  },
+  computed: {
+    selIndex() {
+        return this.$store.state.selIndex;
     }
   },
   mounted(){
@@ -82,7 +94,7 @@ export default {
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon,
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon > i,
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label {
-  color: #0393F8 !important;
+  color: #0393f8 !important;
 }
 </style>
 

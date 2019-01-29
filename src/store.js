@@ -22,7 +22,8 @@ export default new Vuex.Store({
     tx_balance: '', //可提现金额
     cardnum: '', //银行卡号
     openingbank: '', //开户银行
-    expertDesc: '' //专家简介
+    expertDesc: '', //专家简介
+    selIndex: 0 //tabbar选中
   },
   mutations: {
     setInternalInfoItem(state, data) {
