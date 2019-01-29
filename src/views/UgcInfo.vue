@@ -85,8 +85,11 @@ export default {
         }
         if(this.isFollow=='0'){
           this.isFollow='1'
-        }{
+          console.log('关注',this.isFollow)
+        }else{
           this.isFollow='0'
+          console.log('取消关注',this.isFollow)
+          
         }
       }).catch(err=>{
             console.log(err)
