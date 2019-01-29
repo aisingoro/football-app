@@ -34,15 +34,15 @@
     <div class="button-tab">
       <sticky ref="sticky"
               :offset="46"
-              :check-sticky-support="false"
               :disabled="disabled">
         <button-tab v-model="btnTab">
-          <button-tab-item>公共信息</button-tab-item>
-          <button-tab-item>独家内参</button-tab-item>
+          <button-tab-item @on-item-click="goTop">公共信息</button-tab-item>
+          <button-tab-item @on-item-click="goTop">独家内参</button-tab-item>
         </button-tab>
       </sticky>
       <div class=""
-           v-if="btnTab==0">
+           v-if="btnTab==0"
+           ref="internal">
         <public-info :hometeam="matchlist.hometeamname"
                      :awayteam="matchlist.awayteamname"
                      :openInfo="openInfo"></public-info>
@@ -614,6 +614,7 @@ export default {
   },
   data(){
     return{
+      isTop:false,
       star:0,
       price:'',
       paidInfo:'',
@@ -643,6 +644,22 @@ export default {
     }
   },
   methods:{
+    //切换tab回到顶部
+    goTop(){
+      if(this.isTop){
+        return false
+      }
+      let internal = this.$refs.internal
+      let osTop = internal.scrollTop
+      console.log(osTop)
+      this.timer = setInterval(() => {
+        document.documentElement.scrollTop=0
+        if (document.documentElement.scrollTop===0) {
+          this.isTop = true
+          clearInterval(this.timer)
+				}
+      }, 50)
+    },
     //支付宝支付
     userPayAli(e){
       if(this.$store.state.userid==''){
