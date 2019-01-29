@@ -246,7 +246,7 @@ export default {
   methods:{
     goInternal(){
       this.$router.push('/home/internal-reference')
-      
+
     },
     goMatchDetail(e){
       this.$store.commit('setInternalInfoItem',e)
@@ -279,11 +279,11 @@ export default {
 				if (type === 'init') {
           this.allMatchList = data.data.oddsratiocomparisonlist || []
           console.log('ugcList1',this.allMatchList)
-          
+
 				} else {
           this.loading = true
           console.log('ugcList2',type,this.allMatchList)
-          
+
           this.allMatchList = this.allMatchList.concat(data.data.oddsratiocomparisonlist) || []
           console.log('ugcList3',type,this.allMatchList)
 				}
@@ -304,7 +304,7 @@ export default {
     showAllMatch(page,type){
       this.showScrollBox = true
       this.getList(this.page,  'init')
-      
+
     }
   }
 
@@ -403,6 +403,8 @@ export default {
           width: 70px;
           margin-left: 30px;
           margin-right: 12px;
+					// display: flex;
+					flex: 1;
           img {
             display: block;
             width: 56px;

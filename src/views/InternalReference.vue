@@ -1,5 +1,6 @@
 <template>
   <div class="internal-reference"
+			 ref="scroll"
        v-infinite-scroll="loadMore"
        infinite-scroll-disabled="isDisableScroll"
        infinite-scroll-immediate-check="true"
@@ -167,7 +168,8 @@ export default {
 			isDisableScroll: false, // 是否禁用滚动分页
 			isCompleted: false, // 是否继续加载
 			loading: false,
-			noData: false
+			noData: false,
+			scrollTop: 0
     }
   },
   methods:{
@@ -216,7 +218,7 @@ export default {
     showInfo(index){
     var obj = this.internalList[index];
     var showItem=this.internalList[index].showInfoItem;
-    
+
     console.log("赋值前",obj.showInfoItem)
       for(var i=0;i<this.internalList.length;i++){
         this.internalList[i].showInfoItem=false;
@@ -226,8 +228,8 @@ export default {
     console.log("赋值后",obj.showInfoItem)
 
     this.$set(this.internalList, index, obj);
-    
-      
+
+
 		},
 		// 加载更多
 		loadMore () {
@@ -255,9 +257,22 @@ export default {
         this.dayVal=y+m+d;
         console.log("dayVal",this.dayVal)
         return m+"-"+d+'/'+week;
-    }
+		},
+		handelscroll(e) {
+			this.scrollTop = e.target.scrollTop
+			console.log(this.scrollTop)
+		}
 
-  },
+	},
+	beforeRouteLeave (to, from , next) {
+		if (to.name === 'internal-info') {
+				sessionStorage.setItem('scrollTop', this.scrollTop)
+				next()
+		} else {
+			sessionStorage.setItem('scrollTop', 0)
+				next()
+		}
+	},
   mounted () {
     this.yesterdayWeek=this.GetDateStr(-1).split('/')[0];
     this.yesterday=this.GetDateStr(-1).split('/')[1];
@@ -265,22 +280,16 @@ export default {
     this.today=this.GetDateStr(0).split('/')[1];
     this.tomorrowWeek=this.GetDateStr(1).split('/')[0];
     this.tomorrow=this.GetDateStr(1).split('/')[1];
-    this.changeMatch(this.page, '', 'init')
-    // https.fetchPost('/match/neican.jsp',{} ).then((data) => {
-    //     console.log("结果啊啊啊啊",data.data)
-    //     for (var i =0;i<data.data.list.length;i++){
-    //       data.data.list[i].showInfoItem=false
-    //     }
-    //     this.internalList = data.data.list
-
-
-		// }).catch(err=>{
-		// 				console.log(err)
-		// 		}
-		// )
-
-  }
-
+		this.changeMatch(this.page, '', 'init')
+		document.addEventListener('scroll',this.handelscroll, true)
+		setTimeout(() => {
+			let internal = this.$refs.scroll
+			console.log('=========>' + internal)
+			internal.scrollTop = document.documentElement.scrollTop = window.pageYOffset =sessionStorage.getItem('scrollTop')
+  	}, 200)
+	},
+	created() {
+	}
 }
 </script>
 
