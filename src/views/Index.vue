@@ -18,7 +18,9 @@
         </marquee>
       </cell>
     </group>
-    <div class="index-info" v-if="flag"> <!-- // . -->
+    <div class="index-info"
+         v-if="flag">
+      <!-- // . -->
       <h2 class="title-internal">独家内参
         <span @click="goInternal">更多></span>
       </h2>
@@ -34,26 +36,36 @@
           <span>{{item.showntitle.split('(')[0]}} {{item.matchtime.substring(5,item.matchtime.length)}}</span>
         </h3>
         <div>
-          <div>
-            <img :src="item.hometeampic" />
-            <p>{{item.hometeam}}</p>
+          <div style="display:flex;width:100%;">
+            <div style="flex:1">
+              <img :src="item.hometeampic" />
+              <p>{{item.hometeam}}</p>
+            </div>
+            <div style="flex:1">
+              <img src="../../public/images/index-vs.png"
+                   style="width:47px;height:24px;" />
+              <p>{{item.kickoff}}</p>
+              <!-- <p>{{item.matchtime}}</p> -->
+            </div>
+            <div style="flex:1">
+              <img :src="item.awayteampic" />
+              <p>{{item.awayteam}}</p>
+            </div>
           </div>
-          <div>
-            <img src="../../public/images/index-vs.png" />
-            <p>{{item.kickoff}}</p>
-            <!-- <p>{{item.matchtime}}</p> -->
-          </div>
-          <div>
-            <img :src="item.awayteampic" />
-            <p>{{item.awayteam}}</p>
-          </div>
+
           <div class="weather-info">
-            <div><img src="../../public/images/weather-01.png"
-                   class="weather-icon" />{{item.weather.split(',')[0]}}</div>
-            <div><img src="../../public/images/weather-02.png"
-                   class="weather-icon" />{{item.weather.split(',')[1]}}</div>
-            <div><img src="../../public/images/weather-03.png"
-                   class="weather-icon" />{{item.weather.split(',')[2]}}</div>
+            <div>
+              <div><img src="../../public/images/weather-01.png"
+                     class="weather-icon" />{{item.weather.split(',')[0]}}</div>
+            </div>
+            <div>
+              <div><img src="../../public/images/weather-02.png"
+                     class="weather-icon" />{{item.weather.split(',')[1]}}</div>
+            </div>
+            <div>
+              <div><img src="../../public/images/weather-03.png"
+                     class="weather-icon" />{{item.weather.split(',')[2]}}</div>
+            </div>
           </div>
         </div>
 
@@ -67,18 +79,18 @@
                       :stroke-width="5"
                       :stroke-color="item.showtitle1.indexOf('胜')!==-1?'#FF4359':'#6DC21D'">
               <span class="circle-bg circle-win"
-                    :class="item.showtitle1.indexOf('胜')!==-1?'circle-win':'circle-lose'">{{item.showtitle1}}</span>
+                    :class="item.showtitle1.indexOf('胜')!==-1?'circle-win':'circle-lose'">{{item.showvaule1}}%</span>
             </x-circle>
-            {{ item.showvaule1 }}%
+            {{ item.showtitle1}}
           </div>
           <div>
             <x-circle :percent="Number(item.showvaule2)"
                       :stroke-width="5"
                       :stroke-color="item.showtitle2.indexOf('胜')!==-1?'#FF4359':'#6DC21D'">
               <span class="circle-bg circle-win"
-                    :class="item.showtitle2.indexOf('胜')!==-1?'circle-win':'circle-lose'">{{item.showtitle2}}</span>
+                    :class="item.showtitle2.indexOf('胜')!==-1?'circle-win':'circle-lose'">{{item.showvaule2}}%</span>
             </x-circle>
-            {{ item.showvaule2 }}%
+            {{ item.showtitle2 }}
           </div>
           <p class="result-badge">{{item.showtitle}}</p>
         </div>
@@ -91,7 +103,7 @@
                :key="index">
         <thead>
           <tr class="tr-style">
-            <th>{{item.matchnum}}</th>
+            <th>{{item.matchnumshow}}</th>
             <th v-for="(items,indexs) in item.showtitle.split(',')"
                 :key="indexs">{{items}}</th>
           </tr>
@@ -265,7 +277,7 @@ export default {
 			clearInterval(this.timer)
 			}
 			let clock = this.formatTimestamp(leftSeconds)
-			console.log(clock)
+			// console.log(clock)
 		},
 		// 格式化时间戳 hours | minutes | seconds
 		formatTimestamp(time) { // .
@@ -421,36 +433,42 @@ export default {
           font-size: 14px;
           line-height: 36px;
           color: #7ba1d0;
+          // text-align: center;
+          div {
+            text-align: center;
+            .weather-icon {
+              display: inline-block;
+              vertical-align: top;
+              width: 17px;
+              height: 17px;
+              margin-top: 11px;
+              // margin-left: 4px;
+              margin-right: 6px;
+            }
+          }
           &:nth-child(2) {
             flex: 1.2;
-          }
-          .weather-icon {
-            float: left;
-            width: 17px;
-            height: 17px;
-            margin-top: 11px;
-            margin-left: 4px;
-            margin-right: 6px;
           }
         }
       }
       & > div {
+        overflow: hidden;
         width: 100%;
-        height: 155px;
+        // height: 155px;
         background: #ffffff;
         box-shadow: 0px 0px 6px 0px rgba(54, 101, 175, 0.1);
         border-radius: 6px;
         & > div {
-          float: left;
+          // float: left;
           width: 70px;
-          margin-left: 30px;
+          // margin-left: 30px;
           margin-right: 12px;
-					// display: flex;
-					flex: 1;
+          // display: flex;
+          flex: 1;
           img {
             display: block;
-            width: 56px;
-            height: 56px;
+            width: 40px;
+            height: 40px;
             margin: 0 auto;
             margin-top: 24px;
             margin-bottom: 9px;
@@ -460,9 +478,7 @@ export default {
             text-align: center;
             margin: 0 auto;
           }
-          &:nth-child(2) {
-            width: 82px;
-            margin-left: 18px;
+          & > div:nth-child(2) {
             img {
               width: 47px;
               height: 24px;
@@ -474,6 +490,7 @@ export default {
               &:nth-child(2) {
                 color: #b4cae5;
                 margin-bottom: 12px;
+                margin-top: 8px;
                 font-family: 'PingFangSC-Regular';
               }
               &:nth-child(3) {
@@ -616,7 +633,7 @@ export default {
   overflow: hidden;
   margin-top: 12px;
   td {
-    font-size: 14px;
+    font-size: 12px;
     &:nth-child(2) {
       color: #ff4359;
       font-family: ArialMT;
@@ -638,7 +655,7 @@ export default {
   height: 26px;
   background: #0393f8;
   border-radius: 6px 6px 0px 0px;
-  font-size: 12px;
+  font-size: 13px;
   color: #fff;
   line-height: 26px;
 }

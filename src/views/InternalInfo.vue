@@ -107,6 +107,15 @@
                  class="btn"
                  @click="showPayMethod('0001')">
               <span>{{Number(price)/100}}元</span>内参>></div>
+            <!-- 整合按钮 -->
+            <div v-if="machineforecast.needbuy!==''"
+                 class="btn"
+                 @click="showPayMethod('0001')">
+              <span>{{Number(machineforecast.price)/100}}元</span>智能大数据推荐</div>
+            <div v-if="subscription!=='1'"
+                 class="btn"
+                 @click="showPayMethod('0001')">
+              <span>{{Number(subscription.price)/100}}元</span>包月会员VIP</div>
           </div>
         </div>
         <div v-if="needbuy=='1'"
@@ -451,7 +460,30 @@
         </div>
         <div class="btn-show-wrapper">
           <p>大数据智能荐单：</p>
-          <div v-if="machineforecastdxq.needbuy!==''">
+
+          <div class="paid-show"
+               v-if="machineforecast.needbuy=='1'"
+               v-for="(item,index) in machineforecast.aiforecastlist"
+               :key="index">
+            <p>{{item.labname}}</p>
+            <div class="paid-show-info">
+              <div :class="item.labcheck[0]!=='' && item.labcheck==index?'sel-box':''"
+                   v-for="(items,indexs) in item.labshow"
+                   :key="indexs">
+
+                <p>{{items}}
+                  <x-icon type="ios-checkmark-empty"
+                          size="30"
+                          class="check-icon"
+                          v-if="item.labhit[0]!=='' && item.labhit==index"></x-icon>
+                </p>
+                <p>{{item.labvalue[indexs]}}</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!--<div v-if="machineforecastdxq.needbuy!==''">
             <div @click="machineforecastdxq.needbuy=='0'?showPayMethod('0008'):''">
               <span>大小球</span>内参</div>
             <div class="paid-show"
@@ -520,7 +552,7 @@
 
             </div>
           </div>
-          <div v-if="machineforecasthf.needbuy!==''">
+           <div v-if="machineforecasthf.needbuy!==''">
             <div @click="machineforecasthf.needbuy=='0'?showPayMethod('0007'):''">
               <span>半全场</span>内参</div>
             <div class="paid-show"
@@ -543,7 +575,7 @@
               </div>
 
             </div>
-          </div>
+          </div> -->
 
         </div>
         <div class="recommender">
@@ -641,10 +673,12 @@ export default {
       matchlist:{},
       awayInfo:[],
       homeInfo:[],
-      machineforecastdxq:{},//大小球
-      machineforecasthf:{},//半全场
-      machineforecastscore:{},//比分内参
-      machineforecastyp:{}//亚盘
+      machineforecast:{},//大数据智能
+      subscription:{} //包月信息
+      // machineforecastdxq:{},//大小球
+      // machineforecasthf:{},//半全场
+      // machineforecastscore:{},//比分内参
+      // machineforecastyp:{}//亚盘
     }
   },
   methods:{
@@ -732,11 +766,13 @@ export default {
     https.fetchPost('/match/matchinfo.jsp',{id:this.$store.state.internalInfoItem} ).then((data) => {
         this.openInfo = data.data.open //传递公共信息
         console.log('openInfo',data.data.open)
-         
-        this.machineforecastdxq=data.data.machineforecastdxq//大小球
-        this.machineforecasthf=data.data.machineforecasthf//半全场
-        this.machineforecastscore=data.data.machineforecastscore//比分内参
-        this.machineforecastyp=data.data.machineforecastyp//亚盘
+         this.machineforecast = data.data.machineforecast//大数据智能数据
+         this.subscription = data.data.subscription //包月信息
+
+        // this.machineforecastdxq=data.data.machineforecastdxq//大小球
+        // this.machineforecasthf=data.data.machineforecasthf//半全场
+        // this.machineforecastscore=data.data.machineforecastscore//比分内参
+        // this.machineforecastyp=data.data.machineforecastyp//亚盘
         console.log("awayInfo",this.awayInfo)
         this.matchlist = data.data.matchinfo;//基本信息
         this.resultList = data.data.inside.details.resultindex.split(",") || []//结果指数

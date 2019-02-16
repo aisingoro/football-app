@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Index from './views/Index.vue'
 import InternalReference from './views/InternalReference.vue'
 import Ugc from './views/UGC.vue'
+import Information from './views/Information.vue'
 import User from './views/User.vue'
 
 //内参详情
@@ -73,6 +74,10 @@ export default new Router({
         path: "ugc",
         name: 'ugc',
         component: Ugc,
+      }, {
+        path: "information",
+        name: 'information',
+        component: Information,
       }, {
         path: "user",
         name: 'user',

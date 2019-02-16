@@ -22,14 +22,21 @@
              src="../../public/images/tabbar-03.png">
         <img slot="icon-active"
              src="../../public/images/tabbar-sel-03.png">
-        <span slot="label">UGC</span>
+        <span slot="label">荐单</span>
       </tabbar-item>
+      <!-- <tabbar-item link="/home/information">
+        <img slot="icon"
+             src="../../public/images/tabbar-03.png">
+        <img slot="icon-active"
+             src="../../public/images/tabbar-sel-04.png">
+        <span slot="label">资讯</span>
+      </tabbar-item> -->
       <tabbar-item link="/home/user">
         <img slot="icon"
-             src="../../public/images/tabbar-04.png"
+             src="../../public/images/tabbar-05.png"
              style="width:90%">
         <img slot="icon-active"
-             src="../../public/images/tabbar-sel-04.png"
+             src="../../public/images/tabbar-sel-05.png"
              style="width:90%">
         <span slot="label">我的</span>
       </tabbar-item>

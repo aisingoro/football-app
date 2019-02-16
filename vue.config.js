@@ -3,6 +3,8 @@ module.exports = {
   baseUrl: './',
   // 输出文件目录
   outputDir: 'dist',
+  assetsDir: './',
+  // publicPath: './',
   // webpack-dev-server 相关配置
   // 配置 axios 代理请求
   devServer: {
