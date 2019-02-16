@@ -1,6 +1,6 @@
 <template>
   <div class="internal-reference"
-			 ref="scroll"
+       ref="scroll"
        v-infinite-scroll="loadMore"
        infinite-scroll-disabled="isDisableScroll"
        infinite-scroll-immediate-check="true"
@@ -128,7 +128,7 @@
           </div>
           <!-- <span>{{item.details.coldindex}}</span> -->
           <span class="more"
-                @click="getInternalInfo(item.id,item.matchnum)">查看完整版>></span>
+                @click="getInternalInfo(item.id,item.matchnum)">查看完整版</span>
         </div>
       </div>
     </div>
@@ -355,11 +355,14 @@ export default {
         & > p:first-child,
         :last-child {
           color: #313233;
-          margin-top: 5px;
+          margin-top: 0px;
           font-family: 'PingFangSC-Medium';
         }
         & > p:last-child {
-          margin-top: 10px;
+          width: 60%;
+          text-align: center;
+          border: 1px solid #eff5f6;
+          margin-top: 2px;
           font-family: 'PingFangSC-Regular';
         }
       }
@@ -367,14 +370,20 @@ export default {
         margin-bottom: 12px;
         float: right;
         width: 77%;
-        height: 100%;
+        // height: 100%;
+        overflow: hidden;
+        padding-bottom: 18px;
         background: #ffffff;
         border-radius: 6px;
         border: 1px solid rgba(239, 245, 246, 1);
+        display: flex;
         & > div {
-          float: left;
-          width: 70px;
-          margin-left: 16px;
+          flex: 1;
+          margin-left: 2px;
+          margin-right: 2px;
+          // float: left;
+          // width: 70px;
+          // margin-left: 16px;
           img {
             display: block;
             width: 36px;
@@ -382,7 +391,7 @@ export default {
             margin-top: 18px;
           }
           p {
-            font-size: 14px;
+            font-size: 12px;
             color: #313233;
             text-align: center;
             margin-top: 3px;
@@ -506,8 +515,10 @@ export default {
           }
         }
         .more {
+          border: 1px solid #eff5f6;
+          padding: 5px;
           margin-top: 5px;
-          font-size: 14px;
+          font-size: 12px;
           color: #313233;
           float: right;
           font-family: PingFangSC-Regular;

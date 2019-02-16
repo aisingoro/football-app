@@ -73,7 +73,7 @@
              class="table-bg-fff">
       <thead>
         <tr>
-          <th>公司名称</th>
+          <th style="width:140px;">公司名称</th>
           <th>胜</th>
           <th>平</th>
           <th>负</th>
@@ -96,7 +96,7 @@
              class="table-bg-fff">
       <thead>
         <tr>
-          <th>公司名称</th>
+          <th style="width:95px;">公司名称</th>
           <th>让</th>
           <th>让胜</th>
           <th>让平</th>
@@ -169,9 +169,9 @@
     <h3>历史交战
     </h3>
     <p>
-      近{{Number(hisclashcount.win)+Number(hisclashcount.loose)+Number(hisclashcount.drawn)}}场交战，{{hometeam}}
-      <span>{{hisclashcount.win}}胜</span>{{hisclashcount.drawn}}平
-      <span>{{hisclashcount.loose}}负</span> 胜率{{hisclashcount.percentage}}%
+      近{{Number(openInfo.hisclashcount.win)+Number(openInfo.hisclashcount.loose)+Number(openInfo.hisclashcount.drawn)}}场交战，{{hometeam}}
+      <span>{{openInfo.hisclashcount.win}}胜</span>{{openInfo.hisclashcount.drawn}}平
+      <span>{{openInfo.hisclashcount.loose}}负</span> 胜率{{openInfo.hisclashcount.percentage}}%
     </p>
     <p></p>
     <x-table :cell-bordered="false"
@@ -189,7 +189,7 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.hisclash"
             :key="index">
-          <td>{{item.leaguename}} {{item.matchtime}}</td>
+          <td style="line-height:14px;color:#A3ADB7;font-size:0.6rem;">{{item.leaguename}}<br> {{item.matchtime.split(" ")[0]}}</td>
           <td>{{item.home}}</td>
           <td>{{item.finalyscore}}({{item.halfscore}})</td>
           <td>{{item.away}}</td>
@@ -202,8 +202,8 @@
     <h3>近期战绩
     </h3>
     <p>近{{hometeam}}
-      <span>{{homerecentcount.win}}胜</span>{{homerecentcount.drawn}}平
-      <span>{{homerecentcount.loose}}负</span> 胜率{{homerecentcount.percentage}}%
+      <span>{{openInfo.homerecentcount.win}}胜</span>{{openInfo.homerecentcount.drawn}}平
+      <span>{{openInfo.homerecentcount.loose}}负</span> 胜率{{openInfo.homerecentcount.percentage}}%
     </p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
@@ -220,7 +220,7 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.homerecent"
             :key="index">
-          <td>{{item.leaguename}} {{item.matchtime}}</td>
+          <td style="line-height:14px;color:#A3ADB7;font-size:0.6rem;">{{item.leaguename}}<br> {{item.matchtime.split(" ")[0]}}</td>
           <td>{{item.home}}</td>
           <td>{{item.finalyscore}}({{item.halfscore}})</td>
           <td>{{item.away}}</td>
@@ -233,8 +233,8 @@
     <h3>近期战绩
     </h3>
     <p>近{{awayteam}}
-      <span>{{awayrecentcount.win}}胜</span>{{awayrecentcount.drawn}}平
-      <span>{{awayrecentcount.loose}}负</span> 胜率{{awayrecentcount.percentage}}%
+      <span>{{openInfo.awayrecentcount.win}}胜</span>{{openInfo.awayrecentcount.drawn}}平
+      <span>{{openInfo.awayrecentcount.loose}}负</span> 胜率{{openInfo.awayrecentcount.percentage}}%
     </p>
     <x-table :cell-bordered="false"
              :content-bordered="false"
@@ -251,7 +251,7 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.awayrecent"
             :key="index">
-          <td>{{item.leaguename}} {{item.matchtime}}</td>
+          <td style="line-height:14px;color:#A3ADB7;font-size:0.6rem;">{{item.leaguename}}<br> {{item.matchtime.split(" ")[0]}}</td>
           <td>{{item.home}}</td>
           <td>{{item.finalyscore}}({{item.halfscore}})</td>
           <td>{{item.away}}</td>
@@ -299,7 +299,8 @@ export default {
   },
   watch: {
     openInfo: function(newVal,oldVal){
-      console.log("9999",this.openHomeInfo)
+      
+      console.log("9999",newVal.hisclashcount)
         this.openHomeInfo = newVal.home; 
         this.openAwayInfo = newVal.away;
         this.homelastmatches = newVal.home.lastmatches.split(',');
