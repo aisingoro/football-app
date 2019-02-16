@@ -14,7 +14,7 @@
         <marquee>
           <marquee-item v-for="i in 5"
                         :key="i"
-                        @click.native="onClick(i)">小球仙iOS版与Android版即将上线，敬请期待！ {{i}}</marquee-item>
+                        @click.native="onClick(i)">小球仙线，敬请期待！ {{i}}</marquee-item>
         </marquee>
       </cell>
     </group>
@@ -103,7 +103,7 @@
                :key="index">
         <thead>
           <tr class="tr-style">
-            <th>{{item.matchnumshow}}</th>
+            <th style="width:100px;">{{item.matchnumshow}}</th>
             <th v-for="(items,indexs) in item.showtitle.split(',')"
                 :key="indexs">{{items}}</th>
           </tr>
@@ -142,7 +142,7 @@
                    @click.native="goMatchDetail(item.id)">
             <thead>
               <tr class="tr-style">
-                <th>{{item.matchnumshow}}</th>
+                <th style="width:80px;">{{item.matchnumshow}}</th>
                 <th v-for="(items,indexs) in item.showtitle.split(',')"
                     :key="indexs">{{items}}</th>
               </tr>
@@ -689,6 +689,12 @@ export default {
 .maqueen {
   width: 90%;
   margin: 0 auto;
+}
+.maqueen .vux-cell-primary {
+  flex: 0.1;
+}
+.maqueen .weui-cell__ft {
+  text-align: left;
 }
 .maqueen .weui-cells:before {
   border-top: none;
