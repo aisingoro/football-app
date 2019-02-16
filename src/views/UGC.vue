@@ -24,7 +24,7 @@
                    :key="index">
         <div class="tab-swiper vux-center">
           <h2 class="title">{{item}}
-            <span @click="getUgcList">更多></span>
+            <span @click="getUgcList">更多</span>
           </h2>
           <grid :cols="4"
                 :show-lr-borders="false"
@@ -42,7 +42,7 @@
       <swiper-item>
         <div class="tab-swiper vux-center">
           <h2 class="title">榜单
-            <span @click="getUgcList">更多></span>
+            <span @click="getUgcList">更多</span>
           </h2>
           <grid :cols="4"
                 :show-lr-borders="false"
