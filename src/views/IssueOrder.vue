@@ -333,7 +333,6 @@ export default {
         }
         .demo1-item {
           width: 26.7%;
-          height: 38px;
           background: rgba(248, 249, 250, 1);
           border-radius: 3px;
           font-size: 12px;
@@ -342,7 +341,7 @@ export default {
           line-height: 17px;
           margin-left: 14px;
           margin-top: 8px;
-          padding-top: 2px;
+          padding: 3px 0;
         }
         .demo1-item-selected {
           color: #ffffff;

@@ -8,7 +8,7 @@
            v-for="(item,index) in sureList"
            :key="index">
         <div class="side-left">
-          <p>{{item.matchnum}}</p>
+          <p>{{item.matchnumshow}}</p>
           <p>{{item.league}}</p>
           <p>{{item.matchtime}}</p>
         </div>
@@ -182,6 +182,7 @@ export default {
             hometeam: this.orderList[i].hometeam,
             league: this.orderList[i].league,
             matchnum: this.orderList[i].matchnum,
+            matchnumshow:this.orderList[i].matchnumshow,
             matchtime: this.orderList[i].matchtime,
             odds: this.orderList[i].odds,
           })
