@@ -185,8 +185,10 @@
               <div class="home-cli-header">主队禁赛</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in homeInfo.playerssuspended"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -197,8 +199,10 @@
               <div class="away-cli-header">客队禁赛</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in awayInfo.playerssuspended"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -212,8 +216,10 @@
               <div class="home-cli-header">主队上阵成疑</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in homeInfo.playersdoubtful"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -224,8 +230,10 @@
               <div class="away-cli-header">客队上阵成疑</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in awayInfo.playersdoubtful"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -239,8 +247,10 @@
               <div class="home-cli-header">主队不可上场</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in homeInfo.playerunavailable"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -251,8 +261,10 @@
               <div class="away-cli-header">客队不可上场</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in awayInfo.playerunavailable"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -266,8 +278,10 @@
               <div class="home-cli-header">主队休息</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in homeInfo.playersrested"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -278,8 +292,10 @@
               <div class="away-cli-header">客队休息</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in awayInfo.playersrested"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -322,7 +338,7 @@
             </div>
           </div>
           <p class="contain-title"
-             v-if="homeInfo.brief!=='' || awayInfo.brief!==''">【Brief】</p>
+             v-if="homeInfo.brief!=='' || awayInfo.brief!==''">【简报】</p>
           <div class="team-cli"
                v-if="homeInfo.brief!=='' || awayInfo.brief!==''">
             <div class="home-cli">
@@ -407,8 +423,10 @@
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in homeInfo.playerslineup"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -419,8 +437,10 @@
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in awayInfo.playerslineup"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -436,8 +456,10 @@
               <div class="home-cli-header">主队</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in homeInfo.playersbenched"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -448,8 +470,10 @@
               <div class="away-cli-header">客队</div>
               <div class="home-cli-body">
                 <p v-for="(item,index) in awayInfo.playersbenched"
-                   :key="index">{{item.indexOf('/')==-1?item:item.split('/')[0]}}
+                   :key="index">
+                  <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
+                        :class="(items=='主力'||items=='替补'||items=='关键')?'red-badge':''"
                         v-if="item.indexOf('/')!==-1"
                         v-for="(items,indexs) in item.split('/').splice(1,item.split('/').length-1)"
                         :key="indexs">{{items}}</span>
@@ -1071,12 +1095,16 @@ export default {
           }
         }
       }
+
       .cli-badge {
         float: right;
-        margin-right: 8px;
-        font-size: 9px;
+        margin-right: 6px;
+        font-size: 7px;
         border-radius: 7px;
         padding: 0 5px;
+        border: 1px solid rgba(3, 147, 248, 1);
+      }
+      .red-badge {
         border: 1px solid rgba(255, 67, 89, 1);
       }
       .traffic-text {
@@ -1433,6 +1461,13 @@ export default {
   height: 16px;
   right: 18px;
   top: 18px;
+}
+.per-name {
+  display: inline-block;
+  width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
 <style lang="scss">
