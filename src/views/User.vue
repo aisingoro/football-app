@@ -5,10 +5,10 @@
          @click="goUserDetail">
       <img :src="$store.state.userpic==''?require('../../public/images/default-pic.png'):$store.state.userpic" />
       <div>
-        <p v-if="$store.state.account==''"
+        <p v-if="$store.state.account==''||$store.state.account==null||$store.state.account==undefined"
            class="go-login">立即登录</p>
-        <p v-if="$store.state.account!==''">{{$store.state.nickname}}</p>
-        <p v-if="$store.state.account!==''">手机号：{{$store.state.account}}</p>
+        <p v-if="$store.state.account!==''&&$store.state.account!==null&&$store.state.account!==undefined">{{$store.state.nickname}}</p>
+        <p v-if="$store.state.account!==''&&$store.state.account!==null&&$store.state.account!==undefined">手机号：{{$store.state.account}}</p>
       </div>
       <img src="../../public/images/user-header-arrow.png" />
     </div>
@@ -64,26 +64,26 @@ export default {
       list2:[{
         src: require('../../public/images/user-pannel-01.png'),
         title: '设置',
-        url: this.$store.state.account==''?'':'/setting'
+        url: this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined?'':'/setting'
       }],
       list: [{
         src: require('../../public/images/user-pannel-01.png'),
         title: '账户详情',
-        url: this.$store.state.account==''?'':'/count-detail'
+        url: this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined?'':'/count-detail'
       },  {
         src: require('../../public/images/user-pannel-04.png'),
         title: '我的购买',
-        url: this.$store.state.account==''?'':'/myPurchase'
+        url: this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined?'':'/myPurchase'
       }, {
         src: require('../../public/images/user-pannel-03.png'),
         title: '意见反馈',
-        url: this.$store.state.account==''?'':'/feedBack'
+        url: this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined?'':'/feedBack'
       }],
     }
   },
   methods:{
     signIn(){
-      if(this.$store.state.account==''){
+      if(this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined){
         this.$router.push('/login')
         return false
       }
@@ -98,8 +98,8 @@ export default {
           // this.show=true
           this.$vux.toast.show({
 					text: '签到成功！'
-				})
-          this.$store.state.signin='1'
+        })
+          this.$store.commit('setSignin','1')
 				}
       }).catch(err=>{
             console.log(err)
@@ -111,14 +111,14 @@ export default {
       
     },
     goUserDetail(){
-      if(this.$store.state.account==''){
+      if(this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined){
         this.$router.push('/login')
         return false
       }
       this.$router.push('/user-detail')
     },
     goWithdraw(){
-      if(this.$store.state.account==''){
+      if(this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined){
         this.$router.push('/login')
         return false
       }

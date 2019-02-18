@@ -73,7 +73,8 @@ export default {
   methods:{
     changeSel(e){
       console.log('选中',e)
-      this.$store.state.selIndex = e
+      this.$store.commit('setSelIndex',e)
+      
     }
   },
   computed: {

@@ -48,8 +48,8 @@ mounted(){
           this.$vux.toast.show({
             text: '修改成功！',
           })
-          this.$store.state.cardnum = this.cardnum
-          this.$store.state.openingbank = this.openingbank
+          this.$store.commit('setCardnum',this.cardnum)
+          this.$store.commit('setOpeningbank',this.openingbank)
           this.$router.go(-1)
         }
       }).catch(err=>{

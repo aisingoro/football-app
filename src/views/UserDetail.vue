@@ -46,7 +46,7 @@
 
         </cell>
         <cell title="实名信息"
-              :value="$store.state.expertid=='0'?'未认证':'已认证'"
+              :value="($store.state.expertid=='0'||$store.state.expertid==undefined||$store.state.expertid==null||$store.state.expertid=='')?'未认证':'已认证'"
               is-link>
         </cell>
       </group>
@@ -139,7 +139,7 @@ export default {
 		}
   },
   mounted(){
-    this.sex = (this.$store.state.usersex==0?['男']:['女'])
+    this.sex = (this.$store.state.usersex=='0'?['男']:['女'])
   },
 	methods: {
     //修改专家简介
@@ -150,8 +150,7 @@ export default {
                 this.$vux.toast.show({
                     text: '修改成功！',
                   })
-              this.$store.state.expertDesc=this.expertDesc
-                  
+                this.$store.commit('setExpertDesc',this.expertDesc)  
               }
             }).catch(err=>{
                   console.log(err)
@@ -187,7 +186,8 @@ export default {
       let args=e
       https.fetchPost('/user/moduser.jsp',args).then((data) => {
         console.log(data.data)
-        this.$store.state.usersex=this.sex.toString()
+        this.$store.commit('setUsersex',this.sex.toString())  
+        
       }).catch(err=>{
             console.log(err)
         }
@@ -201,7 +201,7 @@ export default {
           sex:e.toString()
         }
         this.changeUserInfo(args)
-        this.$store.state.sex= this.sex.toString()
+        this.$store.commit('setSex',this.sex.toString())  
     },
     changeName(){
         let args={
@@ -210,7 +210,7 @@ export default {
           sex:this.sex.toString()
         }
         this.changeUserInfo(args)
-        this.$store.state.nickname= this.nickname
+        this.$store.commit('setNickname',this.nickname)  
         this.showPay=false
     },
     changePic(){
@@ -220,7 +220,7 @@ export default {
           sex:this.sex.toString()
         }
         this.changeUserInfo(args)
-        this.$store.state.userpic= this.userpic
+        this.$store.commit('setUserpic',this.userpic)  
         
     }
 	},

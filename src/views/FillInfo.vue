@@ -76,7 +76,7 @@ export default {
           cardnum :this.cardnum
       }
       https.fetchPost('/user/regexpert.jsp',args).then((data) => {
-        this.$store.state.expertid = data.data.expertid
+        this.$store.commit('setExpertid',data.data.expertid)
         this.$router.push('/issue-order')
       }).catch(err=>{
             console.log(err)

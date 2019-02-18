@@ -92,22 +92,39 @@ Vue.use(ToastPlugin)
                   }
                 }
                 https.fetchPost('/user/login.jsp',args ).then((data) => {
-                  this.$store.state.userid=data.data.user.userid
-                  this.$store.state.vcode=data.data.user.vcode
-                  this.$store.state.expertid=data.data.user.expertid//是否为专家
-                  this.$store.state.fans=data.data.user.fans //粉丝数
-                  this.$store.state.nickname= data.data.user.nickname //用户昵称
-                  this.$store.state.account= data.data.user.account //手机号
-                  this.$store.state.userpic= data.data.user.userpic //用户头像
-                  this.$store.state.fcount= data.data.user.fcount //发单
-                  this.$store.state.follow= data.data.user.follow //关注
-                  this.$store.state.signin= data.data.user.signin //签到
-                  this.$store.state.balance= data.data.user.balance //仙灵币
-                  this.$store.state.usersex= data.data.user.usersex //性别
-                  this.$store.state.tx_balance= data.data.user.tx_balance //可提现金额
-                  this.$store.state.cardnum= data.data.user.cardnum //银行卡号
-                  this.$store.state.openingbank= data.data.user.openingbank//开户银行
-                  this.$store.state.expertDesc= data.data.user.expertdesc //专家简介
+                  // this.$store.state.userid=data.data.user.userid
+                  this.$store.commit('setUserid',data.data.user.userid)
+                  this.$store.commit('setExpertid',data.data.user.expertid)
+                  this.$store.commit('setFans',data.data.user.fans)
+                  this.$store.commit('setNickname',data.data.user.nickname)
+                  this.$store.commit('setAccount',data.data.user.account)
+                  this.$store.commit('setUserpic',data.data.user.userpic)
+                  this.$store.commit('setFcount',data.data.user.fcount)
+                  this.$store.commit('setFollow',data.data.user.follow)
+                  this.$store.commit('setSignin',data.data.user.signin)
+                  this.$store.commit('setBalance',data.data.user.balance)
+                  this.$store.commit('setUsersex',data.data.user.usersex)
+                  this.$store.commit('setTx_balance',data.data.user.tx_balance)
+                  this.$store.commit('setCardnum',data.data.user.cardnum)
+                  this.$store.commit('setOpeningbank',data.data.user.openingbank)
+                  this.$store.commit('setExpertDesc',data.data.user.expertDesc)
+                  this.$store.commit('setVcode',data.data.user.vcode)
+                  
+                  // this.$store.state.vcode=data.data.user.vcode
+                  // this.$store.state.expertid=data.data.user.expertid//是否为专家
+                  // this.$store.state.fans=data.data.user.fans //粉丝数
+                  // this.$store.state.nickname= data.data.user.nickname //用户昵称
+                  // this.$store.state.account= data.data.user.account //手机号
+                  // this.$store.state.userpic= data.data.user.userpic //用户头像
+                  // this.$store.state.fcount= data.data.user.fcount //发单
+                  // this.$store.state.follow= data.data.user.follow //关注
+                  // this.$store.state.signin= data.data.user.signin //签到
+                  // this.$store.state.balance= data.data.user.balance //仙灵币
+                  // this.$store.state.usersex= data.data.user.usersex //性别
+                  // this.$store.state.tx_balance= data.data.user.tx_balance //可提现金额
+                  // this.$store.state.cardnum= data.data.user.cardnum //银行卡号
+                  // this.$store.state.openingbank= data.data.user.openingbank//开户银行
+                  // this.$store.state.expertDesc= data.data.user.expertdesc //专家简介
                   this.$vux.toast.show({
                     text: '登录成功！',
                   })
@@ -124,6 +141,9 @@ Vue.use(ToastPlugin)
               this.$router.push('/edit-psw')
             }
 
+        },
+        mounted(){
+          console.log("yonghuid",this.$store.state.userid)
         }
     };
 </script>

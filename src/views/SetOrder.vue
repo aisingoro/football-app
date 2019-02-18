@@ -154,8 +154,7 @@ export default {
           this.$router.push('/login')
           return false
         }
-        this.$store.state.fcount =this.$store.state.fcount +1 
-
+        this.$store.commit('setFcount',Number(this.$store.state.fcount) +1)
         this.$vux.toast.show({
           text: '保存荐单成功！',
         })

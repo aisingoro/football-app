@@ -124,7 +124,7 @@ export default {
       if(this.$store.state.userid==''){
         this.$router.push("/login")
       }else{
-        if(this.$store.state.expertid=='0'){
+        if(this.$store.state.expertid=='0'||this.$store.state.expertid==undefined||this.$store.state.expertid==''||this.$store.state.expertid==null){
           //未认证专家
           this.$router.push("/expert-rule")
         }else{

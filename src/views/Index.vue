@@ -298,7 +298,7 @@ export default {
 			return ('00' + str).substring(str.length);
 		},
     goInternal(){
-      this.$store.state.selIndex = 1;
+      this.$store.commit('setSelIndex',1)
       this.$router.push('/home/internal-reference')
 
     },
