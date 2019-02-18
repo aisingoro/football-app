@@ -724,7 +724,7 @@ export default {
     },
     //支付宝支付
     userPayAli(e){
-      if(this.$store.state.userid==''){
+      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
         this.$router.push("/login")
         return false
       }
@@ -742,7 +742,7 @@ export default {
     },
     //金币支付
     userPay(e){
-      if(this.$store.state.userid==''){
+      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
         this.$router.push("/login")
         return false
       }

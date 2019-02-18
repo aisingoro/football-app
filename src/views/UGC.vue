@@ -121,7 +121,7 @@ export default {
       this.$router.push({path:'/ugc-list',query:{ugcId:this.index+1}})
     },
     IssueOrder(){
-      if(this.$store.state.userid==''){
+      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
         this.$router.push("/login")
       }else{
         if(this.$store.state.expertid=='0'||this.$store.state.expertid==undefined||this.$store.state.expertid==''||this.$store.state.expertid==null){

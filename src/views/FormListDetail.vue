@@ -96,7 +96,7 @@ export default {
   },
   methods:{
     userPay(e){
-      if(this.$store.state.userid==''){
+      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
         this.$router.push("/login")
         return false
       }

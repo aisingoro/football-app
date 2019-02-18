@@ -3,7 +3,7 @@
     <h1>我的</h1>
     <div class="user-card"
          @click="goUserDetail">
-      <img :src="$store.state.userpic==''?require('../../public/images/default-pic.png'):$store.state.userpic" />
+      <img :src="$store.state.userpic==''||$store.state.userpic==null||$store.state.userpic==undefined?require('../../public/images/default-pic.png'):$store.state.userpic" />
       <div>
         <p v-if="$store.state.account==''||$store.state.account==null||$store.state.account==undefined"
            class="go-login">立即登录</p>
@@ -26,7 +26,7 @@
         <p>我的关注</p>
       </div>
       <div @click="signIn">
-        <p style="font-size:12px;font-weight:bolder">{{$store.state.signin!=='0'?'已签到':'未签到'}}</p>
+        <p style="font-size:12px;font-weight:bolder">{{$store.state.signin!=='0'&&$store.state.signin!==undefined&&$store.state.signin!==null?'已签到':'未签到'}}</p>
         <p>我的签到</p>
       </div>
     </div>
