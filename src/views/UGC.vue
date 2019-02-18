@@ -245,14 +245,14 @@ export default {
         float: right;
         margin-top: 17px;
         margin-right: 16px;
-        width: 90px;
-        height: 36px;
+        width: 75px;
+        height: 30px;
         background: #ffffff;
         border-radius: 18px;
         color: #0393f8;
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
-        line-height: 36px;
+        line-height: 30px;
       }
     }
     .vux-table {
@@ -266,7 +266,7 @@ export default {
         font-family: PingFangSC-Regular;
       }
       td:first-child {
-        color: #b4cae5;
+        color: #0393f8;
       }
     }
   }

@@ -73,7 +73,8 @@
              class="table-bg-fff">
       <thead>
         <tr>
-          <th style="width:140px;">公司名称</th>
+          <th style="width:95px;">公司名称</th>
+          <th style="width:43px;"></th>
           <th>胜</th>
           <th>平</th>
           <th>负</th>
@@ -82,7 +83,8 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.baseodds"
             :key="index">
-          <td>{{item.source}}</td>
+          <td style="text-align:left;padding-left:20px;">{{item.source}}</td>
+          <td></td>
           <td class="win-col">{{item.win}}<br>{{openInfo.nowodds[index].win}}</td>
           <td class="draw-col">{{item.draw}}<br>{{openInfo.nowodds[index].draw}}</td>
           <td class="lose-col">{{item.loose}}<br>{{openInfo.nowodds[index].loose}}</td>
@@ -97,7 +99,7 @@
       <thead>
         <tr>
           <th style="width:95px;">公司名称</th>
-          <th>让</th>
+          <th style="width:43px;">让</th>
           <th>让胜</th>
           <th>让平</th>
           <th>让负</th>
@@ -106,7 +108,7 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.letbaseodds"
             :key="index">
-          <td>{{item.source}}</td>
+          <td style="text-align:left;padding-left:20px;">{{item.source}}</td>
           <td>{{openInfo.handicap}}</td>
           <td class="win-col">{{item.win}}<br>{{openInfo.letnowodds[index].win}}</td>
           <td class="draw-col">{{item.draw}}<br>{{openInfo.letnowodds[index].draw}}</td>
@@ -131,7 +133,7 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.macaohandicap"
             :key="index">
-          <td>{{item.source}}</td>
+          <td style="text-align:left;padding-left:20px;">{{item.source}}</td>
           <td>{{item.sp}}</td>
           <td :class="item.spupdown=='升'?'win-col':(item.spupdown=='平'?'draw-col':'lose-col')">{{item.spupdown}}</td>
           <td>{{item.pk}}</td>
@@ -157,7 +159,7 @@
       <tbody>
         <tr v-for="(item,index) in openInfo.macaoball"
             :key="index">
-          <td>{{item.source}}</td>
+          <td style="text-align:left;padding-left:20px;">{{item.source}}</td>
           <td>{{item.sp}}</td>
           <td :class="item.spupdown=='升'?'win-col':(item.spupdown=='平'?'draw-col':'lose-col')">{{item.spupdown}}</td>
           <td>{{item.pk}}</td>
@@ -470,7 +472,10 @@ export default {
       tr {
         border-bottom: 1px solid #e7ebf0;
         padding-left: 16px;
-        line-height: 25px;
+        td {
+          line-height: 20px;
+          padding: 5px 0;
+        }
         &:last-child {
           border-bottom: none;
         }

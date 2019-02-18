@@ -627,6 +627,7 @@ export default {
 .index .weui-dialog {
   width: 91.5%;
   height: 80%;
+  font-family: PingFangSC-Medium;
 }
 .index .vux-table {
   border-radius: 6px;
