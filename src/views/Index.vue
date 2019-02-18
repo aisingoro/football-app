@@ -3,7 +3,7 @@
     <swiper :list="swiperList"
             :auto=true
             style="width:100%;margin:0 auto;"
-            :aspect-ratio="150/343"
+            :aspect-ratio="130/343"
             dots-position="center"></swiper>
     <group class="maqueen">
       <cell>
@@ -689,7 +689,11 @@ export default {
 }
 .maqueen {
   width: 90%;
+  height: 32px;
   margin: 0 auto;
+}
+.maqueen .weui-cell {
+  padding: 4px 15px;
 }
 .maqueen .vux-cell-primary {
   flex: 0.1;
@@ -701,8 +705,11 @@ export default {
   border-top: none;
 }
 .maqueen .weui-cells {
-  border-radius: 6px 6px 0px 0px;
+  border-radius: 6px;
+  // line-height: 32px;
   overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 .index .vux-x-icon {
   fill: #d5d5d5;
