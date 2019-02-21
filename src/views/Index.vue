@@ -10,7 +10,8 @@
         <img slot="icon"
              src="../../public/images/maqueen.png"
              width=18
-             height=16/>
+             height=16
+             style="position:absolute;top:50%;left:10px;margin-top:-8px;" />
         <marquee>
           <marquee-item v-for="i in 5"
                         :key="i"
@@ -380,7 +381,6 @@ export default {
       font-size: 22px;
       color: #313233;
       font-weight: 500;
-      margin-top: 17px;
       span {
         float: right;
         font-size: 14px;

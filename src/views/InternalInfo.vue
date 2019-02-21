@@ -21,11 +21,11 @@
         </div>
         <div class="weather-info">
           <div><img src="../../public/images/weather-01.png"
-                 class="weather-icon" />{{matchlist.weather}}</div>
+                 class="weather-icon" />{{matchlist.weather.split(',')[0]}}</div>
           <div><img src="../../public/images/weather-02.png"
-                 class="weather-icon" />风速4.4mph</div>
+                 class="weather-icon" />{{matchlist.weather.split(',')[1]}}</div>
           <div><img src="../../public/images/weather-03.png"
-                 class="weather-icon" />降水2%</div>
+                 class="weather-icon" />{{matchlist.weather.split(',')[2]}}</div>
 
         </div>
 
@@ -108,14 +108,7 @@
                  @click="showPayMethod('0001')">
               <span>{{Number(price)/100}}元</span>内参>></div>
             <!-- 整合按钮 -->
-            <div v-if="machineforecast.needbuy!==''"
-                 class="btn"
-                 @click="showPayMethod('0001')">
-              <span>{{Number(machineforecast.price)/100}}元</span>智能大数据推荐</div>
-            <div v-if="subscription!=='1'"
-                 class="btn"
-                 @click="showPayMethod('0001')">
-              <span>{{Number(subscription.price)/100}}元</span>包月会员VIP</div>
+
           </div>
         </div>
         <div v-if="needbuy=='1'"
@@ -176,7 +169,8 @@
           </div>
           <p class="contain-title"
              v-if="buyDetailInfo.referee!==''">【主帅&主裁】</p>
-          <p class="contain-info">{{buyDetailInfo.referee}}</p>
+          <p class="contain-info"
+             style="background:#fff;padding:5px">{{buyDetailInfo.referee}}</p>
           <p class="contain-title"
              v-if="homeInfo.playerssuspended!=='' || awayInfo.playerssuspended!==''">【伤停及复出】</p>
           <div class="team-cli"
@@ -483,123 +477,37 @@
           </div>
         </div>
         <div class="btn-show-wrapper">
-          <p>大数据智能荐单：</p>
-
-          <div class="paid-show"
-               v-if="machineforecast.needbuy=='1'"
+          <!-- 大数据智能推荐 -->
+          <div v-if="machineforecast.needbuy!==''"
+               class="btn"
+               @click="showPayMethod('0006')">
+            <span v-if="machineforecast.needbuy!==''&&machineforecast.needbuy!=='1'">{{Number(machineforecast.price)/100}}元</span>智能大数据推荐</div>
+          <div v-if="machineforecast.needbuy=='1'"
                v-for="(item,index) in machineforecast.aiforecastlist"
                :key="index">
-            <p>{{item.labname}}</p>
-            <div class="paid-show-info">
-              <div :class="item.labcheck[0]!=='' && item.labcheck==index?'sel-box':''"
-                   v-for="(items,indexs) in item.labshow"
-                   :key="indexs">
-
-                <p>{{items}}
-                  <x-icon type="ios-checkmark-empty"
-                          size="30"
-                          class="check-icon"
-                          v-if="item.labhit[0]!=='' && item.labhit==index"></x-icon>
-                </p>
-                <p>{{item.labvalue[indexs]}}</p>
-              </div>
-            </div>
-
-          </div>
-
-          <!--<div v-if="machineforecastdxq.needbuy!==''">
-            <div @click="machineforecastdxq.needbuy=='0'?showPayMethod('0008'):''">
-              <span>大小球</span>内参</div>
-            <div class="paid-show"
-                 v-if="machineforecastdxq.needbuy=='1'">
-              <p>大小球</p>
+            <div class="paid-show">
+              <p>{{item.labname}}</p>
               <div class="paid-show-info">
-                <div :class="machineforecastdxq.labcheck[0]!=='' && machineforecastdxq.labcheck==index?'sel-box':''"
-                     v-for="(item,index) in machineforecastdxq.labshow"
-                     :key="index">
-
-                  <p>{{item}}
-                    <x-icon type="ios-checkmark-empty"
+                <div :class="{'sel-box':(item.labcheck).indexOf(indexs.toString())!==-1,'hit-box': (item.labhit).indexOf(indexs.toString())!==-1}"
+                     v-for="(items,indexs) in item.labshow"
+                     :key="indexs">
+                  <p>{{items}}
+                    <!-- <x-icon type="ios-checkmark-empty"
                             size="30"
                             class="check-icon"
-                            v-if="machineforecastdxq.labhit[0]!=='' && machineforecastdxq.labhit==index"></x-icon>
+                            v-if="item.labhit[0]!=='' && indexs.indexOf(item.labhit)!=='-1'"></x-icon> -->
                   </p>
-                  <p>{{machineforecastdxq.labvalue[index]}}</p>
+                  <p>{{item.labvalue[indexs]}}</p>
                 </div>
               </div>
 
             </div>
           </div>
-          <div v-if="machineforecastyp.needbuy!==''">
-            <div @click="machineforecastyp.needbuy=='0'?showPayMethod('0009'):''">
-              <span>亚盘</span>内参</div>
-            <div class="paid-show"
-                 v-if="machineforecastyp.needbuy=='1'">
-              <p>亚盘</p>
-              <div class="paid-show-info">
-                <div :class="machineforecastyp.labcheck[0]!=='' && machineforecastyp.labcheck==index?'sel-box':''"
-                     v-for="(item,index) in machineforecastyp.labshow"
-                     :key="index">
-
-                  <p>{{item}}
-                    <x-icon type="ios-checkmark-empty"
-                            size="30"
-                            class="check-icon"
-                            v-if="machineforecastyp.labhit[0]!=='' && machineforecastyp.labhit==index"></x-icon>
-                  </p>
-                  <p>{{machineforecastyp.labvalue[index]}}</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div v-if="machineforecastscore.needbuy!==''">
-            <div @click="machineforecastscore.needbuy=='0'?showPayMethod('0006'):''">
-              <span>比分</span>内参</div>
-            <div class="paid-show"
-                 v-if="machineforecastscore.needbuy=='1' ">
-              <p>比分</p>
-              <div class="paid-show-info">
-                <div :class="machineforecastscore.labcheck[0]!=='' && machineforecastscore.labcheck==index?'sel-box':''"
-                     v-for="(item,index) in machineforecastscore.labshow"
-                     :key="index">
-
-                  <p>{{item}}
-                    <x-icon type="ios-checkmark-empty"
-                            size="30"
-                            class="check-icon"
-                            v-if="machineforecastscore.labhit[0]!=='' && machineforecastscore.labhit==index"></x-icon>
-                  </p>
-                  <p>{{machineforecastscore.labvalue[index]}}</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-           <div v-if="machineforecasthf.needbuy!==''">
-            <div @click="machineforecasthf.needbuy=='0'?showPayMethod('0007'):''">
-              <span>半全场</span>内参</div>
-            <div class="paid-show"
-                 v-if="machineforecasthf.needbuy=='1'">
-              <p>半全场</p>
-              <div class="paid-show-info">
-                <div :class="machineforecasthf.labcheck[0]!=='' && machineforecasthf.labcheck==index?'sel-box':''"
-                     v-for="(item,index) in machineforecasthf.labshow"
-                     :key="index">
-
-                  <p>{{item}}
-                    <x-icon type="ios-checkmark-empty"
-                            size="30"
-                            class="check-icon"
-                            v-if="machineforecasthf.labhit[0]!=='' && machineforecasthf.labhit==index"></x-icon>
-                  </p>
-                  <p>{{machineforecasthf.labvalue[index]}}</p>
-                </div>
-
-              </div>
-
-            </div>
-          </div> -->
+          <!-- 包月 -->
+          <div v-if="subscription!=='1'"
+               class="btn"
+               @click="showPayMethod('0004')">
+            <span>{{Number(subscription.price)/100}}元</span>包月会员VIP</div>
 
         </div>
         <div class="recommender">
@@ -1145,7 +1053,6 @@ export default {
         border-radius: 6px;
         border: 1px solid rgba(228, 236, 240, 1);
         margin: 0 auto;
-        margin-bottom: 10px;
         text-align: center;
         line-height: 40px;
         font-size: 16px;
@@ -1163,7 +1070,7 @@ export default {
         & > p {
           margin: 0 auto;
           margin-top: 20px;
-          margin-bottom: 9px;
+          // margin-bottom: 9px;
         }
         .paid-show-info {
           width: 70%;
@@ -1210,6 +1117,15 @@ export default {
             & > p:nth-child(2) {
               box-sizing: border-box;
               border: 2px solid #0393f8;
+            }
+          }
+          .hit-box {
+            & > p:first-child {
+              background: #ffb340;
+            }
+            & > p:nth-child(2) {
+              box-sizing: border-box;
+              border: 2px solid #ffb340;
             }
           }
         }
@@ -1421,21 +1337,20 @@ export default {
           font-weight: 400;
         }
       }
-
-      .btn {
-        width: 100%;
-        height: 40px;
-        background: #0393f8;
-        color: #fff;
-        border-radius: 6px;
-        font-size: 16px;
-        line-height: 40px;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 22px;
-      }
     }
   }
+}
+.btn {
+  width: 100%;
+  height: 40px;
+  background: #0393f8;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 40px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 22px;
 }
 .paidType {
   position: relative;
