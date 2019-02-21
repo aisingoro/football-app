@@ -56,22 +56,22 @@ axios.interceptors.request.use((config) => {
 
 //返回状态判断(添加响应拦截器)
 axios.interceptors.response.use((res) => {
-	console.log('响应拦截的内容：')
-	console.log(res)
-	//对响应数据做些事
-	if (res.status === 200) {
-		if (res.data.statuscode > 0) {
-			return Promise.resolve(res);
-		} else {
-			console.log('请求错误...' + res.data.statusmsg)
-			Vue.$vux.toast.text(res.data.statusmsg, 'top')
-		}
+  console.log('响应拦截的内容：')
+  console.log(res)
+  //对响应数据做些事
+  if (res.status === 200) {
+    if (res.data.statuscode >= 0) {
+      return Promise.resolve(res);
+    } else {
+      console.log('请求错误...' + res.data.statusmsg)
+      Vue.$vux.toast.text(res.data.statusmsg, 'top')
+    }
 
   }
   return res;
 }, (error) => {
-	console.log('网络异常')
-	Vue.$vux.toast.text('网络异常,请稍后重试!', 'top')
+  console.log('网络异常')
+  Vue.$vux.toast.text('网络异常,请稍后重试!', 'top')
   return Promise.reject(error);
 });
 

@@ -39,8 +39,9 @@
             <p>{{item.hometeam}}</p>
           </div>
           <div>
-            <img src="../../public/images/index-vs.png" />
-            <p>未开赛</p>
+            <img src="../../public/images/index-vs.png"
+                 v-if="item.kickoff=='未开赛'" />
+            <p :class="item.kickoff!=='未开赛'?'finalscore':''">{{item.kickoff!=='未开赛'?item.finalscore:item.kickoff}}</p>
           </div>
           <div>
             <img :src="item.awayteampic" />
@@ -565,5 +566,11 @@ export default {
   left: 20px;
   width: 20px;
   height: 10px;
+}
+.finalscore {
+  margin-top: 38px !important;
+  color: #333333 !important;
+  font-family: 'Bebas Neue' !important;
+  font-size: 24px !important;
 }
 </style>

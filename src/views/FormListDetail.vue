@@ -15,26 +15,32 @@
            @click="statuscode<0?(showPay=true):''">{{ statuscode>=0?'已解锁':'解锁查看'}}</div>
       <span class="attention"
             v-if="statuscode<0">请点击解锁查看，支付费用后可查看</span>
-      <div v-if="statuscode>=0"
-           class="total-result"><img :src="fresult=='1'?require('../../public/images/result-correct.png'):''" />{{fresult=='1'?'荐中':'未荐中'}}</div>
+      <!-- <div v-if="statuscode>=0"
+           class="total-result"><img :src="fresult=='1'?require('../../public/images/result-correct.png'):''" />{{fresult=='1'?'荐中':'未荐中'}}</div> -->
       <div v-if="statuscode>=0"
            v-for="(item,index) in list"
            :key="index">
-        <h3>{{item.hometeam}} vs {{item.awayteam}}</h3>
+        <h3 class="match-title">
+          <span>{{item.matchnumshow}}</span>{{item.hometeam}} vs {{item.awayteam}}
+          <span style="float:right;color:#353637"><img width=20
+                 height=18
+                 style="vertical-align:middle;margin-right:3px;"
+                 :src="item.fresult=='1'?require('../../public/images/result-correct.png'):require('../../public/images/weizhong.jpg')" />{{item.fresult=='1'?'荐中':'未中'}}</span>
+        </h3>
         <div class="paid-show"
              v-for="(items,indexs) in item.forecastlist"
              :key="indexs">
-          <p>{{items.labname}}</p>
+          <!-- <p>{{items.labname}}</p> -->
           <div class="paid-show-info">
-            <div :class="items.labcheck[0]==_index?'sel-box':''"
+            <div :class="{'sel-box':(items.labcheck).indexOf(_index.toString())!==-1,'hit-box': (items.labhit)==(items.labcheck),'gray-box':(items.labhit).indexOf(_index.toString())!==-1&&(items.labcheck).indexOf(_index.toString())==-1}"
                  v-for="(_item,_index) in items.labshow"
                  :key="_index">
 
               <p>{{_item}}
-                <x-icon type="ios-checkmark-empty"
+                <!-- <x-icon type="ios-checkmark-empty"
                         size="30"
                         class="check-icon"
-                        v-if="items.labhit[0]==_index"></x-icon>
+                        v-if="items.labhit[0]==_index"></x-icon> -->
               </p>
               <p>{{items.labvalue[_index]}}</p>
             </div>
@@ -173,13 +179,13 @@ export default {
   .form-list-info {
     width: 91.5%;
     margin: 0 auto;
-    h3 {
-      margin-top: 29px;
-      margin-bottom: 14px;
-      font-size: 16px;
-      font-family: PingFangSC-Medium;
-      font-weight: 500;
-    }
+    // h3 {
+    //   margin-top: 29px;
+    //   margin-bottom: 14px;
+    //   font-size: 16px;
+    //   font-family: PingFangSC-Medium;
+    //   font-weight: 500;
+    // }
     .form-list-desc {
       width: 100%;
       height: 158px;
@@ -266,9 +272,8 @@ export default {
 }
 .paid-show {
   width: 100%;
-  height: 152px;
+  // height: 152px;
   overflow: hidden;
-  background: #f2f5f8;
   border-radius: 0;
   border: none;
   & > p {
@@ -312,6 +317,8 @@ export default {
         font-size: 12px;
         margin-top: 0;
         margin-bottom: 0;
+        border: 1px solid #e4ecf0;
+        box-sizing: border-box;
       }
     }
     .sel-box {
@@ -320,16 +327,45 @@ export default {
       }
       & > p:nth-child(2) {
         box-sizing: border-box;
-        border: 2px solid #0393f8;
+        // border: 1px solid #0393f8;
       }
     }
+    .hit-box {
+      & > p:first-child {
+        background: #ffb340;
+      }
+      & > p:nth-child(2) {
+        box-sizing: border-box;
+        border: 1px solid #ffb340;
+      }
+    }
+    .gray-box {
+      & > p:first-child {
+        background: #bebebe;
+      }
+      & > p:nth-child(2) {
+        box-sizing: border-box;
+        // border: 1px solid #bebebe;
+      }
+    }
+  }
+}
+.match-title {
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  margin-top: 29px;
+  margin-bottom: 14px;
+  span {
+    color: #b4cae5;
+    margin-right: 5px;
   }
 }
 </style>
 
 <style>
 .form-list-detail .vux-header .vux-header-title {
-  color: #313233;
+  color: #313233 !important;
 }
 .form-list-detail .vux-x-icon {
   fill: rgba(255, 165, 36, 1);
