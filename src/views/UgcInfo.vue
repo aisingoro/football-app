@@ -113,7 +113,7 @@ export default {
 <style lang="scss" scoped>
 .ugc-info {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   background: #f8f9fa;
   margin-top: 46px;
   .ugc-header {

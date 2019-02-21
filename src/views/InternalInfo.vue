@@ -524,7 +524,8 @@
           <p>经验丰富 持续盈利 专家见解</p>
           <div class="recommender-list"
                v-for="(item,index) in recommenderList"
-               :key="index">
+               :key="index"
+               @click="goInfo(item.expertid)">
             <img :src="item.expertpic" />
             <p class="list-name">{{item.expertname}}</p>
             <p>近期10中{{item.fright}} 盈利{{item.fprofitrate}}</p>
@@ -623,6 +624,10 @@ export default {
     }
   },
   methods:{
+    //进入专家详情
+    goInfo(index){
+      this.$router.push({path:'/ugc-info', query: {ugcId:index}})
+    },
     //切换tab回到顶部
     goTop(){
       if(this.isTop){
