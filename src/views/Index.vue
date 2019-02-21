@@ -244,6 +244,7 @@ export default {
     }
   },
   mounted(){
+    localStorage.setItem('channel',window.location.href.split("=")[1])
     https.fetchPost('/index/index.jsp',{} ).then((data) => {
         console.log("结果啊啊啊啊",data.data)
         this.swiperList=data.data.bannerlist
@@ -526,7 +527,7 @@ export default {
     .seven-result {
       overflow: hidden;
       & > div {
-        width: 167px;
+        width: 49%;
         height: 98px;
         float: left;
         background: #ffffff;

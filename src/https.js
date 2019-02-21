@@ -31,7 +31,7 @@ axios.interceptors.request.use((config) => {
   }
   let t = String(Date.parse(new Date()));
   let newT = t.substring(0, t.length - 3);
-  config.headers.common['channel'] = '';
+  config.headers.common['channel'] = localStorage.getItem('channel');
   config.headers.common['platform'] = '';
   config.headers.common['package'] = '';
   config.headers.common['version'] = '1.0.0';
