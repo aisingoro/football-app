@@ -106,7 +106,10 @@
             <div v-if="price!==undefined"
                  class="btn"
                  @click="showPayMethod('0001')">
-              <span>{{Number(price)/100}}元</span>内参>></div>
+              <img src="../../public/images/internal-btn-01.png"
+                   style="overflow:hidden"> 独家内参
+              <span>¥： {{Number(price)/100}}元</span>
+            </div>
             <!-- 整合按钮 -->
 
           </div>
@@ -479,9 +482,10 @@
         <div class="btn-show-wrapper">
           <!-- 大数据智能推荐 -->
           <div v-if="machineforecast.needbuy!==''"
-               class="btn"
+               class="bottom-btn"
                @click="showPayMethod('0006')">
-            <span v-if="machineforecast.needbuy!==''&&machineforecast.needbuy!=='1'">{{Number(machineforecast.price)/100}}元</span>智能大数据推荐</div>
+            <img src="../../public/images/internal-btn-02.png" />
+            <span v-if="machineforecast.needbuy!==''&&machineforecast.needbuy!=='1'">¥： {{Number(machineforecast.price)/100}}元</span>智能大数据推荐</div>
           <div v-if="machineforecast.needbuy=='1'"
                v-for="(item,index) in machineforecast.aiforecastlist"
                :key="index">
@@ -504,10 +508,15 @@
             </div>
           </div>
           <!-- 包月 -->
-          <div v-if="subscription!=='1'"
-               class="btn"
+          <div v-if="subscription.needbuy!=='1'"
+               class="bottom-btn"
                @click="showPayMethod('0004')">
-            <span>{{Number(subscription.price)/100}}元</span>包月会员VIP</div>
+            <img src="../../public/images/internal-btn-03.png" /> 包月会员VIP
+          </div>
+          <p v-if="subscription.needbuy!=='1'"
+             class="vip-class">会员特权：独家内参、智能大数据推荐任意查看
+            <span>( ¥: {{subscription.price/100}}元/月 ) </span>
+          </p>
 
         </div>
         <div class="recommender">
@@ -1200,7 +1209,7 @@ export default {
     .part-one > div:first-child {
       width: 91.5%;
       margin: 0 auto;
-      padding-bottom: 10px;
+      // padding-bottom: 10px;
       & > p {
         font-size: 16px;
         color: #313233;
@@ -1341,16 +1350,70 @@ export default {
   }
 }
 .btn {
-  width: 100%;
+  // width: 88%;
   height: 40px;
   background: #0393f8;
   color: #fff;
   border-radius: 6px;
   font-size: 16px;
   line-height: 40px;
-  text-align: center;
+  // text-align: center;
   margin-top: 10px;
   margin-bottom: 22px;
+  position: relative;
+  padding-left: 11.5%;
+  img {
+    width: 22px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    left: 10px;
+  }
+  span {
+    float: right;
+    margin-right: 10px;
+  }
+}
+.vip-class {
+  font-size: 12px !important;
+  font-family: PingFangSC-Regular;
+  margin-top: -10px !important;
+  span {
+    color: #ff3145;
+  }
+}
+.bottom-btn {
+  width: 81.5%;
+  margin: 0 auto;
+  margin-top: 0;
+  height: 40px;
+  background: #0393f8;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 40px;
+  margin-bottom: 22px;
+  position: relative;
+  padding-left: 10%;
+
+  &:nth-child(2) {
+    color: #ffe49b;
+    background: url('../../public/images/internal-btn-04.png') 100% 100%/100%
+      100%;
+  }
+  img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    left: 10px;
+  }
+  span {
+    float: right;
+    margin-right: 10px;
+  }
 }
 .paidType {
   position: relative;
