@@ -68,7 +68,7 @@
         <p>{{item.expertname}}</p>
         <p>近期{{item.fright[0]}}中{{item.fright[1]}} {{item.fright[2]}}走{{item.fright[3]}}错</p>
       </div>
-      <div @click="onItemClick(item.fid)">立即查看</div>
+      <div @click="onItemClick(item.expertid)">立即查看</div>
       <x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
