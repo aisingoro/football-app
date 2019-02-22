@@ -36,8 +36,9 @@
 
 <script>
 import https from '../https.js'
-import { XHeader } from 'vux'
-
+import { XHeader,ToastPlugin } from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
   components: {
     XHeader
@@ -67,6 +68,13 @@ export default {
   methods:{
     
     nextPage(){
+      if(this.uploadImageFront==''||this.uploadImageSide==''){
+        this.$vux.toast.show({
+          type:'warn',
+          text: '请先上传身份照片',
+        })
+        return false;
+      }
       let args={
         idcardpic1:this.uploadImageFront,
         idcardpic2:this.uploadImageSide
