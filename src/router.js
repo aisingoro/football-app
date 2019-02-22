@@ -54,7 +54,7 @@ export default new Router({
   // base: process.env.BASE_URL,
   routes: [{
       path: '',
-      redirect: '/home/index?channel=1',
+      redirect: '/home/index?channel=2',
       name: 'index',
       component: Index
     },
@@ -63,7 +63,11 @@ export default new Router({
       name: 'home',
       component: Home,
       children: [{
-        path: "index?channel=1",
+        path: "index?channel=2",
+        name: 'index',
+        component: Index,
+      }, {
+        path: "index",
         name: 'index',
         component: Index,
       }, {
