@@ -32,7 +32,8 @@
     <div v-for="(item,index) in listInfo"
          :key="index"
          class="table-box">
-      <x-table :cell-bordered="false"
+			<div class="left">
+				<x-table :cell-bordered="false"
                style="background-color:#fff;">
         <tbody>
           <tr v-for="(items,indexs) in item.title"
@@ -42,7 +43,9 @@
             <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'平')}}</td>
           </tr>
         </tbody>
-      </x-table>
+      	</x-table>
+			</div>
+
       <div class="table-result"
            @click="listDetail(item.fid)">
         <div>{{item.fresult==-99?'立即查看':(item.fresult==-1?'未中':'荐中')}}</div>
@@ -74,12 +77,12 @@ export default {
     },
     followUgc(){
       var args={expertid:this.$route.query.ugcId}
-      
+
       if(this.isFollow=='1'){
         args={expertid:this.$route.query.ugcId,type:'-1'}
       }
       https.fetchPost('/expert/follow.jsp',args ).then((data) => {
-        
+
         if(data.data.statuscode=='-1098'||data.data.statuscode=='-1030'){
           this.$router.push('/login')
         }
@@ -89,7 +92,7 @@ export default {
         }else{
           this.isFollow='0'
           console.log('取消关注',this.isFollow)
-          
+
         }
       }).catch(err=>{
             console.log(err)
@@ -116,6 +119,7 @@ export default {
   // height: 100%;
   background: #f8f9fa;
   margin-top: 46px;
+	overflow: hidden;
   .ugc-header {
     width: 100%;
     height: 156px;
@@ -209,31 +213,38 @@ export default {
     margin-bottom: 16px;
   }
   .table-box {
+		width: 96%;
     display: flex;
-    margin-bottom: 18px;
-    .vux-table {
-      flex: 3.5;
-      margin-left: 21px;
-      // width: 71%;
-      font-size: 12px;
-      tr {
-        border-left: 1px solid #f1f4f6;
-        border-right: 1px solid #f1f4f6;
-        font-family: PingFangSC-Regular;
-      }
-      td:first-child {
-        color: #b4cae5;
-      }
-      td:last-child {
-        padding-right: 10px;
-      }
-    }
+		margin: 0 auto 18px;
+		justify-content: space-between;
+		.left {
+				flex: 1;
+		}
+		.vux-table {
+				font-size: 12px;
+				tr {
+					border-left: 1px solid #f1f4f6;
+					border-right: 1px solid #f1f4f6;
+					font-family: PingFangSC-Regular;
+				}
+				td {
+					text-align: center;
+				}
+				td:first-child {
+					color: #b4cae5;
+					padding-left: 5px;
+					text-align: left;
+				}
+				td:last-child {
+					padding-right: 10px;
+					text-align: right;
+				}
+			}
     .table-result {
-      flex: 1;
+      width: 68px;
       background: #0393f8;
       color: #ffffff;
       position: relative;
-      margin-right: 21px;
       & > div {
         width: 100%;
         text-align: center;

@@ -73,7 +73,7 @@ export default new Router({
       }, {
         path: "internal-reference",
         name: 'internal-reference',
-        component: InternalReference,
+				component: InternalReference
       }, {
         path: "ugc",
         name: 'ugc',
