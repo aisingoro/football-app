@@ -12,7 +12,7 @@
 				</cell>
 			</group>
 		</div>
-		<div class="login-out">退出登录</div>
+		<div class="login-out" @click="loginOut">退出登录</div>
 	</div>
 </template>
 <script>
@@ -33,7 +33,12 @@ export default {
 		}
 	},
 	methods: {
-
+		loginOut () {
+			let data = localStorage.getItem('loginInfo')
+			this.$store.commit('loginOut',JSON.parse(data))
+			this.$store.state.userid = ''
+			this.$router.go(-1)
+		}
 	},
 }
 </script>

@@ -45,73 +45,88 @@ export default new Vuex.Store({
       localStorage.setItem('matchnum', data)
 
     },
-    setUserid(state, data) {
-      state.userid = data;
-      localStorage.setItem('userid', data)
-    },
-    setExpertid(state, data) {
-      state.expertid = data;
-      localStorage.setItem('expertid', data)
-    },
-    setFans(state, data) {
-      state.fans = data;
-      localStorage.setItem('fans', data)
-    },
-    setNickname(state, data) {
-      state.nickname = data;
-      localStorage.setItem('nickname', data)
-    },
-    setAccount(state, data) {
-      state.account = data;
-      localStorage.setItem('account', data)
-    },
-    setUserpic(state, data) {
-      state.userpic = data;
-      localStorage.setItem('userpic', data)
-    },
-    setFcount(state, data) {
-      state.fcount = data;
-      localStorage.setItem('fcount', data)
-    },
-    setFollow(state, data) {
-      state.follow = data;
-      localStorage.setItem('follow', data)
-    },
-    setSignin(state, data) {
-      state.signin = data;
-      localStorage.setItem('signin', data)
-    },
-    setBalance(state, data) {
-      state.balance = data;
-      localStorage.setItem('balance', data)
-    },
-    setUsersex(state, data) {
-      state.usersex = data;
-      localStorage.setItem('usersex', data)
-    },
-    setTx_balance(state, data) {
-      state.tx_balance = data;
-      localStorage.setItem('tx_balance', data)
-    },
-    setCardnum(state, data) {
-      state.cardnum = data;
-      localStorage.setItem('cardnum', data)
-    },
-    setOpeningbank(state, data) {
-      state.openingbank = data;
-      localStorage.setItem('openingbank', data)
-    },
-    setExpertDesc(state, data) {
-      state.expertDesc = data;
-      localStorage.setItem('expertDesc', data)
-    },
-    setSelIndex(state, data) {
-      state.selIndex = data;
-      localStorage.setItem('selIndex', data)
-    },
-    setVcode(state, data) {
-      state.vcode = data;
-      localStorage.setItem('vcode', data)
-    }
+    // setUserid(state, data) {
+    //   state.userid = data;
+    //   localStorage.setItem('userid', data)
+    // },
+    // setExpertid(state, data) {
+    //   state.expertid = data;
+    //   localStorage.setItem('expertid', data)
+    // },
+    // setFans(state, data) {
+    //   state.fans = data;
+    //   localStorage.setItem('fans', data)
+    // },
+    // setNickname(state, data) {
+    //   state.nickname = data;
+    //   localStorage.setItem('nickname', data)
+    // },
+    // setAccount(state, data) {
+    //   state.account = data;
+    //   localStorage.setItem('account', data)
+    // },
+    // setUserpic(state, data) {
+    //   state.userpic = data;
+    //   localStorage.setItem('userpic', data)
+    // },
+    // setFcount(state, data) {
+    //   state.fcount = data;
+    //   localStorage.setItem('fcount', data)
+    // },
+    // setFollow(state, data) {
+    //   state.follow = data;
+    //   localStorage.setItem('follow', data)
+    // },
+    // setSignin(state, data) {
+    //   state.signin = data;
+    //   localStorage.setItem('signin', data)
+    // },
+    // setBalance(state, data) {
+    //   state.balance = data;
+    //   localStorage.setItem('balance', data)
+    // },
+    // setUsersex(state, data) {
+    //   state.usersex = data;
+    //   localStorage.setItem('usersex', data)
+    // },
+    // setTx_balance(state, data) {
+    //   state.tx_balance = data;
+    //   localStorage.setItem('tx_balance', data)
+    // },
+    // setCardnum(state, data) {
+    //   state.cardnum = data;
+    //   localStorage.setItem('cardnum', data)
+    // },
+    // setOpeningbank(state, data) {
+    //   state.openingbank = data;
+    //   localStorage.setItem('openingbank', data)
+    // },
+    // setExpertDesc(state, data) {
+    //   state.expertDesc = data;
+    //   localStorage.setItem('expertDesc', data)
+    // },
+    // setSelIndex(state, data) {
+    //   state.selIndex = data;
+    //   localStorage.setItem('selIndex', data)
+    // },
+    // setVcode(state, data) {
+    //   state.vcode = data;
+    //   localStorage.setItem('vcode', data)
+		// },
+		loginStore (state, data) {
+			for (let item in data) {
+				state[item] = data[item];
+				localStorage.setItem(item, data[item])
+				localStorage.setItem('loginInfo', JSON.stringify(data))
+			}
+		},
+		loginOut (state, data) {
+			console.log(data)
+			for (let item in data) {
+				state[item] = '';
+				localStorage.removeItem(item)
+				localStorage.removeItem('loginInfo')
+			}
+		}
   },
 })
