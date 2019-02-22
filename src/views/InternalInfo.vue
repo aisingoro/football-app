@@ -19,7 +19,7 @@
             <p>{{matchlist.awayteamname}}</p>
           </div>
         </div>
-        <div class="weather-info">
+        <!-- <div class="weather-info">
           <div><img src="../../public/images/weather-01.png"
                  class="weather-icon" />{{matchlist.weather.split(',')[0]}}</div>
           <div><img src="../../public/images/weather-02.png"
@@ -27,6 +27,20 @@
           <div><img src="../../public/images/weather-03.png"
                  class="weather-icon" />{{matchlist.weather.split(',')[2]}}</div>
 
+        </div> -->
+        <div class="weather-info">
+          <div>
+            <div><img src="../../public/images/weather-01.png"
+                   class="weather-icon" />{{matchlist.weather.split(',')[0]}}</div>
+          </div>
+          <div>
+            <div><img src="../../public/images/weather-02.png"
+                   class="weather-icon" />{{matchlist.weather.split(',')[1]}}</div>
+          </div>
+          <div>
+            <div><img src="../../public/images/weather-03.png"
+                   class="weather-icon" />{{matchlist.weather.split(',')[2]}}</div>
+          </div>
         </div>
 
       </div>
@@ -870,25 +884,56 @@ export default {
         }
       }
       .weather-info {
+        clear: both;
         width: 100%;
         height: 36px;
         background: #215696;
+        margin: 0 auto;
+        overflow: hidden;
         display: flex;
         & > div {
           flex: 1;
           font-size: 14px;
           line-height: 36px;
           color: #7ba1d0;
-          .weather-icon {
-            float: left;
-            width: 17px;
-            height: 17px;
-            margin-top: 11px;
-            margin-left: 19px;
-            margin-right: 7px;
+          // text-align: center;
+          div {
+            text-align: center;
+            .weather-icon {
+              display: inline-block;
+              vertical-align: top;
+              width: 17px;
+              height: 17px;
+              margin-top: 11px;
+              // margin-left: 4px;
+              margin-right: 6px;
+            }
+          }
+          &:nth-child(2) {
+            flex: 1.2;
           }
         }
       }
+      // .weather-info {
+      //   width: 100%;
+      //   height: 36px;
+      //   background: #215696;
+      //   display: flex;
+      //   & > div {
+      //     flex: 1;
+      //     font-size: 14px;
+      //     line-height: 36px;
+      //     color: #7ba1d0;
+      //     .weather-icon {
+      //       float: left;
+      //       width: 17px;
+      //       height: 17px;
+      //       margin-top: 11px;
+      //       margin-left: 19px;
+      //       margin-right: 7px;
+      //     }
+      //   }
+      // }
     }
   }
 
