@@ -38,7 +38,7 @@
         <tbody>
           <tr v-for="(items,indexs) in item.title"
               :key="indexs">
-            <td>{{items.match_num}}</td>
+            <td>{{items.matchnumshow}}</td>
             <td>{{items.hometeam}} VS {{items.awayteam}}</td>
             <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'平')}}</td>
           </tr>
@@ -116,7 +116,7 @@ export default {
 <style lang="scss" scoped>
 .ugc-info {
   width: 100%;
-  // height: 100%;
+  min-height: 100%;
   background: #f8f9fa;
   margin-top: 46px;
 	overflow: hidden;
