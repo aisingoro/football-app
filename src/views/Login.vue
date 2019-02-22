@@ -65,8 +65,8 @@ Vue.use(ToastPlugin)
                 loadbtn: false,
                 loginText: '登录',
                 inputType: "password",
-                username: '18518040722',
-                userpsw: '123456',
+                username: '',
+                userpsw: '',
                 a:{}
             }
         },
