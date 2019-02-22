@@ -105,10 +105,10 @@ export default new Vuex.Store({
     //   state.expertDesc = data;
     //   localStorage.setItem('expertDesc', data)
     // },
-    // setSelIndex(state, data) {
-    //   state.selIndex = data;
-    //   localStorage.setItem('selIndex', data)
-    // },
+    setSelIndex(state, data) {
+      state.selIndex = data;
+      localStorage.setItem('selIndex', data)
+    },
     // setVcode(state, data) {
     //   state.vcode = data;
     //   localStorage.setItem('vcode', data)
