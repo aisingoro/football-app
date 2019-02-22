@@ -173,7 +173,8 @@
           <p class="contain-title"
              v-if="buyDetailInfo.referee!==''">【主帅&主裁】</p>
           <p class="contain-info"
-             style="background:#fff;padding:5px">{{buyDetailInfo.referee}}</p>
+             style="background:#fff;padding:5px"
+             v-if="buyDetailInfo.referee!==''">{{buyDetailInfo.referee}}</p>
           <p class="contain-title"
              v-if="homeInfo.playerssuspended!=='' || awayInfo.playerssuspended!==''">【伤停及复出】</p>
           <div class="team-cli"
@@ -239,11 +240,11 @@
             </div>
           </div>
           <div class="team-cli"
-               v-if="homeInfo.playerunavailable!=='' || awayInfo.playerunavailable!==''">
+               v-if="homeInfo.playersunavailable!=='' || awayInfo.playersunavailable!==''">
             <div class="home-cli">
               <div class="home-cli-header">主队不可上场</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in homeInfo.playerunavailable"
+                <p v-for="(item,index) in homeInfo.playersunavailable"
                    :key="index">
                   <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
@@ -257,7 +258,7 @@
             <div class="away-cli">
               <div class="away-cli-header">客队不可上场</div>
               <div class="home-cli-body">
-                <p v-for="(item,index) in awayInfo.playerunavailable"
+                <p v-for="(item,index) in awayInfo.playersunavailable"
                    :key="index">
                   <span class="per-name">{{item.indexOf('/')==-1?item:item.split('/')[0]}}</span>
                   <span class="cli-badge"
@@ -509,7 +510,7 @@
           </div>
           <!-- 包月 -->
           <div v-if="subscription.needbuy!=='1'"
-               class="bottom-btn"
+               class="bottom-btn vip-box"
                @click="showPayMethod('0004')">
             <img src="../../public/images/internal-btn-03.png" /> 包月会员VIP
           </div>
@@ -1325,6 +1326,7 @@ export default {
       }
       .cold-point {
         margin-top: 10px;
+        margin-bottom: 10px;
         width: 100%;
         height: 88px;
         background: rgba(245, 246, 247, 1);
@@ -1402,11 +1404,6 @@ export default {
   position: relative;
   padding-left: 10%;
 
-  &:nth-child(2) {
-    color: #ffe49b;
-    background: url('../../public/images/internal-btn-04.png') 100% 100%/100%
-      100%;
-  }
   img {
     width: 20px;
     height: 20px;
@@ -1419,6 +1416,10 @@ export default {
     float: right;
     margin-right: 10px;
   }
+}
+.vip-box {
+  color: #ffe49b;
+  background: url('../../public/images/internal-btn-04.png') 100% 100%/100% 100%;
 }
 .paidType {
   position: relative;
