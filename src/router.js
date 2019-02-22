@@ -63,7 +63,7 @@ export default new Router({
       name: 'home',
       component: Home,
       children: [{
-        path: "index",
+        path: "index?channel=1",
         name: 'index',
         component: Index,
       }, {
