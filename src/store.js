@@ -12,12 +12,12 @@ export default new Vuex.Store({
     userid: localStorage.getItem("userid"), //用户唯一标识 userid
     vcode: localStorage.getItem("vcode"), //版本号 ，原值为‘1’
     expertid: localStorage.getItem("expertid"), //是否为专家,原值为'0'
-    fans: localStorage.getItem("fans"), //粉丝数,原值为'0'
+    fans: localStorage.getItem("fans") || 0, //粉丝数,原值为'0'
     nickname: localStorage.getItem("nickname"), //用户昵称
     account: localStorage.getItem("account"), //手机号
     userpic: localStorage.getItem("userpic"), //用户头像
-    fcount: localStorage.getItem("fcount"), //发单,原值为'0'
-    follow: localStorage.getItem("follow"), //关注,原值为'0'
+    fcount: localStorage.getItem("fcount") || 0, //发单,原值为'0'
+    follow: localStorage.getItem("follow") || 0, //关注,原值为'0'
     signin: localStorage.getItem("signin"), //签到,原值为'0'
     balance: localStorage.getItem("balance"), //仙灵币,原值为'0'
     usersex: localStorage.getItem("usersex"), //性别,原值为'0'
