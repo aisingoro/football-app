@@ -13,7 +13,7 @@
       <img :src="item.expertpic" />
       <div>
         <p>{{item.expertname}}</p>
-        <p>近期10中8 盈利{{item.fprofitrate}}</p>
+        <p>近期{{item.fright[0]}}中{{item.fright[1]}} {{item.fright[2]}}走{{item.fright[3]}}错 盈利{{item.fprofitrate}}</p>
       </div>
       <span class="more">></span>
     </div>

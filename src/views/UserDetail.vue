@@ -139,9 +139,27 @@ export default {
 		}
   },
   mounted(){
-    this.sex = (this.$store.state.usersex=='0'?['男']:['女'])
+    this.refreshUserInfo();
   },
 	methods: {
+    // 更新用户信息
+		refreshUserInfo () {
+ 			https.fetchPost('/user/getinfo.jsp',{} ).then((data) => {
+				 console.log('更新用户信息....')
+         console.log(data)
+         this.$store.commit('loginStore',data.data.user)
+         console.log("!!!!",data.data.user.usersex)
+    this.sex = (data.data.user.usersex=='0'?['男']:['女'])
+         
+        //  this.$store.commit('setUserpic', data.data.user.userpic)
+				//  this.$store.commit('setNickname', data.data.user.nickname)
+				//  this.$store.commit('setUsersex', data.data.user.sex)
+				//  this.$store.commit('setExpertid', data.data.user.expertid)
+				//  this.$store.commit('setExpertDesc', data.data.user.expertDesc)
+    // this.sex = (this.$store.state.usersex=='0'?['男']:['女'])
+         
+			 })
+		},
     //修改专家简介
     changeDesc(){
       https.fetchPost('/expert/moddesc.jsp',{expertdesc:this.expertDesc}).then((data) => {

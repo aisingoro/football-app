@@ -66,13 +66,21 @@
       <div style="width: 95%;background-color:#fff;height:192px;margin:0 auto;border-radius:5px;padding-top:10px;">
         <div style="padding:20px 15px;">
           <p class="paidType">请选择支付方式：</p>
-          <img src="../../public/images/zhifubao.png"
-               class="zhifubao"
-               @click="userPay('0002')" />
-          <span class="zhifubao-text">支付宝</span>
-          <img @click="showPay = false"
-               src="../../public/images/zhifubao-close.png"
-               class="zhifubao-close" />
+          <div class="paid-desc">
+            <div>
+              <img src="../../public/images/zhifubao.png"
+                   class="zhifubao"
+                   @click="userPayAli(paidInfo)" />
+              <span class="zhifubao-text">支付宝支付</span>
+            </div>
+            <div>
+              <img src="../../public/images/jinbi.png"
+                   class="zhifubao"
+                   @click="userPay(paidInfo)" />
+              <span class="zhifubao-text">金币支付</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </popup>
@@ -101,22 +109,21 @@ export default {
     }
   },
   methods:{
-    userPay(e){
-      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
-        this.$router.push("/login")
-        return false
-      }
-      let args={
-        buyid:this.$store.state.internalInfoItem,
-        // buytype:e,
-        buytype:'0006',
-        paytype:'0006',
-        payback:'/internal-info'
-      }
+    pay(args){
       https.fetchPost('/user/userpay.jsp',args).then((data) => {
-        console.log(data.data)
+        console.log(data.data.tourl)
+        // window.location.href = data.data.tourl
         if(data.data.statuscode>0){
-          window.location.href = 'http://localhost:8080/#/withdrawResult'
+          //支付宝支付成功后会跳转支付页面
+          if(data.data.tourl){
+            window.location.href=data.data.tourl
+          }else{
+             //金币支付完成直接跳转支付成功页面
+          this.$router.push({path:'/withdrawResult',query: {forceid:this.$route.query.forceid}})
+          }
+         
+          // window.location.href = 'http://localhost:8080/#/withdrawResult'
+
 
         }else{
           this.$vux.toast.show({
@@ -124,10 +131,47 @@ export default {
                     text: data.data.statusmsg,
                   })
         }
+
+
       }).catch(err=>{
               console.log(err)
           }
       )
+    },
+    //支付宝支付
+    userPayAli(){
+      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
+        this.$router.push("/login")
+        return false
+      }
+      let args={
+        buyid:this.$route.query.forceid,
+        buytype:'0002',
+        paytype:'0006',
+        // payback:'http://localhost:8080/index.html#/internal-info'
+        payback: window.location.href
+
+      }
+      console.log(window.location.href)
+      this.pay(args)
+    },
+    //金币支付
+    userPay(){
+      if(this.$store.state.userid==''||this.$store.state.userid==null||this.$store.state.userid==undefined){
+        this.$router.push("/login")
+        return false
+      }
+      let args={
+        buyid:this.$route.query.forceid,
+        buytype:'0002',
+        // buytype:'0006',
+        paytype:'0004',
+        // payback:'http://localhost:8080/index.html#/internal-info'
+        payback: window.location.href
+
+      }
+      console.log(window.location.href)
+      this.pay(args)
 
     },
   },
@@ -359,6 +403,12 @@ export default {
   span {
     color: #b4cae5;
     margin-right: 5px;
+  }
+}
+.paid-desc {
+  display: flex;
+  & > div {
+    flex: 1;
   }
 }
 </style>
