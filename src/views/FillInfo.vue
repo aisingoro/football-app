@@ -43,8 +43,9 @@
 
 <script>
 import https from '../https.js'
-import { XHeader,XInput,XTextarea,Group,Selector } from 'vux'
-
+import { XHeader,XInput,XTextarea,Group,Selector,ToastPlugin } from 'vux'
+import Vue from 'vue'
+Vue.use(ToastPlugin)
 export default {
   components: {
     XHeader,
@@ -75,7 +76,23 @@ export default {
           openingbank :this.openingbank,
           cardnum :this.cardnum
       }
+      let arg={
+        expertdesc :this.expertdesc,
+          truename :this.truename,
+          idcard :this.idcard,
+          openingbank :this.openingbank,
+          cardnum :this.cardnum
+      }
       https.fetchPost('/user/regexpert.jsp',args).then((data) => {
+        for(var i in arg){
+          if(arg[i]==''){
+            this.$vux.toast.show({
+              type:'warn',
+              text: '请填写完整信息！'
+            })
+            return false
+          }
+        }
         this.$store.commit('setExpertid',data.data.expertid)
         this.$router.push('/issue-order')
       }).catch(err=>{
