@@ -642,7 +642,7 @@ export default {
     //进入专家详情
     goInfo(index){
       this.$router.push({path:'/ugc-info', query: {ugcId:index}})
-    },
+		},
     //切换tab回到顶部
     goTop(){
       if(this.isTop){
@@ -707,7 +707,7 @@ export default {
              //金币支付完成直接跳转支付成功页面
           this.$router.push('/withdrawResult')
           }
-         
+
           // window.location.href = 'http://localhost:8080/#/withdrawResult'
 
 
