@@ -702,7 +702,7 @@ export default {
         if(data.data.statuscode>0){
           //支付宝支付成功后会跳转支付页面
           if(data.data.tourl){
-            window.location.href=data.data.tourl
+            window.location.replace=data.data.tourl
           }else{
              //金币支付完成直接跳转支付成功页面
           this.$router.push('/withdrawResult')
