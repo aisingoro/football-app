@@ -9,7 +9,7 @@
 		          title="我的购买"></x-header>
 		<div class="Purchase-content">
 			<div class="Purchase-p">
-				<div class="Purchase-list">
+				<div class="Purchase-list" v-if="PurchaseData.length > 0">
 					<div class="Purchase-item-list"
 					     v-for="(items, _index) in PurchaseData"
 					     :key="_index"
@@ -23,16 +23,19 @@
 							<span class="Purchase-date">{{items.date}}</span>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-		<load-more tip="正在加载"
+						<load-more tip="正在加载"
 		           :show-loading="true"
 		           v-show="loading"></load-more>
 		<load-more v-show="noData"
 		           :show-loading="false"
 		           tip="暂无更多数据"
 		           background-color="#fbf9fe"></load-more>
+				</div>
+				<div class="noList" v-else>
+					暂无数据...
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -74,7 +77,7 @@ export default {
         this.isDisableScroll = false
 				if (type === 'init') {
           this.PurchaseData = data.data.list || []
-          
+
 				} else {
           this.loading = true
           this.PurchaseData = this.PurchaseData.concat(data.data.list) || []
@@ -131,7 +134,7 @@ export default {
   },
 	mounted(){
     this.getList(this.page,  'init')
-    
+
 		// https.fetchPost('/user/blance.jsp',{} ).then((data) => {
 		// 	console.log(data.data)
 		// 	this.PurchaseData = data.data.list
@@ -172,7 +175,7 @@ export default {
 		// 				break;
     //       }
     //     }
-			
+
 		// }).catch(err=>{
 		// 			console.log(err)
 		// 	}
@@ -243,6 +246,13 @@ export default {
   color: #ff455b;
   font-size: 18px;
   text-align: right;
+}
+.noList {
+	color: #666;
+	width: 100%;
+	text-align: center;
+	background: #fff;
+	padding-top: 200px;
 }
 </style>
 <style>
