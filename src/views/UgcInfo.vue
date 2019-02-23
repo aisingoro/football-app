@@ -40,7 +40,7 @@
               :key="indexs">
             <td>{{items.matchnumshow}}</td>
             <td>{{items.hometeam}} VS {{items.awayteam}}</td>
-            <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'平')}}</td>
+            <td>{{items.match_result==-1?'负':(items.match_result==1?'胜':'...')}}</td>
           </tr>
         </tbody>
       	</x-table>
