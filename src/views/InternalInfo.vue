@@ -672,7 +672,7 @@ export default {
         // paytype:'0004',
         // payback:'http://localhost:8080/index.html#/internal-info'
         payback: window.location.href
-        
+
       }
       console.log(window.location.href)
       this.pay(args)
@@ -690,7 +690,7 @@ export default {
         paytype:'0004',
         // payback:'http://localhost:8080/index.html#/internal-info'
         payback: window.location.href
-        
+
       }
       console.log(window.location.href)
       this.pay(args)
@@ -711,8 +711,8 @@ export default {
                     text: data.data.statusmsg,
                   })
         }
-        
-       
+
+
       }).catch(err=>{
               console.log(err)
           }
@@ -747,12 +747,12 @@ export default {
         }
         this.bigprobabilityevents = data.data.inside.details.bigprobabilityevents.open.split(',')//大概率
         this.coldindex = data.data.inside.details.coldindex.split("%")[0];
-        
+
         // this.scoreList = data.data.inside.details.scoreindex.split(",")//比分指数
-        
-        
-        
-       
+
+
+
+
 		}).catch(err=>{
 						console.log(err)
 				}
@@ -764,7 +764,7 @@ export default {
 						console.log(err)
 				}
     )
-    
+
   }
 }
 </script>

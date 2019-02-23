@@ -6,9 +6,9 @@
        infinite-scroll-immediate-check="true"
        infinite-scroll-distance="10">
     <h1>独家内参</h1>
-    <tab>
+    <tab v-model="tabIndex">
       <tab-item @on-item-click="onItemClick">{{yesterdayWeek}}<br>{{yesterday}}</tab-item>
-      <tab-item selected
+      <tab-item
                 @on-item-click="onItemClick">{{todayWeek}}<br>{{today}}</tab-item>
       <tab-item @on-item-click="onItemClick">{{tomorrowWeek}}<br>{{tomorrow}}</tab-item>
     </tab>
@@ -170,7 +170,8 @@ export default {
 			isCompleted: false, // 是否继续加载
 			loading: false,
 			noData: false,
-			scrollTop: 0
+			scrollTop: 0,
+			tabIndex: localStorage.getItem('tabIndex') || 1
     }
   },
   methods:{
@@ -206,7 +207,9 @@ export default {
 			this.page = 1; // 切换tab的时候 重置page页数为第一页
 			this.isCompleted = false
 			this.noData = false
-      this.changeMatch(this.page, this.dayVal, 'init')
+			this.changeMatch(this.page, this.dayVal, 'init')
+			localStorage.setItem('InternalReferenceDate',this.dayVal)
+			localStorage.setItem('tabIndex',index)
     },
     getInternalInfo(index,matchnum){
       console.log(index)
@@ -268,11 +271,13 @@ export default {
 	beforeRouteLeave (to, from , next) {
 		if (to.name === 'internal-info') {
 				sessionStorage.setItem('scrollTop', this.scrollTop)
-				next()
 		} else {
 			sessionStorage.setItem('scrollTop', 0)
-				next()
+			localStorage.removeItem('InternalReferenceDate')
+			localStorage.removeItem('tabIndex')
 		}
+		next()
+
 	},
   mounted () {
     this.yesterdayWeek=this.GetDateStr(-1).split('/')[0];
@@ -280,8 +285,9 @@ export default {
     this.todayWeek=this.GetDateStr(0).split('/')[0];
     this.today=this.GetDateStr(0).split('/')[1];
     this.tomorrowWeek=this.GetDateStr(1).split('/')[0];
-    this.tomorrow=this.GetDateStr(1).split('/')[1];
-		this.changeMatch(this.page, '', 'init')
+		this.tomorrow=this.GetDateStr(1).split('/')[1];
+		let InternalReferenceDate = localStorage.getItem('InternalReferenceDate') || ''
+		this.changeMatch(this.page, InternalReferenceDate, 'init')
 		document.addEventListener('scroll',this.handelscroll, true)
 		setTimeout(() => {
 			let internal = this.$refs.scroll
