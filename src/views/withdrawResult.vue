@@ -26,6 +26,12 @@ export default {
 	computed: {
 
 	},
+	mounted() {
+		// 购买成功 跳回上一级页面
+		setTimeout(() => {
+			 this.$router.go(-1)
+		}, 3000);
+	},
 }
 </script>
 <style lang="scss" scope>

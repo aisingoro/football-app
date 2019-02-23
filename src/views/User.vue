@@ -26,7 +26,7 @@
         <p>我的关注</p>
       </div>
       <div @click="signIn">
-        <p style="font-size:12px;font-weight:bolder">{{$store.state.signin!=='0'&&$store.state.signin!==undefined&&$store.state.signin!==null?'已签到':'未签到'}}</p>
+        <p style="font-size:12px;font-weight:bolder">{{$store.state.signin == 'true' ?'已签到':'未签到'}}</p>
         <p>我的签到</p>
       </div>
     </div>
@@ -86,7 +86,7 @@ export default {
       if(this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined){
         this.$router.push('/login')
         return false
-      }
+			}
       https.fetchPost('/user/signin.jsp',{} ).then((data) => {
 				console.log("ugc",data.data)
 				if(data.data.statuscode<0){
@@ -98,17 +98,26 @@ export default {
           // this.show=true
           this.$vux.toast.show({
 					text: '签到成功！'
-        })
-          this.$store.commit('setSignin','1')
+        	})
+					this.$store.commit('setSignin', 'true')
+					this.refreshUserInfo()
 				}
       }).catch(err=>{
             console.log(err)
         }
       )
-    },
+		},
+		// 更新用户信息
+		refreshUserInfo () {
+ 			https.fetchPost('/user/getinfo.jsp',{} ).then((data) => {
+				 console.log('更新用户信息....')
+				 console.log(data)
+				 this.$store.commit('setBalance', data.data.user.balance)
+			 })
+		},
     goUgcInfo(){
         this.$router.push({path:'/ugc-info',query:{ugcId:this.$store.state.expertid}})
-      
+
     },
     goUserDetail(){
       if(this.$store.state.account==''||this.$store.state.account==null||this.$store.state.account==undefined){
@@ -123,7 +132,7 @@ export default {
         return false
       }
       this.$router.push('/withdraw')
-      
+
     }
   }
 
