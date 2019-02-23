@@ -8,8 +8,7 @@
     <h1>独家内参</h1>
     <tab v-model="tabIndex">
       <tab-item @on-item-click="onItemClick">{{yesterdayWeek}}<br>{{yesterday}}</tab-item>
-      <tab-item
-                @on-item-click="onItemClick">{{todayWeek}}<br>{{today}}</tab-item>
+      <tab-item @on-item-click="onItemClick">{{todayWeek}}<br>{{today}}</tab-item>
       <tab-item @on-item-click="onItemClick">{{tomorrowWeek}}<br>{{tomorrow}}</tab-item>
     </tab>
     <div class="internalList"
@@ -40,8 +39,8 @@
           </div>
           <div>
             <img src="../../public/images/index-vs.png"
-                 v-if="item.kickoff=='未开赛'" />
-            <p :class="item.kickoff!=='未开赛'?'finalscore':''">{{item.kickoff!=='未开赛'?item.finalscore:item.kickoff}}</p>
+                 v-if="item.kickoff!=='已结束'" />
+            <p :class="item.kickoff=='已结束'?'finalscore':''">{{item.kickoff=='已结束'?item.finalscore:item.kickoff}}</p>
           </div>
           <div>
             <img :src="item.awayteampic" />
