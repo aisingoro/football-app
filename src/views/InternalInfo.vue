@@ -498,7 +498,7 @@
           <!-- 大数据智能推荐 -->
           <div v-if="machineforecast.needbuy!==''"
                class="bottom-btn"
-               @click="showPayMethod('0006')">
+               @click="machineforecast.needbuy=='1'?'':showPayMethod('0006')">
             <img src="../../public/images/internal-btn-02.png" />
             <span v-if="machineforecast.needbuy!==''&&machineforecast.needbuy!=='1'">¥： {{Number(machineforecast.price)/100}}元</span>智能大数据推荐</div>
           <div v-if="machineforecast.needbuy=='1'"
@@ -668,8 +668,7 @@ export default {
       let args={
         buyid:this.$store.state.internalInfoItem,
         buytype:e,
-        buytype:'0006',
-        // paytype:'0004',
+        paytype:'0006',
         // payback:'http://localhost:8080/index.html#/internal-info'
         payback: window.location.href
 
@@ -701,9 +700,16 @@ export default {
         console.log(data.data.tourl)
         // window.location.href = data.data.tourl
         if(data.data.statuscode>0){
-          //金币支付完成直接跳转支付成功页面
+          //支付宝支付成功后会跳转支付页面
+          if(data.data.tourl){
+            window.location.href=data.data.tourl
+          }else{
+             //金币支付完成直接跳转支付成功页面
           this.$router.push('/withdrawResult')
+          }
+         
           // window.location.href = 'http://localhost:8080/#/withdrawResult'
+
 
         }else{
           this.$vux.toast.show({
