@@ -19,9 +19,7 @@
         </marquee>
       </cell>
     </group>
-    <div class="index-info"
-         v-if="flag">
-      <!-- // . -->
+    <div class="index-info">
       <h2 class="title-internal">独家内参
         <span @click="goInternal">更多></span>
       </h2>
@@ -238,9 +236,6 @@ export default {
         awayteampic:require('../../public/images/index-team-02.png'),
         paytype:1
 			}],
-			timer: null, // .
-			endTime: '1551234316', // .
-			flag: true // .
     }
   },
   mounted(){
@@ -259,46 +254,8 @@ export default {
 						console.log(err)
 				}
 		)
-		this.progressCountDown() // .
   },
   methods:{
-		// 开始倒计时
-		progressCountDown () { // .
-			this.timer = setInterval(() => {
-			this.progressnowTime()
-			}, 1000)
-		},
-		// 倒计时进度
-		progressnowTime () { // .
-			if (!this.endTime) return
-			let leftSeconds = this.endTime - this.getTimestamp()
-			if (leftSeconds <= 0) {
-			leftSeconds = 0
-			this.flag = false
-			console.log('触发.....')
-			clearInterval(this.timer)
-			}
-			let clock = this.formatTimestamp(leftSeconds)
-			// console.log(clock)
-		},
-		// 格式化时间戳 hours | minutes | seconds
-		formatTimestamp(time) { // .
-			let hours = Math.floor(time / 3600)
-			let minutes = Math.floor((time - hours * 3600) / 60)
-			let seconds = Math.floor(time - hours * 3600 - minutes * 60)
-			let timeArr = [hours, minutes, seconds]
-			let clock = `${hours}小时${minutes}分${seconds}秒`
-			return clock
-		},
-		// 获取当前时间10位时间戳
-		getTimestamp() { // .
-			let currentTime = new Date().getTime() + '';
-			return currentTime.substr(0, 10);
-		},
-		// 左边补零
-		padLeftZero(str) { // .
-			return ('00' + str).substring(str.length);
-		},
     goInternal(){
       this.$store.commit('setSelIndex',1)
       this.$router.push('/home/internal-reference')
